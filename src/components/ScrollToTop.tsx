@@ -28,7 +28,7 @@ export default function ScrollToTop() {
       lenis.resize();
       ScrollTrigger.refresh();
     });
-  }, [location.pathname, lenis]);
+  }, [location.pathname, location.search, location.state, lenis]);
 
   return null;
 }

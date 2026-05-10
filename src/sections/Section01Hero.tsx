@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useSyncExternalStore } from 'react';
 import { useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -10,6 +10,15 @@ import useReducedMotion from '@/hooks/use-reduced-motion';
 gsap.registerPlugin(ScrollTrigger);
 
 const CROSSFADE_DURATION = 1; // seconds
+const MOBILE_QUERY = '(max-width: 639px)';
+
+const subscribeMobile = (cb: () => void) => {
+  const mq = window.matchMedia(MOBILE_QUERY);
+  mq.addEventListener('change', cb);
+  return () => mq.removeEventListener('change', cb);
+};
+const getMobileSnapshot = () => window.matchMedia(MOBILE_QUERY).matches;
+const getMobileServerSnapshot = () => false;
 
 export default function Section01Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -161,14 +170,7 @@ export default function Section01Hero() {
     });
   }, { scope: sectionRef, dependencies: [reducedMotion] });
 
-  // Mobile gradient fallback check
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 640);
-    const onResize = () => setIsMobile(window.innerWidth < 640);
-    window.addEventListener('resize', onResize, { passive: true });
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
+  const isMobile = useSyncExternalStore(subscribeMobile, getMobileSnapshot, getMobileServerSnapshot);
 
   const navigate = useNavigate();
   const goToProjects = () => {

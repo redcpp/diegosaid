@@ -24,18 +24,21 @@ export function LenisProvider({ children }: { children: ReactNode }) {
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
+    // Lenis must be instantiated client-side (touches window), so the instance
+    // is created in this effect and surfaced via state for consumers below.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLenis(instance);
 
     return () => {
       gsap.ticker.remove(raf);
       instance.destroy();
-      setLenis(null);
     };
   }, []);
 
   return <LenisContext.Provider value={lenis}>{children}</LenisContext.Provider>;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useLenis() {
   return useContext(LenisContext);
 }

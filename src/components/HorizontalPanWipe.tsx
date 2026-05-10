@@ -18,17 +18,18 @@ export default function HorizontalPanWipe({
   const lineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!lineRef.current) return;
+    const node = lineRef.current;
+    if (!node) return;
 
     gsap.fromTo(
-      lineRef.current,
+      node,
       { scaleX: 0 },
       {
         scaleX: 1,
         duration: 0.6,
         ease: 'power2.out',
         scrollTrigger: {
-          trigger: lineRef.current,
+          trigger: node,
           start: 'top 85%',
         },
       }
@@ -36,7 +37,7 @@ export default function HorizontalPanWipe({
 
     return () => {
       ScrollTrigger.getAll().forEach((t) => {
-        if (t.trigger === lineRef.current) t.kill();
+        if (t.trigger === node) t.kill();
       });
     };
   }, []);

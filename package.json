@@ -1,13 +1,20 @@
 {
-  "name": "my-app",
+  "name": "diegosaid",
+  "description": "Diego Said — personal portfolio (React + Vite + Tailwind, deployed on Cloudflare Pages).",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
+  "homepage": "https://diegosaid.pages.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/redcpp/diegosaid.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=diegosaid"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

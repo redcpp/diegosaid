@@ -1,73 +1,65 @@
-# React + TypeScript + Vite
+# diegosaid
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio for **Diego Said** — a single-page editorial site built with React, Vite, Tailwind, and GSAP, deployed on Cloudflare Pages.
 
-Currently, two official plugins are available:
+**Live**: https://diegosaid.pages.dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
 
-## React Compiler
+- **React 19** + **TypeScript**
+- **Vite 7** for dev/build
+- **Tailwind CSS v3** + **shadcn/ui** primitives
+- **GSAP** + **Lenis** for scroll-driven animation and smooth scrolling
+- **React Router v7**
+- **Cloudflare Pages** for hosting
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting started
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev          # http://localhost:5173
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Script           | Purpose                                                        |
+| ---------------- | -------------------------------------------------------------- |
+| `npm run dev`    | Start the Vite dev server with HMR.                            |
+| `npm run build`  | Type-check (`tsc -b`) and build for production into `dist/`.   |
+| `npm run lint`   | Run ESLint over the codebase.                                  |
+| `npm run preview`| Preview the production build locally.                          |
+| `npm run deploy` | Build and deploy `dist/` to Cloudflare Pages via Wrangler.     |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project layout
+
 ```
+src/
+  components/        Layout chrome (Navbar, Footer) + reusable atoms
+    ui/              shadcn/ui primitives
+  hooks/             Reusable React hooks (matchMedia, lazy video, etc.)
+  lib/               Utilities and the Lenis scroll context
+  pages/             Route entry points (Home, Projects, Blog, blog posts)
+  sections/          Home/Projects page sections in render order
+  index.css          Global styles, focus rings, texture utilities
+  main.tsx           Application entry
+public/              Static assets (videos, SVGs, _redirects)
+docs/                Planning artifacts
+output/              Phase-1 audit, redesign brief, swarm-voting outputs
+```
+
+## Deployment
+
+Pushes to `main` are intended to trigger a Cloudflare Pages build (connect the
+repo under **Pages → Settings → Builds & deployments**). Build command:
+`npm run build`; output directory: `dist`.
+
+For ad-hoc deploys without the Git integration:
+
+```bash
+npm run deploy       # builds and uploads dist/ via wrangler
+```
+
+## License
+
+All rights reserved. Code is published for portfolio review; reuse of brand
+assets, copy, and videos requires permission.

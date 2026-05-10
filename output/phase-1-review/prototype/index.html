@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diego Said — Redesign Prototype (Phase 1 Preview)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Skip Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Comparison Toggle -->
+  <div class="mode-toggle" role="group" aria-label="Design mode">
+    <button id="btn-before" class="mode-btn active" aria-pressed="true">BEFORE</button>
+    <button id="btn-after" class="mode-btn" aria-pressed="false">AFTER (Top 5)</button>
+  </div>
+
+  <main id="main-content">
+    <!-- HERO -->
+    <section class="section-hero" data-section="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-diamond" aria-hidden="true"></div>
+      <div class="hero-content">
+        <span class="eyebrow">EST. 1996</span>
+        <h1 class="hero-title">DIEGO SAID</h1>
+        <p class="hero-subtitle">Where Symmetry Is Policy</p>
+        <button class="mech-btn">ENTER PORTFOLIO</button>
+      </div>
+    </section>
+
+    <!-- MANIFESTO -->
+    <section class="section-manifesto" data-section="manifesto">
+      <div class="divider-pan"></div>
+      <div class="manifesto-content">
+        <p class="manifesto-text">
+          <span class="word">Software</span> <span class="word">Engineer.</span>
+          <span class="word">Systems</span> <span class="word">Architect.</span>
+          <span class="word">DeFi</span> <span class="word">Protocol</span> <span class="word">Designer.</span>
+          <span class="word">ACM-ICPC</span> <span class="word">Finalist.</span>
+          <span class="word">Founder.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section-projects" data-section="projects">
+      <div class="container">
+        <span class="eyebrow">// ━━━ SELECTED WORK ━━━</span>
+        <h2 class="section-title">SEVEN PROJECTS. SEVEN DIORAMAS.</h2>
+        <p class="section-lead">Every system tells a story. Every story has a miniature world.</p>
+
+        <div class="projects-grid">
+          <!-- Featured Project -->
+          <article class="project-card project-card--featured">
+            <div class="project-frame">
+              <div class="project-thumbnail">
+                <div class="project-glass"></div>
+                <span class="project-fallback">CAM GRUPO</span>
+              </div>
+            </div>
+            <div class="project-placard">
+              <h3 class="project-name">CAM GRUPO</h3>
+              <p class="project-desc">Luxury real estate brokerage in Riviera Nayarit. Corporate websites, HDR photography pipeline, on-premise LLM inference stack.</p>
+              <div class="project-tags">
+                <span class="project-tag">Real Estate</span>
+                <span class="project-tag">LLM</span>
+                <span class="project-tag">Automation</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Standard Projects -->
+          <article class="project-card">
+            <div class="project-frame">
+              <div class="project-thumbnail">
+                <div class="project-glass"></div>
+                <span class="project-fallback">XBACKED</span>
+              </div>
+            </div>
+            <div class="project-placard">
+              <h3 class="project-name">XBACKED DAO</h3>
+              <p class="project-desc">DeFi lending protocol on Algorand. Authored ADR-47 — a formal proof by contradiction.</p>
+              <div class="project-tags">
+                <span class="project-tag">DeFi</span>
+                <span class="project-tag">Smart Contracts</span>
+                <span class="project-tag">Risk Analysis</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-frame">
+              <div class="project-thumbnail">
+                <div class="project-glass"></div>
+                <span class="project-fallback">VCF</span>
+              </div>
+            </div>
+            <div class="project-placard">
+              <h3 class="project-name">VCF/PLOTEIN</h3>
+              <p class="project-desc">Clinical genomic interpretation web app. Published in Bioinformatics, Oxford Academic.</p>
+              <div class="project-tags">
+                <span class="project-tag">Genomics</span>
+                <span class="project-tag">Vue.js</span>
+                <span class="project-tag">Bioinformatics</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-frame">
+              <div class="project-thumbnail">
+                <div class="project-glass"></div>
+                <span class="project-fallback">ORACLE</span>
+              </div>
+            </div>
+            <div class="project-placard">
+              <h3 class="project-name">ORACLE BIG DATA</h3>
+              <p class="project-desc">OCI image pipelines and CI/CD for Big Data workloads. Automated server re-imaging, firmware updates.</p>
+              <div class="project-tags">
+                <span class="project-tag">Cloud</span>
+                <span class="project-tag">CI/CD</span>
+                <span class="project-tag">Python</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-frame">
+              <div class="project-thumbnail">
+                <div class="project-glass"></div>
+                <span class="project-fallback">DECENTRACARE</span>
+              </div>
+            </div>
+            <div class="project-placard">
+              <h3 class="project-name">DECENTRACARE CRM</h3>
+              <p class="project-desc">Healthcare CRM platform for hundreds of nurses. ETL pipelines for MiHIN (HIPAA-compliant).</p>
+              <div class="project-tags">
+                <span class="project-tag">Healthcare</span>
+                <span class="project-tag">React</span>
+                <span class="project-tag">ETL</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <div class="project-frame">
+              <div class="project-thumbnail">
+                <div class="project-glass"></div>
+                <span class="project-fallback">ML/LLM</span>
+              </div>
+            </div>
+            <div class="project-placard">
+              <h3 class="project-name">ML & LLM SYSTEMS</h3>
+              <p class="project-desc">Private MLX inference stack on Apple Silicon. Custom Claude-based skills for legal documents.</p>
+              <div class="project-tags">
+                <span class="project-tag">Machine Learning</span>
+                <span class="project-tag">LLM</span>
+                <span class="project-tag">Quantitative</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROFILE (Blush) -->
+    <section class="section-profile" data-section="profile">
+      <div class="container profile-grid">
+        <div class="profile-left">
+          <span class="eyebrow">// ━━━ ABOUT ━━━</span>
+          <h2 class="section-title">DIEGO SAID ANAYA MANCILLA</h2>
+          <p class="profile-location">NUEVO VALLARTA, NAYARIT, M&Eacute;XICO</p>
+          <div class="divider-pan divider-pan--narrow"></div>
+          <p class="profile-bio">Software engineer with experience spanning enterprise cloud infrastructure, decentralized finance protocols, quantitative business analytics, and genomic data systems. ACM-ICPC Regional Finalist (Mexico & Central America, 2018). Currently executing a strategic return to full-time engineering with focus on Go, distributed systems, and cloud-native backend architecture.</p>
+        </div>
+        <div class="profile-right">
+          <div class="terminal-panel">
+            <div class="terminal-header">
+              <span class="terminal-dot terminal-dot--red"></span>
+              <span class="terminal-dot terminal-dot--yellow"></span>
+              <span class="terminal-dot terminal-dot--green"></span>
+            </div>
+            <div class="terminal-body">
+              <div class="terminal-line">
+                <span class="terminal-prompt">$ whoami</span>
+                <span class="terminal-output">Diego Said Anaya Mancilla</span>
+              </div>
+              <div class="terminal-line">
+                <span class="terminal-prompt">$ location</span>
+                <span class="terminal-output">20.6975° N, 105.2921° W</span>
+              </div>
+              <div class="terminal-line">
+                <span class="terminal-prompt">$ status</span>
+                <span class="terminal-output">Returning to Engineering</span>
+              </div>
+              <div class="terminal-line">
+                <span class="terminal-prompt">$ focus</span>
+                <span class="terminal-output">Go · Distributed Systems · Cloud-Native</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AWARDS (Creme) -->
+    <section class="section-awards" data-section="awards">
+      <div class="container">
+        <span class="eyebrow">// ━━━ HONORS ━━━</span>
+        <h2 class="section-title">AWARDS & RECOGNITION</h2>
+        <div class="awards-grid">
+          <article class="award-card">
+            <div class="award-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="12" y="12" width="24" height="24" transform="rotate(45 24 24)"/>
+                <rect x="18" y="18" width="12" height="12" transform="rotate(45 24 24)"/>
+              </svg>
+            </div>
+            <h3 class="award-name">ACM-ICPC Regional Finalist</h3>
+            <span class="award-year">2018</span>
+            <p class="award-org">Mexico & Central America</p>
+            <div class="divider-pan divider-pan--narrow"></div>
+            <p class="award-desc">Competitive programming world finals qualifier.</p>
+          </article>
+
+          <article class="award-card">
+            <div class="award-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="12" y="12" width="24" height="24" transform="rotate(45 24 24)"/>
+                <rect x="18" y="18" width="12" height="12" transform="rotate(45 24 24)"/>
+              </svg>
+            </div>
+            <h3 class="award-name">ACM-ICPC Honorable Mention</h3>
+            <span class="award-year">2017</span>
+            <p class="award-org">Mexico & Central America</p>
+            <div class="divider-pan divider-pan--narrow"></div>
+            <p class="award-desc">Top placement in regional algorithmic competition.</p>
+          </article>
+
+          <article class="award-card">
+            <div class="award-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="12" y="12" width="24" height="24" transform="rotate(45 24 24)"/>
+                <rect x="18" y="18" width="12" height="12" transform="rotate(45 24 24)"/>
+              </svg>
+            </div>
+            <h3 class="award-name">Youth Summit Delegate</h3>
+            <span class="award-year">2013</span>
+            <p class="award-org">World Bank Group</p>
+            <div class="divider-pan divider-pan--narrow"></div>
+            <p class="award-desc">Selected to represent Mexico in Washington, D.C.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG PREVIEW (Ink — dramatic reading room) -->
+    <section class="section-blog" data-section="blog">
+      <div class="container">
+        <span class="eyebrow">// ━━━ LATEST WRITING ━━━</span>
+        <div class="blog-header">
+          <h2 class="section-title">TECHNICAL ARTICLES</h2>
+          <a href="#" class="blog-viewall">VIEW ALL &rarr;</a>
+        </div>
+        <div class="blog-list">
+          <article class="blog-card">
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">ADR-47 Explained for Engineers</h3>
+              <p class="blog-card-excerpt">How a proof by contradiction saved a DeFi protocol from a flawed LP-seeding mechanism.</p>
+            </div>
+            <div class="blog-card-meta">
+              <span>MAY 2024</span>
+              <span class="blog-dot"></span>
+              <span>12 MIN</span>
+              <div class="blog-arrow" aria-hidden="true">&rarr;</div>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">Distributed Systems Patterns</h3>
+              <p class="blog-card-excerpt">Lessons learned building resilient infrastructure at Oracle Cloud and CAM Grupo.</p>
+            </div>
+            <div class="blog-card-meta">
+              <span>JULY 2024</span>
+              <span class="blog-dot"></span>
+              <span>15 MIN</span>
+              <div class="blog-arrow" aria-hidden="true">&rarr;</div>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-card-content">
+              <h3 class="blog-card-title">LLM Inference On-Premise</h3>
+              <p class="blog-card-excerpt">Running private MLX + Tailscale + Apple Silicon for secure, cost-effective LLM serving.</p>
+            </div>
+            <div class="blog-card-meta">
+              <span>SEPTEMBER 2024</span>
+              <span class="blog-dot"></span>
+              <span>10 MIN</span>
+              <div class="blog-arrow" aria-hidden="true">&rarr;</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section-contact" data-section="contact">
+      <div class="container container--narrow">
+        <span class="eyebrow">// ━━━ SEND A MESSAGE ━━━</span>
+        <h2 class="section-title">PROJECT INQUIRY FORM</h2>
+        <p class="section-lead">Fill out this form with the precision of a technical specification.</p>
+
+        <form class="contact-form">
+          <div class="form-field">
+            <label for="name">$ name: <span class="required" aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Diego Said Anaya Mancilla" required>
+          </div>
+          <div class="form-field">
+            <label for="email">$ email: <span class="required" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" placeholder="diego@camgrupo.com" required>
+          </div>
+          <div class="form-field">
+            <label for="subject">$ subject: <span class="required" aria-hidden="true">*</span></label>
+            <input type="text" id="subject" name="subject" placeholder="System Architecture Consulting Inquiry" required>
+          </div>
+          <div class="form-field">
+            <label for="message">$ message: <span class="required" aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" rows="5" placeholder="Describe your project with the same rigor you'd use in a technical specification document..." required></textarea>
+          </div>
+          <button type="submit" class="mech-btn mech-btn--filled">TRANSMIT MESSAGE &rarr;</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <svg width="32" height="32" viewBox="0 0 48 48" fill="none" class="footer-logo">
+            <rect x="12" y="12" width="24" height="24" transform="rotate(45 24 24)" stroke="currentColor" stroke-width="2"/>
+            <rect x="18" y="18" width="12" height="12" transform="rotate(45 24 24)" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span class="footer-name">DIEGO SAID</span>
+          <span class="footer-tagline">Where Symmetry Is Policy</span>
+        </div>
+        <div class="footer-nav">
+          <span class="footer-heading">NAVIGATION</span>
+          <a href="#">PROJECTS</a>
+          <a href="#">BLOG</a>
+          <a href="#">CONTACT</a>
+        </div>
+        <div class="footer-social">
+          <span class="footer-heading">CONNECT</span>
+          <a href="#">LINKEDIN</a>
+          <a href="#">GITHUB</a>
+          <a href="#">WEBSITE</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 DIEGO SAID — SYMMETRY IS POLICY</p>
+        <p class="footer-built">Built with obsessive precision</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

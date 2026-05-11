@@ -28,7 +28,8 @@ npm run dev          # http://localhost:5173
 | `npm run build`  | Type-check (`tsc -b`) and build for production into `dist/`.   |
 | `npm run lint`   | Run ESLint over the codebase.                                  |
 | `npm run preview`| Preview the production build locally.                          |
-| `npm run deploy` | Build and deploy `dist/` to Cloudflare Pages via Wrangler.     |
+| `npm run deploy`     | Build and deploy `dist/` to Cloudflare Pages via Wrangler.     |
+| `npm run deploy:prod`| Push to GitHub, then build and deploy to Cloudflare Pages.     |
 
 ## Project layout
 
@@ -49,14 +50,16 @@ output/              Phase-1 audit, redesign brief, swarm-voting outputs
 
 ## Deployment
 
-Pushes to `main` are intended to trigger a Cloudflare Pages build (connect the
-repo under **Pages → Settings → Builds & deployments**). Build command:
-`npm run build`; output directory: `dist`.
-
-For ad-hoc deploys without the Git integration:
+Push code to GitHub and deploy to Cloudflare Pages in one step:
 
 ```bash
-npm run deploy       # builds and uploads dist/ via wrangler
+npm run deploy:prod   # git push origin main + build + deploy via wrangler
+```
+
+For a build-and-deploy without pushing to Git:
+
+```bash
+npm run deploy        # build and upload dist/ via wrangler
 ```
 
 ## License

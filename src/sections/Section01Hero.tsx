@@ -181,6 +181,7 @@ export default function Section01Hero() {
     <section
       ref={sectionRef}
       className="relative min-h-[100dvh] flex items-center justify-center overflow-hidden"
+      style={{ background: 'linear-gradient(180deg, #2B4C8C 0%, #1A1A1A 100%)' }}
     >
       {/* Video Background — Loop Connector (A) */}
       <video
@@ -189,6 +190,7 @@ export default function Section01Hero() {
         muted
         playsInline
         preload="auto"
+        poster="./video-hero-poster.jpg"
         onLoadedMetadata={() => handleLoadedMetadata(1)}
         onPlay={() => handlePlay(1)}
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
@@ -198,6 +200,7 @@ export default function Section01Hero() {
           transition: `opacity ${CROSSFADE_DURATION}s ease-in-out`,
         }}
       >
+        <source src="./video-hero-loop-connector.webm" type="video/webm" />
         <source src="./video-hero-loop-connector.mp4" type="video/mp4" />
       </video>
 
@@ -206,7 +209,7 @@ export default function Section01Hero() {
         ref={video2Ref}
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         onLoadedMetadata={() => handleLoadedMetadata(2)}
         onPlay={() => handlePlay(2)}
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"

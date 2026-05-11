@@ -2,7 +2,7 @@
 
 Personal portfolio for **Diego Said** — a single-page editorial site built with React, Vite, Tailwind, and GSAP, deployed on Cloudflare Pages.
 
-**Live**: https://diegosaid.pages.dev
+**Live**: https://diegosaid.com
 
 ## Stack
 

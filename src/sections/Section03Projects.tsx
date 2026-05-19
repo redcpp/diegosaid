@@ -143,16 +143,18 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             </>
           ) : (
             <div
-              className="w-full h-full flex items-center justify-center bg-ink/5"
-              style={{ boxShadow: 'inset 0 4px 32px rgba(0,0,0,0.10)' }}
+              className="w-full h-full flex items-center justify-center"
+              style={{
+                background: 'linear-gradient(135deg, #A41034 0%, #8C2B3D 50%, #2B4C8C 100%)',
+              }}
             >
-              <div className="text-center">
-                <span className="font-headline font-bold text-[48px] text-ink/15 uppercase tracking-[-0.02em]">
-                  HBS
+              <div className="text-center px-6">
+                <span className="font-headline font-bold text-[18px] sm:text-[22px] uppercase text-creme block tracking-[-0.005em]">
+                  HARVARD BUSINESS SCHOOL
                 </span>
-                <p className="font-mono text-[10px] text-stone-text mt-1 tracking-[0.14em] uppercase">
-                  CORe · 2022
-                </p>
+                <span className="font-mono text-[10px] uppercase text-creme/85 block tracking-[0.2em] mt-2">
+                  ONLINE
+                </span>
               </div>
             </div>
           )}

@@ -1,0 +1,22 @@
+{
+  "name": "Diego Said",
+  "short_name": "Diego Said",
+  "description": "Portfolio of Diego Said Anaya Mancilla — Software Engineer, Systems Architect, DeFi Protocol Designer, and Luxury Real Estate Technologist.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F3EF",
+  "theme_color": "#1A1A1A",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

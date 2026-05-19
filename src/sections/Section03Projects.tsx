@@ -22,21 +22,21 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    name: 'CAM GRUPO',
+    name: 'CENTURY 21 CAM GRUPO',
     video: './video-projects-realestate.mp4',
     description:
-      'Luxury real estate brokerage in Riviera Nayarit. Corporate websites, HDR photography pipeline, on-premise LLM inference stack.',
-    tags: ['Real Estate', 'LLM', 'Automation'],
+      'Luxury real estate brokerage in Riviera Nayarit. MCP servers for NOM-247 contract generation, on-premise LLM stack on Apple Silicon, 6-stage HDR pipeline, and DCF / Monte Carlo market intelligence over 1,500+ MLS transactions.',
+    tags: ['Real Estate', 'MCP · LLM', 'Quantitative'],
     sectionId: 'cam-grupo',
-    role: 'Founder · Technical Director',
-    year: '2020 →',
+    role: 'Founder & Broker',
+    year: '2025 →',
     featured: true,
   },
   {
     name: 'XBACKED DAO',
     video: './video-projects-defi.mp4',
     description:
-      'DeFi lending protocol on Algorand. Authored ADR-47 — a formal proof by contradiction that prevented a flawed LP-seeding mechanism.',
+      'xUSD CDP-style stablecoin on Algorand. Built vault contracts, liquidation engine, redemption mechanism, and keeper economy. Co-authored Litepaper v2.0; authored ADR-46 (Vault Looping) and ADR-47.',
     tags: ['DeFi', 'Smart Contracts', 'Risk Analysis'],
     sectionId: 'xbacked',
     role: 'Core Developer',
@@ -56,28 +56,28 @@ const PROJECTS: Project[] = [
     name: 'ORACLE BIG DATA',
     video: './video-projects-oracle.mp4',
     description:
-      'OCI image pipelines and CI/CD for Big Data workloads. Automated server re-imaging, firmware updates, release testing, global Severity 1 support.',
+      'OCI image pipelines migrating on-premise Big Data apps to cloud. TeamCity CI/CD, Docker, Artifactory, Java/Python REST APIs. Automated server re-imaging, firmware testing, and global Severity 1 incident support.',
     tags: ['Cloud', 'CI/CD', 'Python'],
     sectionId: 'oracle',
     role: 'Software Developer II',
-    year: '2019',
+    year: '2019–21',
   },
   {
-    name: 'DECENTRACARE CRM',
+    name: 'AUGUSTO CONSULTING',
     video: './video-projects-decentracare.mp4',
     description:
-      'Healthcare CRM platform for hundreds of nurses. ETL pipelines for MiHIN (HIPAA-compliant).',
-    tags: ['Healthcare', 'React', 'ETL'],
+      'Decentracare — healthcare gig-economy staffing platform (React + Flask + AWS); grew to 350+ clinicians. ADHD Online — Vue.js assessment flow and dashboard.',
+    tags: ['Healthcare', 'React', 'Vue.js'],
     sectionId: 'decentracare',
-    role: 'Full Stack (Contract)',
-    year: '2021',
+    role: 'Full Stack · Contractor',
+    year: '2021–23',
   },
   {
-    name: 'ML & LLM SYSTEMS',
+    name: 'MCP & LLM SYSTEMS',
     video: './video-projects-ml-llm.mp4',
     description:
-      'Private MLX inference stack on Apple Silicon. Custom Claude-based skills for legal documents. Market intelligence dashboard analyzing 1,500+ MLS transactions.',
-    tags: ['Machine Learning', 'LLM', 'Quantitative'],
+      'Private vMLX inference stack on Apple Silicon over Tailscale. Claude-skill library for contract comparison, document classification, and file organization. Quantitative toolkit (DCF, IRR, Monte Carlo) over 1,500+ MLS transactions.',
+    tags: ['MCP', 'On-Prem LLM', 'Quantitative'],
     sectionId: 'ml-llm',
     role: 'Independent R&D',
     year: '2023 →',

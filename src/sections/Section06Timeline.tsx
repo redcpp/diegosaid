@@ -18,14 +18,6 @@ interface TimelineEvent {
 
 const EVENTS: TimelineEvent[] = [
   {
-    year: '2013',
-    title: 'YOUTH SUMMIT DELEGATE',
-    org: 'World Bank Group',
-    description:
-      'Selected to represent Mexico at the World Bank Group Youth Summit in Washington, D.C.',
-    tags: ['Policy', 'Leadership'],
-  },
-  {
     year: '2015–2018',
     title: 'B.SC. SOFTWARE ENGINEERING',
     org: 'Universidad Autónoma de Querétaro',
@@ -46,17 +38,25 @@ const EVENTS: TimelineEvent[] = [
     title: 'SOFTWARE ENGINEER INTERN',
     org: 'ILHGR — Cancer Genomics Lab',
     description:
-      'Built VCF/Plotein. Published in Bioinformatics, Oxford Academic. Co-authored with Oxford, UNAM, and Cambridge.',
+      'Built VCF/Plotein (Vue.js, Node.js). Co-author on the resulting paper in Bioinformatics (Oxford Academic), with collaborators from UNAM, Oxford, and Cambridge.',
     tags: ['Vue.js', 'Genomics', 'Published'],
     emphasis: true,
   },
   {
-    year: '2019',
+    year: '2019–2021',
     title: 'SOFTWARE DEVELOPER II',
     org: 'Oracle — Big Data Service',
     description:
-      'OCI image pipelines, CI/CD automation, Docker containerization, global Severity 1 support.',
+      'OCI image pipelines migrating on-prem Big Data apps to cloud (TeamCity CI/CD, Docker, Artifactory, Java/Python REST APIs). Global Severity 1 incident support.',
     tags: ['Java', 'Python', 'Cloud'],
+  },
+  {
+    year: '2020–PRESENT',
+    title: 'OPERATIONS & IT (PART-TIME)',
+    org: 'CAM Grupo — Construction & Development',
+    description:
+      'Airtable operations (project tracking, document workflows, lead management); corporate email infrastructure and the marketing website camgrupo.com plus individual sites per development.',
+    tags: ['Airtable', 'Web', 'Ops'],
   },
   {
     year: '2021',
@@ -66,53 +66,36 @@ const EVENTS: TimelineEvent[] = [
     tags: ['Cloud', 'GCP'],
   },
   {
-    year: '2021',
-    title: 'FULL STACK DEVELOPER (CONTRACTOR)',
-    org: 'Augusto Consulting',
-    description:
-      'Built Decentracare CRM for hundreds of nurses. AWS Glue ETL pipelines for MiHIN (HIPAA).',
-    tags: ['React', 'AWS', 'HIPAA'],
-  },
-  {
     year: '2021–2022',
-    title: 'CORE DEVELOPER',
+    title: 'CORE DEVELOPER — PROTOCOL & SMART CONTRACTS',
     org: 'xBacked DAO',
     description:
-      'DeFi protocol on Algorand. Authored ADR-47 — formal proof by contradiction preventing flawed LP-seeding launch.',
-    tags: ['DeFi', 'Smart Contracts', 'Risk'],
+      'Core engineer on xUSD (CDP stablecoin on Algorand): vault contracts, liquidation engine, redemption mechanism, staking, governance, keeper economy. Co-authored Litepaper v2.0; authored ADR-46 (Vault Looping) and ADR-47.',
+    tags: ['xUSD', 'Litepaper v2.0', 'ADR-46/47'],
     emphasis: true,
   },
   {
+    year: '2021–2023',
+    title: 'FULL STACK DEVELOPER (CONTRACTOR)',
+    org: 'Augusto Consulting',
+    description:
+      'Decentracare — healthcare gig-economy staffing platform on React + Python/Flask + AWS; grew to 350+ clinicians. ADHD Online — Vue.js assessment flow and dashboard.',
+    tags: ['React', 'Flask', 'Vue.js'],
+  },
+  {
     year: '2022',
-    title: 'CREDENTIAL OF READINESS (CORE)',
+    title: 'CREDENTIAL OF READINESS (CORe)',
     org: 'Harvard Business School Online',
     description: 'Business Analytics, Economics, Financial Accounting.',
     tags: ['HBS', 'Analytics', 'Economics'],
   },
   {
-    year: '2020–PRESENT',
-    title: 'FOUNDER & TECHNICAL DIRECTOR',
+    year: '2025–PRESENT',
+    title: 'FOUNDER & BROKER — AI-NATIVE BROKERAGE',
     org: 'Century 21 CAM Grupo',
     description:
-      '20+ agent luxury brokerage. Built corporate tech stack, LLM inference, HDR pipeline, quantitative market intelligence.',
-    tags: ['Founder', 'LLM', 'Quantitative'],
-    emphasis: true,
-  },
-  {
-    year: '2023–PRESENT',
-    title: 'INDEPENDENT R&D',
-    org: 'Self-Directed',
-    description:
-      'Private MLX inference stack on Apple Silicon. Custom Claude skills. Monte Carlo investment analysis. 1,500+ MLS transaction analysis.',
-    tags: ['MLX', 'Claude', 'Monte Carlo'],
-  },
-  {
-    year: 'PRESENT',
-    title: 'STRATEGIC RETURN',
-    org: 'Full-Time Engineering',
-    description:
-      'Returning to full-time engineering with focus on backend architecture.',
-    tags: ['Go', 'Distributed Systems'],
+      'Lead a 20+ agent luxury brokerage in Riviera Nayarit. Architected MCP servers for NOM-247 contract generation; operate a private vMLX inference stack on Apple Silicon; Claude-skill library for legal workflows; HDR computer-vision pipeline; market intelligence over 1,500+ MLS transactions with DCF / IRR / Monte Carlo pricing.',
+    tags: ['MCP', 'On-Prem LLM', 'Quantitative'],
     emphasis: true,
   },
 ];

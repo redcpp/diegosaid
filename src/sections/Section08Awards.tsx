@@ -35,15 +35,6 @@ const AWARDS: Award[] = [
     description:
       'Recognized for technical depth and consistency across a multi-round programming gauntlet.',
   },
-  {
-    serial: 'REG-2013/03',
-    name: 'Youth Summit Delegate',
-    year: '2013',
-    org: 'World Bank Group',
-    region: 'Washington, D.C., USA',
-    description:
-      'One of the youngest national delegates — policy roundtables on technology and inclusion.',
-  },
 ];
 
 function AwardCard({ award }: { award: Award }) {
@@ -114,7 +105,7 @@ export default function Section08Awards() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mt-16 max-w-[860px]">
           {AWARDS.map((award) => (
             <AwardCard key={award.serial} award={award} />
           ))}

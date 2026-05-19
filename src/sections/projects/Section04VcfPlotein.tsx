@@ -44,12 +44,6 @@ export default function Section04VcfPlotein() {
       className="w-full bg-creme pt-20 lg:pt-24 pb-20 px-6 lg:px-20"
     >
       <div className="max-w-[1240px] mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-ink/55 uppercase border-b border-ink/15 pb-3 mb-10">
-          <span>CASE FILE · DSR/2026/P-03</span>
-          <span className="text-cobalt">VCF / PLOTEIN</span>
-          <span>2018 · PUBLISHED</span>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           <div ref={leftRef} className="opacity-0 lg:col-span-5">
             <div className="relative w-full aspect-video rounded-sm border border-stone overflow-hidden">
@@ -65,22 +59,14 @@ export default function Section04VcfPlotein() {
                 <source src="/video-projects-genomics.webm" type="video/webm" />
                 <source src="/video-projects-genomics.mp4" type="video/mp4" />
               </video>
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent" />
               <span aria-hidden="true" className="absolute top-2.5 left-2.5 w-4 h-4 border-t border-l border-creme/55 pointer-events-none" />
               <span aria-hidden="true" className="absolute top-2.5 right-2.5 w-4 h-4 border-t border-r border-creme/55 pointer-events-none" />
               <span aria-hidden="true" className="absolute bottom-2.5 left-2.5 w-4 h-4 border-b border-l border-creme/55 pointer-events-none" />
               <span aria-hidden="true" className="absolute bottom-2.5 right-2.5 w-4 h-4 border-b border-r border-creme/55 pointer-events-none" />
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono text-[9px] tracking-[0.18em] text-creme/80 uppercase z-10">
-                <span>CASE / 03</span>
-                <span>№ 03 / 07</span>
-              </div>
             </div>
 
             <div className="mt-6">
-              <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase">
-                VCF / PLOTEIN
-              </span>
-              <h2 className="font-headline font-bold text-[24px] sm:text-[30px] uppercase text-ink leading-[1.05] tracking-[-0.01em] mt-2">
+              <h2 className="font-headline font-bold text-[24px] sm:text-[30px] uppercase text-ink leading-[1.05] tracking-[-0.01em]">
                 CLINICAL GENOMIC INTERPRETATION PLATFORM
               </h2>
               <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1">
@@ -98,16 +84,13 @@ export default function Section04VcfPlotein() {
           <div ref={rightRef} className="opacity-0 lg:col-span-7 lg:pt-1">
             <p className="font-body text-[15px] text-ink leading-[1.7]">
               Built VCF/Plotein, a web application for clinical interpretation of genomic variants
-              from exome sequencing. The platform enables researchers and clinicians to visualize,
-              annotate, and interpret VCF (Variant Call Format) data from next-generation
-              sequencing pipelines. Published in Bioinformatics, Oxford Academic, co-authored with
-              researchers from Oxford, UNAM, and the University of Cambridge.
+              from exome sequencing. The platform lets researchers and clinicians visualize,
+              annotate, and interpret VCF data from next-generation sequencing pipelines.
             </p>
 
             <div className="mt-6 bg-blush/70 border border-ink/15 rounded-sm p-5 lg:p-6">
-              <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase border-b border-ink/15 pb-2">
-                <span>§ PUBLICATION</span>
-                <span className="text-ink/55">PEER-REVIEWED</span>
+              <div className="font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase border-b border-ink/15 pb-2">
+                PUBLICATION
               </div>
               <p className="font-body text-[14px] italic text-ink leading-[1.7] mt-4">
                 VCF/Plotein: a web application for clinical interpretation of genomic variants
@@ -130,15 +113,6 @@ export default function Section04VcfPlotein() {
                   {m}
                 </span>
               ))}
-            </div>
-
-            <div className="mt-6 pt-5 border-t border-ink/10">
-              <span className="font-mono text-[10px] tracking-[0.18em] text-ink/45 uppercase">
-                § STACK
-              </span>
-              <p className="font-mono text-[12px] text-stone-text mt-2 leading-[1.7]">
-                Vue.js · Node.js · PostgreSQL · VCF Parsing · Bioinformatics
-              </p>
             </div>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">

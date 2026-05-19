@@ -44,12 +44,6 @@ export default function Section06Decentracare() {
       className="w-full bg-creme pt-20 lg:pt-24 pb-20 px-6 lg:px-20"
     >
       <div className="max-w-[1240px] mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-ink/55 uppercase border-b border-ink/15 pb-3 mb-10">
-          <span>CASE FILE · DSR/2026/P-05</span>
-          <span className="text-cobalt">DECENTRACARE CRM</span>
-          <span>2021 · SHIPPED</span>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           <div ref={leftRef} className="opacity-0 lg:col-span-5">
             <div className="relative w-full aspect-video rounded-sm border border-stone overflow-hidden">
@@ -65,22 +59,14 @@ export default function Section06Decentracare() {
                 <source src="/video-projects-decentracare.webm" type="video/webm" />
                 <source src="/video-projects-decentracare.mp4" type="video/mp4" />
               </video>
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent" />
               <span aria-hidden="true" className="absolute top-2.5 left-2.5 w-4 h-4 border-t border-l border-creme/55 pointer-events-none" />
               <span aria-hidden="true" className="absolute top-2.5 right-2.5 w-4 h-4 border-t border-r border-creme/55 pointer-events-none" />
               <span aria-hidden="true" className="absolute bottom-2.5 left-2.5 w-4 h-4 border-b border-l border-creme/55 pointer-events-none" />
               <span aria-hidden="true" className="absolute bottom-2.5 right-2.5 w-4 h-4 border-b border-r border-creme/55 pointer-events-none" />
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono text-[9px] tracking-[0.18em] text-creme/80 uppercase z-10">
-                <span>CASE / 05</span>
-                <span>№ 05 / 07</span>
-              </div>
             </div>
 
             <div className="mt-6">
-              <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase">
-                DECENTRACARE CRM
-              </span>
-              <h2 className="font-headline font-bold text-[24px] sm:text-[30px] uppercase text-ink leading-[1.05] tracking-[-0.01em] mt-2">
+              <h2 className="font-headline font-bold text-[24px] sm:text-[30px] uppercase text-ink leading-[1.05] tracking-[-0.01em]">
                 HEALTHCARE CRM &amp; ETL PIPELINES
               </h2>
               <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1">
@@ -97,11 +83,9 @@ export default function Section06Decentracare() {
 
           <div ref={rightRef} className="opacity-0 lg:col-span-7 lg:pt-1">
             <p className="font-body text-[15px] text-ink leading-[1.7]">
-              Built Decentracare, a CRM platform serving hundreds of nurses in the healthcare
-              sector. Developed ETL pipelines using AWS Glue for the Michigan Health Information
-              Network Shared Services (MiHIN), processing healthcare data in full HIPAA
-              compliance. The CRM provides care coordination, patient management, and real-time
-              scheduling for distributed nursing teams.
+              Built Decentracare, a CRM platform serving hundreds of nurses. Developed AWS Glue
+              ETL pipelines for the Michigan Health Information Network (MiHIN), processing
+              healthcare data in full HIPAA compliance.
             </p>
 
             <div className="flex flex-wrap gap-1.5 mt-6">
@@ -113,15 +97,6 @@ export default function Section06Decentracare() {
                   {m}
                 </span>
               ))}
-            </div>
-
-            <div className="mt-6 pt-5 border-t border-ink/10">
-              <span className="font-mono text-[10px] tracking-[0.18em] text-ink/45 uppercase">
-                § STACK
-              </span>
-              <p className="font-mono text-[12px] text-stone-text mt-2 leading-[1.7]">
-                React.js · Node.js · AWS Glue · AWS Lambda · PostgreSQL · HIPAA · ETL
-              </p>
             </div>
 
             <div className="mt-7">

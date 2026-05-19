@@ -1,199 +1,140 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import useReducedMotion from '@/hooks/use-reduced-motion';
+
+const STATS = [
+  { num: '07', label: 'PROJECTS' },
+  { num: '07+', label: 'YEARS' },
+  { num: '05', label: 'DOMAINS' },
+  { num: '02', label: 'PUBLICATIONS' },
+];
 
 export default function Section01PageHero() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
-  const circleRef = useRef<HTMLDivElement>(null);
-  const [eyebrowText, setEyebrowText] = useState('');
-  const eyebrowStarted = useRef(false);
+  const reducedMotion = useReducedMotion();
 
-  // Typewriter eyebrow effect
-  useEffect(() => {
-    if (eyebrowStarted.current) return;
-    eyebrowStarted.current = true;
-
-    const fullText = '// \u2501\u2501\u2501 ENGINEERING PORTFOLIO \u2501\u2501\u2501';
-    let i = 0;
-    const delayTimer = setTimeout(() => {
-      const interval = setInterval(() => {
-        i++;
-        setEyebrowText(fullText.slice(0, i));
-        if (i >= fullText.length) clearInterval(interval);
-      }, 30);
-      return () => clearInterval(interval);
-    }, 300);
-
-    return () => clearTimeout(delayTimer);
-  }, []);
-
-  // GSAP character split + entrance animations
   useEffect(() => {
     const ctx = gsap.context(() => {
+      if (reducedMotion) return;
+
       // Split title into character spans
       if (titleRef.current) {
         const text = titleRef.current.textContent || '';
         titleRef.current.innerHTML = '';
         text.split('').forEach((char) => {
           const span = document.createElement('span');
-          span.textContent = char === ' ' ? '\u00A0' : char;
+          span.textContent = char === ' ' ? ' ' : char;
           span.style.display = 'inline-block';
           span.style.opacity = '0';
-          span.style.transform = 'scale(0.8)';
+          span.style.transform = 'translateY(20px)';
           titleRef.current!.appendChild(span);
         });
 
-        // Animate characters
         gsap.to(titleRef.current.children, {
           opacity: 1,
-          scale: 1,
-          duration: 0.6,
+          y: 0,
+          duration: 0.7,
           stagger: 0.03,
-          ease: 'power4.out',
-          delay: 0.5,
+          ease: 'power3.out',
+          delay: 0.3,
         });
       }
 
-      // Subtitle fade up
-      if (subtitleRef.current) {
-        gsap.fromTo(
-          subtitleRef.current,
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', delay: 0.9 }
-        );
-      }
+      // Stagger other elements
+      gsap.fromTo(
+        '.hero-stagger',
+        { opacity: 0, y: 14 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power2.out', delay: 0.15 }
+      );
 
-      // Stats stagger
-      if (statsRef.current) {
-        const statItems = statsRef.current.children;
-        gsap.fromTo(
-          statItems,
-          { opacity: 0, y: 10 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: 'power2.out',
-            delay: 1.2,
-          }
-        );
-      }
-
-      // Ambient circle pulse
-      if (circleRef.current) {
-        gsap.to(circleRef.current, {
-          scale: 1.05,
-          duration: 4,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-        });
-      }
+      gsap.fromTo(
+        '.stat-cell',
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out', delay: 1.0 }
+      );
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <section
       ref={sectionRef}
-      className="relative flex items-center justify-center overflow-hidden"
-      style={{
-        minHeight: '70vh',
-        backgroundColor: 'var(--color-ink)',
-      }}
+      className="relative bg-ink text-creme pt-28 lg:pt-32 pb-16 lg:pb-20 px-6 lg:px-20 overflow-hidden"
     >
-      {/* Grid pattern overlay */}
+      {/* Faint grid */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        aria-hidden="true"
+        className="absolute inset-0 opacity-[0.07] pointer-events-none"
         style={{
-          backgroundImage: 'url(/pattern-grid.svg)',
-          backgroundSize: '40px 40px',
-          opacity: 0.2,
+          backgroundImage:
+            'linear-gradient(rgba(245,243,239,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(245,243,239,0.6) 1px, transparent 1px)',
+          backgroundSize: '64px 64px',
+          maskImage:
+            'radial-gradient(ellipse at center, black 0%, black 60%, transparent 100%)',
         }}
       />
 
-      {/* Pulsing cobalt ambient circle */}
-      <div
-        ref={circleRef}
-        className="absolute pointer-events-none"
-        style={{
-          width: 'min(400px, 80vw)',
-          height: 'min(400px, 80vw)',
-          borderRadius: '50%',
-          backgroundColor: 'var(--color-cobalt)',
-          opacity: 0.08,
-          filter: 'blur(80px)',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-        }}
-      />
+      {/* Decorative numeral */}
+      <span
+        aria-hidden="true"
+        className="hidden lg:block absolute -top-6 right-6 font-headline font-bold text-[180px] leading-none text-creme/[0.04] select-none pointer-events-none tracking-tighter"
+      >
+        P
+      </span>
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-6 py-24">
-        {/* Eyebrow typewriter */}
-        <span
-          className="font-mono text-label tracking-[0.04em] block mb-6"
-          style={{ color: 'var(--color-stone)' }}
-        >
-          {eyebrowText}
-          <span className="animate-cursor-blink">_</span>
-        </span>
+      <div className="max-w-[1240px] mx-auto relative z-10">
+        {/* Registry strip */}
+        <div className="hero-stagger flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-stone uppercase border-b border-creme/15 pb-3 mb-12">
+          <span>VOLUME · DSR/2026/P — CASE FILES</span>
+          <span className="text-cobalt">{STATS[0].num} ENTRIES · 2018 → PRESENT</span>
+          <span>OPEN ACCESS</span>
+        </div>
+
+        {/* Volume / topic */}
+        <div className="hero-stagger flex items-baseline gap-3 mb-6">
+          <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase">
+            § VOL. P
+          </span>
+          <span className="font-mono text-[10px] tracking-[0.18em] text-stone/70 uppercase">
+            ENGINEERING PORTFOLIO
+          </span>
+        </div>
 
         {/* Title */}
         <h1
           ref={titleRef}
-          className="font-headline font-bold text-[48px] sm:text-[64px] md:text-display-xl uppercase tracking-[-0.02em]"
-          style={{
-            color: 'var(--color-creme)',
-            lineHeight: '0.9em',
-          }}
+          className="font-headline font-bold text-[56px] sm:text-[80px] lg:text-display-xl uppercase text-creme leading-[0.9] tracking-[-0.025em]"
         >
-          SELECTED WORKS
+          SELECTED<br />
+          WORKS<span className="text-cobalt">.</span>
         </h1>
 
         {/* Subtitle */}
-        <p
-          ref={subtitleRef}
-          className="font-body text-[16px] sm:text-[18px] italic text-center mx-auto mt-6 opacity-0"
-          style={{
-            color: 'var(--color-stone)',
-            maxWidth: '600px',
-          }}
-        >
-          Seven projects. Seven worlds. One obsession with correctness.
+        <p className="hero-stagger font-body italic text-[15px] sm:text-[17px] text-stone mt-6 max-w-[58ch] leading-[1.65]">
+          Seven projects. Seven worlds. One obsession with correctness. Each case file is
+          archived below — chronological, full-context, with the systems and the trade-offs.
         </p>
 
         {/* Stats row */}
-        <div
-          ref={statsRef}
-          className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 mt-8"
-        >
-          {[
-            { num: '7', label: 'PROJECTS' },
-            { num: '7+', label: 'YEARS' },
-            { num: '5', label: 'DOMAINS' },
-            { num: '2', label: 'PUBLICATIONS' },
-          ].map((stat) => (
-            <div key={stat.label} className="text-center opacity-0">
-              <span
-                className="font-headline font-medium text-[12px] sm:text-label uppercase tracking-[0.1em]"
-                style={{ color: 'var(--color-cobalt)' }}
-              >
-                {stat.num}
-              </span>{' '}
-              <span
-                className="font-headline font-medium text-[12px] sm:text-label uppercase tracking-[0.1em]"
-                style={{ color: 'var(--color-stone)' }}
-              >
-                {stat.label}
+        <div className="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-5 border-t border-creme/15 pt-8">
+          {STATS.map((s) => (
+            <div key={s.label} className="stat-cell flex flex-col gap-1">
+              <span className="font-headline font-bold text-[36px] sm:text-[44px] text-cobalt leading-none tracking-[-0.02em]">
+                {s.num}
+              </span>
+              <span className="font-mono text-[10px] tracking-[0.18em] text-stone uppercase">
+                {s.label}
               </span>
             </div>
           ))}
+        </div>
+
+        {/* Bottom hairline */}
+        <div className="hero-stagger mt-10 pt-3 border-t border-creme/10 flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-stone/60 uppercase">
+          <span>// SCROLL TO READ CASE FILES</span>
+          <span className="hidden sm:inline">FILED · CHRONOLOGICAL</span>
         </div>
       </div>
     </section>

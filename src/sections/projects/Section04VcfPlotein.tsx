@@ -3,8 +3,8 @@ import { useLazyVideo } from '@/hooks/use-lazy-video';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import HorizontalPanWipe from '@/components/HorizontalPanWipe';
 import MechanicalButton from '@/components/MechanicalButton';
+import useReducedMotion from '@/hooks/use-reduced-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,156 +12,147 @@ const METRICS = ['OXFORD PUBLISHED', 'GENOMIC VARIANTS', 'VUE.JS · NODE.JS'];
 
 export default function Section04VcfPlotein() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLDivElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
-  const metricsRef = useRef<HTMLDivElement>(null);
-  const pubBoxRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
 
   useGSAP(() => {
-    if (!sectionRef.current) return;
+    if (!sectionRef.current || reducedMotion) return;
 
     const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top 70%',
-      },
+      scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
     });
 
-    if (videoRef.current) {
-      tl.fromTo(videoRef.current, { opacity: 0 }, { opacity: 1, duration: 1.0, ease: 'power2.out' }, 0);
-    }
     if (leftRef.current) {
-      tl.fromTo(leftRef.current, { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: 'power2.out' }, 0.15);
+      tl.fromTo(leftRef.current, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' }, 0);
     }
     if (rightRef.current) {
-      tl.fromTo(rightRef.current, { x: 40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: 'power2.out' }, 0.3);
+      tl.fromTo(rightRef.current, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' }, 0.15);
     }
-    if (pubBoxRef.current) {
-      tl.fromTo(pubBoxRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, 0.5);
-    }
-    if (metricsRef.current) {
-      const pills = metricsRef.current.querySelectorAll('.metric-pill');
-      tl.fromTo(pills, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out' }, 0.6);
-    }
-    if (ctaRef.current) {
-      tl.fromTo(ctaRef.current, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.8);
-    }
-  }, { scope: sectionRef });
+    tl.fromTo(
+      sectionRef.current.querySelectorAll('.metric-pill'),
+      { opacity: 0, y: 8 },
+      { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out' },
+      0.35
+    );
+  }, { scope: sectionRef, dependencies: [reducedMotion] });
 
   return (
-    <section ref={sectionRef} id="vcf-plotein" className="w-full bg-creme pt-32 lg:pt-40 pb-24 px-6 lg:px-20">
-      <div className="max-w-[1200px] mx-auto">
-        {/* Horizontal Pan Wipe Divider */}
-        <HorizontalPanWipe className="mb-16" />
-
-        {/* Part A — Video Diorama */}
-        <div
-          ref={videoRef}
-          className="relative w-full aspect-video max-w-[1200px] mx-auto rounded-lg border border-stone overflow-hidden opacity-0"
-        >
-          <video
-            ref={useLazyVideo()}
-            muted
-            loop
-            playsInline
-            preload="none"
-            className="w-full h-full object-cover"
-            aria-label="VCF/Plotein genomics platform showcase video"
-          >
-            <source src="/video-projects-genomics.webm" type="video/webm" />
-            <source src="/video-projects-genomics.mp4" type="video/mp4" />
-          </video>
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
-          {/* Label overlay */}
-          <div className="absolute bottom-6 left-6">
-            <span className="font-headline font-bold text-[48px] text-creme opacity-30 block leading-none">03</span>
-            <span className="font-headline font-bold text-[24px] uppercase text-creme block leading-tight">VCF/PLOTEIN</span>
-          </div>
+    <section
+      ref={sectionRef}
+      id="vcf-plotein"
+      className="w-full bg-creme pt-20 lg:pt-24 pb-20 px-6 lg:px-20"
+    >
+      <div className="max-w-[1240px] mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-ink/55 uppercase border-b border-ink/15 pb-3 mb-10">
+          <span>CASE FILE · DSR/2026/P-03</span>
+          <span className="text-cobalt">VCF / PLOTEIN</span>
+          <span>2018 · PUBLISHED</span>
         </div>
 
-        {/* Part B — Case Study Details */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
-          {/* Left Column */}
-          <div ref={leftRef} className="opacity-0">
-            <h2 className="font-headline font-bold text-[28px] sm:text-display-md uppercase text-ink leading-tight">
-              CLINICAL GENOMIC INTERPRETATION PLATFORM
-            </h2>
-            <p className="font-headline font-medium text-label uppercase text-stone tracking-[0.08em] mt-4">
-              JANUARY 2018 — DECEMBER 2018
-            </p>
-            <p className="font-body text-[14px] text-cobalt mt-2">
-              Software Engineer Intern — Cancer Genomics Lab
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          <div ref={leftRef} className="opacity-0 lg:col-span-5">
+            <div className="relative w-full aspect-video rounded-sm border border-stone overflow-hidden">
+              <video
+                ref={useLazyVideo()}
+                muted
+                loop
+                playsInline
+                preload="none"
+                className="w-full h-full object-cover"
+                aria-label="VCF/Plotein genomics platform showcase video"
+              >
+                <source src="/video-projects-genomics.webm" type="video/webm" />
+                <source src="/video-projects-genomics.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent" />
+              <span aria-hidden="true" className="absolute top-2.5 left-2.5 w-4 h-4 border-t border-l border-creme/55 pointer-events-none" />
+              <span aria-hidden="true" className="absolute top-2.5 right-2.5 w-4 h-4 border-t border-r border-creme/55 pointer-events-none" />
+              <span aria-hidden="true" className="absolute bottom-2.5 left-2.5 w-4 h-4 border-b border-l border-creme/55 pointer-events-none" />
+              <span aria-hidden="true" className="absolute bottom-2.5 right-2.5 w-4 h-4 border-b border-r border-creme/55 pointer-events-none" />
+              <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono text-[9px] tracking-[0.18em] text-creme/80 uppercase z-10">
+                <span>CASE / 03</span>
+                <span>№ 03 / 07</span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase">
+                VCF / PLOTEIN
+              </span>
+              <h2 className="font-headline font-bold text-[24px] sm:text-[30px] uppercase text-ink leading-[1.05] tracking-[-0.01em] mt-2">
+                CLINICAL GENOMIC INTERPRETATION PLATFORM
+              </h2>
+              <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                <span className="font-mono text-[11px] tracking-[0.14em] text-stone-text uppercase">
+                  JAN 2018 — DEC 2018
+                </span>
+                <span className="font-mono text-[11px] tracking-[0.14em] text-stone-text/60 uppercase">·</span>
+                <span className="font-body italic text-[13px] text-cobalt">
+                  SWE Intern — Cancer Genomics Lab
+                </span>
+              </div>
+            </div>
           </div>
 
-          {/* Right Column */}
-          <div ref={rightRef} className="opacity-0">
-            <p className="font-body text-[16px] text-ink leading-[1.65]">
-              Built VCF/Plotein, a web application for clinical interpretation
-              of genomic variants from exome sequencing. The platform enables
-              researchers and clinicians to visualize, annotate, and interpret
-              VCF (Variant Call Format) data from next-generation sequencing
-              pipelines. Published in Bioinformatics, Oxford Academic,
-              co-authored with researchers from Oxford, UNAM, and the University
-              of Cambridge.
+          <div ref={rightRef} className="opacity-0 lg:col-span-7 lg:pt-1">
+            <p className="font-body text-[15px] text-ink leading-[1.7]">
+              Built VCF/Plotein, a web application for clinical interpretation of genomic variants
+              from exome sequencing. The platform enables researchers and clinicians to visualize,
+              annotate, and interpret VCF (Variant Call Format) data from next-generation
+              sequencing pipelines. Published in Bioinformatics, Oxford Academic, co-authored with
+              researchers from Oxford, UNAM, and the University of Cambridge.
             </p>
 
-            {/* Publication Citation Box */}
-            <div
-              ref={pubBoxRef}
-              className="mt-8 opacity-0 bg-blush border border-stone rounded-lg p-8"
-            >
-              <span className="font-headline font-medium text-[11px] uppercase tracking-[0.1em] block mb-4 text-cobalt">
-                PUBLICATION
-              </span>
-              <p className="font-body text-[14px] italic text-ink leading-[1.65]">
-                VCF/Plotein: a web application for clinical interpretation of
-                genomic variants from exome sequencing. Bioinformatics, Oxford
-                Academic Press, June 2019.
+            <div className="mt-6 bg-blush/70 border border-ink/15 rounded-sm p-5 lg:p-6">
+              <div className="flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase border-b border-ink/15 pb-2">
+                <span>§ PUBLICATION</span>
+                <span className="text-ink/55">PEER-REVIEWED</span>
+              </div>
+              <p className="font-body text-[14px] italic text-ink leading-[1.7] mt-4">
+                VCF/Plotein: a web application for clinical interpretation of genomic variants
+                from exome sequencing.
               </p>
-              <p className="font-body text-[12px] text-stone mt-3">
+              <p className="font-mono text-[10px] tracking-[0.14em] mt-2 text-cobalt uppercase">
+                Bioinformatics · Oxford Academic Press · June 2019
+              </p>
+              <p className="font-body text-[12px] text-stone-text mt-2">
                 Co-authored with Oxford, UNAM, and Cambridge researchers.
               </p>
             </div>
 
-            {/* Key Metrics */}
-            <div ref={metricsRef} className="flex flex-wrap gap-4 mt-8">
+            <div className="flex flex-wrap gap-1.5 mt-6">
               {METRICS.map((m) => (
                 <span
                   key={m}
-                  className="metric-pill font-headline font-medium text-[11px] uppercase tracking-[0.04em] text-cobalt bg-blush px-4 py-1.5 rounded opacity-0"
+                  className="metric-pill opacity-0 font-mono text-[10px] uppercase tracking-[0.12em] text-cobalt border border-cobalt/40 bg-cobalt/5 px-2 py-[3px]"
                 >
                   {m}
                 </span>
               ))}
             </div>
 
-            {/* Tech Stack */}
-            <p className="font-mono text-[12px] text-stone mt-4">
-              Vue.js · Node.js · PostgreSQL · VCF Parsing · Bioinformatics
-            </p>
+            <div className="mt-6 pt-5 border-t border-ink/10">
+              <span className="font-mono text-[10px] tracking-[0.18em] text-ink/45 uppercase">
+                § STACK
+              </span>
+              <p className="font-mono text-[12px] text-stone-text mt-2 leading-[1.7]">
+                Vue.js · Node.js · PostgreSQL · VCF Parsing · Bioinformatics
+              </p>
+            </div>
 
-            {/* CTA */}
-            <div ref={ctaRef} className="mt-6 opacity-0">
-              <MechanicalButton
-                variant="outline"
-                href="https://github.com/redcpp/vcfplotein"
-              >
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <MechanicalButton variant="outline" href="https://github.com/redcpp/vcfplotein">
                 VIEW ON GITHUB →
               </MechanicalButton>
-              <div className="mt-3">
-                <a
-                  href="https://pubmed.ncbi.nlm.nih.gov/31161195/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-body text-[13px] underline underline-offset-4 hover:text-cobalt transition-colors text-ink"
-                >
-                  View on PubMed →
-                </a>
-              </div>
+              <a
+                href="https://pubmed.ncbi.nlm.nih.gov/31161195/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-[11px] tracking-[0.14em] uppercase text-ink hover:text-cobalt transition-colors underline underline-offset-4"
+              >
+                VIEW ON PUBMED →
+              </a>
             </div>
           </div>
         </div>

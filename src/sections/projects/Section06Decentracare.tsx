@@ -3,8 +3,8 @@ import { useLazyVideo } from '@/hooks/use-lazy-video';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
-import HorizontalPanWipe from '@/components/HorizontalPanWipe';
 import MechanicalButton from '@/components/MechanicalButton';
+import useReducedMotion from '@/hooks/use-reduced-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,112 +12,119 @@ const METRICS = ['HIPAA COMPLIANT', 'AWS GLUE ETL', '100+ NURSES', 'REACT.JS'];
 
 export default function Section06Decentracare() {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLDivElement>(null);
   const leftRef = useRef<HTMLDivElement>(null);
   const rightRef = useRef<HTMLDivElement>(null);
-  const metricsRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
 
   useGSAP(() => {
-    if (!sectionRef.current) return;
+    if (!sectionRef.current || reducedMotion) return;
 
     const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top 70%',
-      },
+      scrollTrigger: { trigger: sectionRef.current, start: 'top 75%' },
     });
 
-    if (videoRef.current) {
-      tl.fromTo(videoRef.current, { opacity: 0 }, { opacity: 1, duration: 1.0, ease: 'power2.out' }, 0);
-    }
     if (leftRef.current) {
-      tl.fromTo(leftRef.current, { x: -40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: 'power2.out' }, 0.15);
+      tl.fromTo(leftRef.current, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' }, 0);
     }
     if (rightRef.current) {
-      tl.fromTo(rightRef.current, { x: 40, opacity: 0 }, { x: 0, opacity: 1, duration: 0.8, ease: 'power2.out' }, 0.3);
+      tl.fromTo(rightRef.current, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' }, 0.15);
     }
-    if (metricsRef.current) {
-      const pills = metricsRef.current.querySelectorAll('.metric-pill');
-      tl.fromTo(pills, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out' }, 0.5);
-    }
-    if (ctaRef.current) {
-      tl.fromTo(ctaRef.current, { opacity: 0, y: 15 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.7);
-    }
-  }, { scope: sectionRef });
+    tl.fromTo(
+      sectionRef.current.querySelectorAll('.metric-pill'),
+      { opacity: 0, y: 8 },
+      { opacity: 1, y: 0, duration: 0.4, stagger: 0.06, ease: 'power2.out' },
+      0.35
+    );
+  }, { scope: sectionRef, dependencies: [reducedMotion] });
 
   return (
-    <section ref={sectionRef} id="decentracare" className="w-full bg-creme pt-32 lg:pt-40 pb-24 px-6 lg:px-20">
-      <div className="max-w-[1200px] mx-auto">
-        {/* Horizontal Pan Wipe Divider */}
-        <HorizontalPanWipe className="mb-16" />
-
-        {/* Part A — Video Diorama */}
-        <div
-          ref={videoRef}
-          className="relative w-full aspect-video max-w-[1200px] mx-auto rounded-lg border border-stone overflow-hidden opacity-0"
-        >
-          <video
-            ref={useLazyVideo()}
-            muted
-            loop
-            playsInline
-            preload="none"
-            className="w-full h-full object-cover"
-            aria-label="Decentracare healthcare CRM showcase video"
-          >
-            <source src="/video-projects-decentracare.webm" type="video/webm" />
-            <source src="/video-projects-decentracare.mp4" type="video/mp4" />
-          </video>
-          {/* Gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
-          {/* Label overlay */}
-          <div className="absolute bottom-6 left-6">
-            <span className="font-headline font-bold text-[48px] text-creme opacity-30 block leading-none">05</span>
-            <span className="font-headline font-bold text-[24px] uppercase text-creme block leading-tight">DECENTRACARE CRM</span>
-          </div>
+    <section
+      ref={sectionRef}
+      id="decentracare"
+      className="w-full bg-creme pt-20 lg:pt-24 pb-20 px-6 lg:px-20"
+    >
+      <div className="max-w-[1240px] mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-ink/55 uppercase border-b border-ink/15 pb-3 mb-10">
+          <span>CASE FILE · DSR/2026/P-05</span>
+          <span className="text-cobalt">DECENTRACARE CRM</span>
+          <span>2021 · SHIPPED</span>
         </div>
 
-        {/* Part B — Case Study Details */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-16">
-          {/* Left Column */}
-          <div ref={leftRef} className="opacity-0">
-            <h2 className="font-headline font-bold text-[28px] sm:text-display-md uppercase text-ink leading-tight">
-              HEALTHCARE CRM &amp; ETL PIPELINES
-            </h2>
-            <p className="font-headline font-medium text-label uppercase text-stone tracking-[0.08em] mt-4">
-              MARCH 2021 — DECEMBER 2023
-            </p>
-            <p className="font-body text-[14px] text-cobalt mt-2">
-              Full Stack Developer (Contractor) — Augusto Consulting
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+          <div ref={leftRef} className="opacity-0 lg:col-span-5">
+            <div className="relative w-full aspect-video rounded-sm border border-stone overflow-hidden">
+              <video
+                ref={useLazyVideo()}
+                muted
+                loop
+                playsInline
+                preload="none"
+                className="w-full h-full object-cover"
+                aria-label="Decentracare healthcare CRM showcase video"
+              >
+                <source src="/video-projects-decentracare.webm" type="video/webm" />
+                <source src="/video-projects-decentracare.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/25 via-transparent to-transparent" />
+              <span aria-hidden="true" className="absolute top-2.5 left-2.5 w-4 h-4 border-t border-l border-creme/55 pointer-events-none" />
+              <span aria-hidden="true" className="absolute top-2.5 right-2.5 w-4 h-4 border-t border-r border-creme/55 pointer-events-none" />
+              <span aria-hidden="true" className="absolute bottom-2.5 left-2.5 w-4 h-4 border-b border-l border-creme/55 pointer-events-none" />
+              <span aria-hidden="true" className="absolute bottom-2.5 right-2.5 w-4 h-4 border-b border-r border-creme/55 pointer-events-none" />
+              <div className="absolute top-4 left-4 right-4 flex items-center justify-between font-mono text-[9px] tracking-[0.18em] text-creme/80 uppercase z-10">
+                <span>CASE / 05</span>
+                <span>№ 05 / 07</span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase">
+                DECENTRACARE CRM
+              </span>
+              <h2 className="font-headline font-bold text-[24px] sm:text-[30px] uppercase text-ink leading-[1.05] tracking-[-0.01em] mt-2">
+                HEALTHCARE CRM &amp; ETL PIPELINES
+              </h2>
+              <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                <span className="font-mono text-[11px] tracking-[0.14em] text-stone-text uppercase">
+                  MAR 2021 — DEC 2023
+                </span>
+                <span className="font-mono text-[11px] tracking-[0.14em] text-stone-text/60 uppercase">·</span>
+                <span className="font-body italic text-[13px] text-cobalt">
+                  Full Stack · Contractor
+                </span>
+              </div>
+            </div>
           </div>
 
-          {/* Right Column */}
-          <div ref={rightRef} className="opacity-0">
-            <p className="font-body text-[16px] text-ink leading-[1.65]">
-              Built Decentracare, a CRM platform serving hundreds of nurses in the healthcare sector. Developed ETL pipelines using AWS Glue for the Michigan Health Information Network Shared Services (MiHIN), processing healthcare data in full HIPAA compliance. The CRM provides care coordination, patient management, and real-time scheduling for distributed nursing teams.
+          <div ref={rightRef} className="opacity-0 lg:col-span-7 lg:pt-1">
+            <p className="font-body text-[15px] text-ink leading-[1.7]">
+              Built Decentracare, a CRM platform serving hundreds of nurses in the healthcare
+              sector. Developed ETL pipelines using AWS Glue for the Michigan Health Information
+              Network Shared Services (MiHIN), processing healthcare data in full HIPAA
+              compliance. The CRM provides care coordination, patient management, and real-time
+              scheduling for distributed nursing teams.
             </p>
 
-            {/* Key Metrics */}
-            <div ref={metricsRef} className="flex flex-wrap gap-4 mt-6">
+            <div className="flex flex-wrap gap-1.5 mt-6">
               {METRICS.map((m) => (
                 <span
                   key={m}
-                  className="metric-pill font-headline font-medium text-[11px] uppercase tracking-[0.04em] text-cobalt bg-blush px-4 py-1.5 rounded opacity-0"
+                  className="metric-pill opacity-0 font-mono text-[10px] uppercase tracking-[0.12em] text-cobalt border border-cobalt/40 bg-cobalt/5 px-2 py-[3px]"
                 >
                   {m}
                 </span>
               ))}
             </div>
 
-            {/* Tech Stack */}
-            <p className="font-mono text-[12px] text-stone mt-4">
-              React.js · Node.js · AWS Glue · AWS Lambda · PostgreSQL · HIPAA · ETL
-            </p>
+            <div className="mt-6 pt-5 border-t border-ink/10">
+              <span className="font-mono text-[10px] tracking-[0.18em] text-ink/45 uppercase">
+                § STACK
+              </span>
+              <p className="font-mono text-[12px] text-stone-text mt-2 leading-[1.7]">
+                React.js · Node.js · AWS Glue · AWS Lambda · PostgreSQL · HIPAA · ETL
+              </p>
+            </div>
 
-            {/* CTA */}
-            <div ref={ctaRef} className="mt-6 opacity-0">
+            <div className="mt-7">
               <MechanicalButton variant="outline" href="https://augustoconsulting.com">
                 VIEW PROJECT →
               </MechanicalButton>

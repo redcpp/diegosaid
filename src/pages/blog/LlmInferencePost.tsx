@@ -7,6 +7,7 @@ export default function LlmInferencePost() {
       subtitle="Running private MLX + Tailscale + Apple Silicon for secure, cost-effective LLM serving."
       date="SEPTEMBER 2024"
       readTime="10 MIN READ"
+      serial="03"
       tags={['LLM', 'MLX', 'Apple Silicon', 'Tailscale']}
     >
       <p>

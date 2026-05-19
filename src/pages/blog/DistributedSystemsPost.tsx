@@ -7,6 +7,7 @@ export default function DistributedSystemsPost() {
       subtitle="Lessons learned building resilient infrastructure at Oracle Cloud Infrastructure and CAM Grupo."
       date="JULY 2024"
       readTime="15 MIN READ"
+      serial="02"
       tags={['Systems Design', 'Cloud', 'CI/CD', 'Oracle']}
     >
       <p>

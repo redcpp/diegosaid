@@ -7,6 +7,7 @@ export default function Adr47Post() {
       subtitle="How a proof by contradiction saved a DeFi protocol from a flawed LP-seeding mechanism."
       date="MAY 2024"
       readTime="12 MIN READ"
+      serial="01"
       tags={['DeFi', 'Formal Proof', 'Risk Analysis', 'Algorand']}
     >
       <p>

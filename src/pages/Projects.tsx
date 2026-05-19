@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useLenis } from '@/lib/lenis-context';
 import Section01PageHero from '@/sections/projects/Section01PageHero';
 import Section02CamGrupo from '@/sections/projects/Section02CamGrupo';
+import Section02bCamConstruction from '@/sections/projects/Section02bCamConstruction';
 import Section03Xbacked from '@/sections/projects/Section03Xbacked';
 import Section04VcfPlotein from '@/sections/projects/Section04VcfPlotein';
 import Section05Oracle from '@/sections/projects/Section05Oracle';
@@ -32,6 +33,7 @@ export default function Projects() {
     <div>
       <Section01PageHero />
       <Section02CamGrupo />
+      <Section02bCamConstruction />
       <Section03Xbacked />
       <Section04VcfPlotein />
       <Section05Oracle />

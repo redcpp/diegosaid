@@ -8,7 +8,7 @@ import useReducedMotion from '@/hooks/use-reduced-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const METRICS = ['20+ AGENTS', '7-FIGURE SALES', '6-STAGE HDR PIPELINE', 'PRIVATE LLM STACK'];
+const METRICS = ['20+ AGENTS', '7-FIGURE SALES', 'DRAFTING: DAYS → <1 HR', 'PRIVATE LLM STACK'];
 
 export default function Section02CamGrupo() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -72,11 +72,11 @@ export default function Section02CamGrupo() {
               </h2>
               <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1">
                 <span className="font-mono text-[11px] tracking-[0.14em] text-stone-text uppercase">
-                  MARCH 2020 — PRESENT
+                  MARCH 2025 — PRESENT
                 </span>
                 <span className="font-mono text-[11px] tracking-[0.14em] text-stone-text/60 uppercase">·</span>
                 <span className="font-body italic text-[13px] text-cobalt">
-                  Founder &amp; Technical Director
+                  Founder &amp; Broker
                 </span>
               </div>
             </div>
@@ -85,11 +85,16 @@ export default function Section02CamGrupo() {
           {/* Right column — body */}
           <div ref={rightRef} className="opacity-0 lg:col-span-7 lg:pt-1">
             <p className="font-body text-[15px] text-ink leading-[1.7]">
-              Founder of a 20+ agent luxury residential brokerage in Riviera Nayarit, producing
-              seven-figure pre-sale developments. Built the corporate stack: property portals, a
-              NOM-247 compliant contract generator, a private on-premise LLM inference rig on Apple
-              Silicon (MLX, Tailscale), Claude-based skills for contract comparison, and a 6-stage
-              HDR photography pipeline.
+              Lead a 20+ agent luxury residential brokerage in Riviera Nayarit with seven-figure
+              pre-sale revenue. Architected MCP (Model Context Protocol) servers for
+              NOM-247-compliant contract generation — Claude orchestrates extraction, validation,
+              and assembly end-to-end, collapsing drafting from days of 3-party back-and-forth
+              (lawyer, client, agents) to under 1 hour solo. Operate a private on-premise LLM
+              inference stack (Apple Silicon, vMLX, Tailscale) and a Claude-skill library (contract
+              comparison, document classification, intelligent file organization). Engineered an
+              automated HDR computer-vision pipeline (perspective correction, CLAHE local contrast,
+              cinematic LUT grading) from raw Canon HEIF input. Built a market intelligence system
+              ingesting 1,500+ MLS transactions with DCF / IRR / Monte Carlo pricing models.
             </p>
 
             <div className="flex flex-wrap gap-1.5 mt-5">

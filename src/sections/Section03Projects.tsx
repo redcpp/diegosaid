@@ -17,7 +17,6 @@ interface Project {
   sectionId: string;
   role: string;
   year: string;
-  status: 'SHIPPED' | 'OPS' | 'ARCHIVE' | 'PUBLISHED';
   featured?: boolean;
 }
 
@@ -31,7 +30,6 @@ const PROJECTS: Project[] = [
     sectionId: 'cam-grupo',
     role: 'Founder · Technical Director',
     year: '2020 →',
-    status: 'OPS',
     featured: true,
   },
   {
@@ -43,7 +41,6 @@ const PROJECTS: Project[] = [
     sectionId: 'xbacked',
     role: 'Core Developer',
     year: '2021–22',
-    status: 'SHIPPED',
   },
   {
     name: 'VCF/PLOTEIN',
@@ -54,7 +51,6 @@ const PROJECTS: Project[] = [
     sectionId: 'vcf-plotein',
     role: 'Software Engineer Intern',
     year: '2018',
-    status: 'PUBLISHED',
   },
   {
     name: 'ORACLE BIG DATA',
@@ -65,7 +61,6 @@ const PROJECTS: Project[] = [
     sectionId: 'oracle',
     role: 'Software Developer II',
     year: '2019',
-    status: 'SHIPPED',
   },
   {
     name: 'DECENTRACARE CRM',
@@ -76,7 +71,6 @@ const PROJECTS: Project[] = [
     sectionId: 'decentracare',
     role: 'Full Stack (Contract)',
     year: '2021',
-    status: 'SHIPPED',
   },
   {
     name: 'ML & LLM SYSTEMS',
@@ -87,7 +81,6 @@ const PROJECTS: Project[] = [
     sectionId: 'ml-llm',
     role: 'Independent R&D',
     year: '2023 →',
-    status: 'OPS',
   },
   {
     name: 'HARVARD CORe',
@@ -98,16 +91,8 @@ const PROJECTS: Project[] = [
     sectionId: 'harvard-core',
     role: 'Credential',
     year: '2022',
-    status: 'ARCHIVE',
   },
 ];
-
-const STATUS_COLOR: Record<Project['status'], string> = {
-  SHIPPED: 'text-sage border-sage/50',
-  OPS: 'text-cobalt border-cobalt/60',
-  ARCHIVE: 'text-stone-text border-stone',
-  PUBLISHED: 'text-terracotta border-terracotta/60',
-};
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [hovered, setHovered] = useState(false);
@@ -122,8 +107,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     videoRef.current?.pause();
   };
 
-  const serial = `CASE/${String(index + 1).padStart(2, '0')}`;
-
   return (
     <Link to={`/projects?section=${project.sectionId}`} className="block group">
       <article
@@ -134,19 +117,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         onMouseLeave={handleMouseLeave}
         data-index={index}
       >
-        {/* Top registry strip */}
-        <div className="flex items-center justify-between px-5 lg:px-6 py-2.5 border-b border-ink/10 bg-creme/50 font-mono text-[10px] tracking-[0.16em] text-ink/55 uppercase">
-          <span>{serial}</span>
-          {project.featured && (
-            <span className="text-cobalt">★ FEATURED</span>
-          )}
-          <span
-            className={`px-2 py-[1px] border ${STATUS_COLOR[project.status]} tracking-[0.18em]`}
-          >
-            {project.status}
-          </span>
-        </div>
-
         {/* Video Thumbnail */}
         <div className="relative aspect-video bg-ink/5 overflow-hidden">
           {project.video ? (
@@ -170,18 +140,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                     'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.03) 100%)',
                 }}
               />
-              {/* Corner crops */}
-              <span aria-hidden="true" className="absolute top-2 left-2 w-4 h-4 border-t border-l border-creme/40" />
-              <span aria-hidden="true" className="absolute top-2 right-2 w-4 h-4 border-t border-r border-creme/40" />
-              <span aria-hidden="true" className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-creme/40" />
-              <span aria-hidden="true" className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-creme/40" />
-
-              {/* Hover hint */}
-              <div
-                className={`absolute bottom-3 right-3 z-20 font-mono text-[10px] tracking-[0.16em] uppercase px-2 py-1 border border-creme/40 bg-ink/60 text-creme transition-opacity ${hovered ? 'opacity-100' : 'opacity-0'}`}
-              >
-                ▸ PREVIEW LIVE
-              </div>
             </>
           ) : (
             <div
@@ -233,17 +191,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               </span>
             ))}
           </div>
-
-          {/* Footer with read more */}
-          <div className="mt-6 pt-4 border-t border-ink/10 flex items-center justify-between relative z-10">
-            <span className="font-mono text-[10px] tracking-[0.16em] text-ink/40 uppercase">
-              CASE STUDY
-            </span>
-            <span className="flex items-center gap-2 font-mono text-[10px] tracking-[0.14em] text-cobalt uppercase">
-              OPEN FILE
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </span>
-          </div>
         </div>
       </article>
     </Link>
@@ -278,22 +225,7 @@ export default function Section03Projects() {
       id="projects"
       className="w-full bg-creme pt-28 pb-24 px-6 lg:px-20 texture-grid relative overflow-hidden"
     >
-      {/* Decorative numeral */}
-      <span
-        aria-hidden="true"
-        className="hidden lg:block absolute -top-6 right-6 font-headline font-bold text-[180px] leading-none text-ink/[0.04] select-none pointer-events-none tracking-tighter"
-      >
-        03
-      </span>
-
       <div className="max-w-[1240px] mx-auto relative z-10">
-        {/* Registry strip */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-ink/55 uppercase border-b border-ink/15 pb-3 mb-12">
-          <span>CASE FILES · DSR/2026/003 — SELECTED WORK</span>
-          <span className="text-cobalt">{PROJECTS.length} ENTRIES · 2018 → PRESENT</span>
-          <span>SORT · BY RELEVANCE</span>
-        </div>
-
         <SectionEyebrow text="SELECTED WORK" />
         <div className="mt-4 lg:flex lg:items-end lg:justify-between gap-8 mb-12">
           <h2 className="font-headline font-bold text-[36px] sm:text-display-lg uppercase text-ink leading-[0.95] tracking-[-0.015em]">
@@ -301,19 +233,8 @@ export default function Section03Projects() {
             <span className="text-cobalt">SEVEN DIORAMAS.</span>
           </h2>
           <p className="font-body italic text-[14px] text-ink/65 mt-4 lg:mt-0 max-w-sm">
-            Every system tells a story. Every story has a miniature world — preserved here as a
-            case file.
+            Selected work, 2018 — present.
           </p>
-        </div>
-
-        {/* Column legend */}
-        <div className="hidden lg:flex items-center gap-4 mb-4 font-mono text-[10px] tracking-[0.18em] text-ink/40 uppercase">
-          <span>★ FEATURED</span>
-          <span className="w-1 h-1 rounded-full bg-ink/30" />
-          <span className="text-sage">SHIPPED</span>
-          <span className="text-cobalt">OPS</span>
-          <span className="text-terracotta">PUBLISHED</span>
-          <span className="text-stone-text">ARCHIVE</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
@@ -322,10 +243,7 @@ export default function Section03Projects() {
           ))}
         </div>
 
-        <div className="mt-16 pt-6 border-t border-ink/15 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-          <span className="font-mono text-[10px] tracking-[0.18em] text-ink/55 uppercase">
-            // END OF SUMMARY · FULL CASE FILES AVAILABLE
-          </span>
+        <div className="mt-16 pt-6 border-t border-ink/15 flex justify-end">
           <Link to="/projects">
             <MechanicalButton variant="outline">
               VIEW FULL CASE STUDIES &rarr;

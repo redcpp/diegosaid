@@ -111,25 +111,18 @@ const EVENTS: TimelineEvent[] = [
     title: 'STRATEGIC RETURN',
     org: 'Full-Time Engineering',
     description:
-      'Executing a strategic return to full-time engineering with focus on Go, distributed systems, and cloud-native backend architecture.',
+      'Returning to full-time engineering with focus on backend architecture.',
     tags: ['Go', 'Distributed Systems'],
     emphasis: true,
   },
 ];
 
-function TimelineRow({ event, idx }: { event: TimelineEvent; idx: number }) {
-  const num = String(idx + 1).padStart(2, '0');
-
+function TimelineRow({ event }: { event: TimelineEvent }) {
   return (
     <article
       className="timeline-row opacity-0 group relative grid grid-cols-12 gap-x-4 lg:gap-x-8 py-8 lg:py-10 border-t border-ink/15 hover:bg-ink/[0.02] transition-colors"
       data-emphasis={event.emphasis ? 'true' : 'false'}
     >
-      {/* Index */}
-      <div className="col-span-12 lg:col-span-1">
-        <span className="font-mono text-[11px] tracking-[0.16em] text-ink/40">№ {num}</span>
-      </div>
-
       {/* Year column */}
       <div className="col-span-12 lg:col-span-3 relative">
         <div className="flex lg:block items-baseline gap-3">
@@ -146,31 +139,16 @@ function TimelineRow({ event, idx }: { event: TimelineEvent; idx: number }) {
             </span>
           )}
         </div>
-        {event.emphasis && (
-          <span
-            aria-hidden="true"
-            className="hidden lg:block absolute -left-3 top-2 w-1.5 h-1.5 rounded-full bg-cobalt"
-          />
-        )}
       </div>
 
       {/* Content */}
-      <div className="col-span-12 lg:col-span-8 mt-3 lg:mt-0">
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex-1 min-w-0">
-            <h3 className="font-headline font-bold text-[16px] sm:text-[18px] uppercase text-ink leading-tight tracking-[0.005em] group-hover:text-cobalt transition-colors">
-              {event.title}
-            </h3>
-            <p className="font-body italic text-[13px] text-stone-text mt-1">
-              {event.org}
-            </p>
-          </div>
-          {event.emphasis && (
-            <span className="shrink-0 font-mono text-[9px] tracking-[0.18em] text-cobalt uppercase border border-cobalt/60 px-2 py-0.5 mt-1">
-              ★ Milestone
-            </span>
-          )}
-        </div>
+      <div className="col-span-12 lg:col-span-9 mt-3 lg:mt-0">
+        <h3 className="font-headline font-bold text-[16px] sm:text-[18px] uppercase text-ink leading-tight tracking-[0.005em] group-hover:text-cobalt transition-colors">
+          {event.title}
+        </h3>
+        <p className="font-body italic text-[13px] text-stone-text mt-1">
+          {event.org}
+        </p>
         <p className="font-body text-[13.5px] sm:text-[14.5px] text-ink/85 leading-[1.65] mt-3 max-w-[68ch]">
           {event.description}
         </p>
@@ -185,12 +163,6 @@ function TimelineRow({ event, idx }: { event: TimelineEvent; idx: number }) {
           ))}
         </div>
       </div>
-
-      {/* Hover indicator */}
-      <span
-        aria-hidden="true"
-        className="absolute left-0 top-0 bottom-0 w-[2px] bg-cobalt scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-500"
-      />
     </article>
   );
 }
@@ -232,43 +204,17 @@ export default function Section06Timeline() {
       </span>
 
       <div className="max-w-[1240px] mx-auto relative z-10">
-        {/* Registry header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-ink/55 uppercase border-b border-ink/15 pb-3 mb-12">
-          <span>RECORD · DSR/2026/006 — CHRONOLOGY</span>
-          <span className="text-cobalt">{EVENTS.length} ENTRIES · 13 YEARS</span>
-          <span>SORT · ASC BY YEAR</span>
-        </div>
-
         <SectionEyebrow text="CAREER TIMELINE" color="var(--color-cobalt)" />
-        <div className="mt-4 lg:flex lg:items-end lg:justify-between gap-8">
-          <h2 className="font-headline font-bold text-[36px] sm:text-display-lg uppercase text-ink leading-[0.95] tracking-[-0.015em]">
-            EVERY MILESTONE,<br />
-            <span className="text-cobalt">IN ORDER</span>
-          </h2>
-          <p className="font-body italic text-[14px] text-ink/65 mt-4 lg:mt-0 max-w-sm">
-            A chronological ledger of training, employment, and notable artifacts.
-            Milestone entries marked with <span className="text-cobalt not-italic">★</span>.
-          </p>
-        </div>
-
-        {/* Column legend */}
-        <div className="hidden lg:grid grid-cols-12 gap-x-8 mt-16 mb-2 font-mono text-[10px] tracking-[0.18em] text-ink/40 uppercase">
-          <span className="col-span-1">№</span>
-          <span className="col-span-3">YEAR</span>
-          <span className="col-span-8">ENTRY</span>
-        </div>
+        <h2 className="mt-4 font-headline font-bold text-[36px] sm:text-display-lg uppercase text-ink leading-[0.95] tracking-[-0.015em]">
+          EVERY MILESTONE,<br />
+          <span className="text-cobalt">IN ORDER</span>
+        </h2>
 
         {/* Timeline rows */}
-        <div className="border-b border-ink/15">
-          {EVENTS.map((event, i) => (
-            <TimelineRow key={`${event.year}-${event.title}`} event={event} idx={i} />
+        <div className="mt-16 border-b border-ink/15">
+          {EVENTS.map((event) => (
+            <TimelineRow key={`${event.year}-${event.title}`} event={event} />
           ))}
-        </div>
-
-        {/* Footer */}
-        <div className="flex items-center justify-between mt-4 font-mono text-[10px] tracking-[0.18em] text-ink/40 uppercase">
-          <span>END OF RECORD</span>
-          <span>// EOF · NEXT REV 2026.06</span>
         </div>
       </div>
     </section>

@@ -19,10 +19,10 @@ interface FormField {
 }
 
 const FIELDS: FormField[] = [
-  { key: 'name', label: 'name', type: 'text', placeholder: 'Diego Said Anaya Mancilla', required: true },
+  { key: 'name', label: 'name', type: 'text', placeholder: 'Your name', required: true },
   { key: 'email', label: 'email', type: 'email', placeholder: 'diego@camgrupo.com', required: true },
   { key: 'subject', label: 'subject', type: 'text', placeholder: 'System Architecture Consulting Inquiry', required: true },
-  { key: 'message', label: 'message', type: 'textarea', placeholder: 'Describe your project with the same rigor you\'d use in a technical specification document...', required: true, rows: 6 },
+  { key: 'message', label: 'message', type: 'textarea', placeholder: 'Briefly describe your project, timeline, and budget.', required: true, rows: 6 },
   { key: 'engagement_type', label: 'engagement_type', type: 'select', placeholder: '', required: false, options: ['Full-Time Engineering', 'Contract Consulting', 'System Architecture Review', 'DeFi Protocol Audit', 'Other'] },
 ];
 
@@ -112,34 +112,15 @@ export default function Section09Contact() {
     <section
       ref={sectionRef}
       id="contact"
-      className="w-full bg-creme py-28 lg:py-36 px-6 lg:px-20 texture-grid relative overflow-hidden"
+      className="w-full bg-creme py-20 lg:py-24 px-6 lg:px-20 texture-grid relative overflow-hidden"
     >
-      {/* Decorative numeral */}
-      <span
-        aria-hidden="true"
-        className="hidden lg:block absolute -top-6 left-6 font-headline font-bold text-[180px] leading-none text-ink/[0.04] select-none pointer-events-none tracking-tighter"
-      >
-        10
-      </span>
-
       <div className="max-w-[1240px] mx-auto relative z-10">
-        {/* Registry strip */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-ink/55 uppercase border-b border-ink/15 pb-3 mb-12">
-          <span>FORM A-7 · DSR/2026/010 — PROJECT INQUIRY</span>
-          <span className="text-cobalt">CHANNEL · ENCRYPTED</span>
-          <span>SLA · ~24 HRS</span>
-        </div>
-
         <SectionEyebrow text="SEND A MESSAGE" />
-        <div className="mt-4 lg:flex lg:items-end lg:justify-between gap-8 mb-14">
+        <div className="mt-4 mb-14">
           <h2 className="font-headline font-bold text-[36px] sm:text-display-lg uppercase text-ink leading-[0.95] tracking-[-0.015em]">
             PROJECT<br />
             <span className="text-cobalt">INQUIRY FORM</span>
           </h2>
-          <p className="font-body italic text-[14px] text-ink/65 mt-4 lg:mt-0 max-w-sm">
-            Fill out with the precision of a technical specification. Asterisks mark required
-            fields. Submissions reach my private terminal directly.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12">
@@ -152,23 +133,9 @@ export default function Section09Contact() {
                 aria-atomic="true"
               >
                 <div className="bg-ink rounded-sm p-7 font-mono text-mono-text text-left w-full max-w-xl border border-ink shadow-[0_24px_48px_-24px_rgba(26,26,26,0.45)]">
-                  <div className="flex items-center gap-2 mb-4 pb-4 border-b border-creme/10">
-                    <span className="w-2 h-2 rounded-full bg-[#28c840]" />
-                    <span className="w-2 h-2 rounded-full bg-[#febc2e]" />
-                    <span className="w-2 h-2 rounded-full bg-[#ff5f57]" />
-                    <span className="ml-auto text-[10px] tracking-[0.14em] text-stone uppercase">
-                      transmit.sh
-                    </span>
-                  </div>
-                  <div className="space-y-1 text-creme">
-                    <p>
-                      <span className="text-sage">$</span> transmit_message
-                    </p>
-                    <p className="text-cobalt">&gt;&gt; PACKET SENT</p>
-                    <p className="text-cobalt">&gt;&gt; Response: ACK</p>
-                    <p className="text-cobalt">&gt;&gt; ETA: ~24 hours</p>
-                    <p className="animate-cursor-blink">_</p>
-                  </div>
+                  <p className="text-creme">
+                    Message sent. Reply within ~24 hours.
+                  </p>
                 </div>
                 <MechanicalButton onClick={reset} variant="outline" className="mt-2">
                   SEND ANOTHER &rarr;
@@ -176,15 +143,12 @@ export default function Section09Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-7" noValidate>
-                {FIELDS.map((field, i) => (
+                {FIELDS.map((field) => (
                   <div key={field.key} className="form-field opacity-0">
                     <label
                       className="flex items-baseline gap-3 mb-2"
                       htmlFor={field.key}
                     >
-                      <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt/80">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
                       <span className="font-mono text-[12px] tracking-[0.04em] text-cobalt">
                         $ {field.label}:
                         {field.required && (
@@ -276,24 +240,12 @@ export default function Section09Contact() {
           <aside className="lg:col-span-4 relative">
             <div className="sticky top-24">
               <div className="bg-parchment border border-ink/15 p-6 relative overflow-hidden">
-                {/* Top lighting */}
-                <span
-                  aria-hidden="true"
-                  className="absolute top-0 left-0 right-0 h-[35%] pointer-events-none"
-                  style={{
-                    background:
-                      'linear-gradient(180deg, rgba(255,255,255,0.45) 0%, transparent 100%)',
-                  }}
-                />
                 <div className="relative z-10">
-                  <span className="font-mono text-[10px] tracking-[0.18em] text-ink/55 uppercase">
-                    OR · DIRECT CHANNELS
-                  </span>
-                  <h3 className="font-headline font-bold text-[18px] uppercase text-ink mt-2 tracking-[0.005em]">
+                  <h3 className="font-headline font-bold text-[18px] uppercase text-ink tracking-[0.005em]">
                     Prefer to skip the form?
                   </h3>
                   <p className="font-body text-[13px] text-ink/70 mt-2 leading-[1.6]">
-                    Reach me on any of these channels. I read every line.
+                    Reach me on any of these channels.
                   </p>
 
                   <ul className="mt-5 border-t border-ink/15">
@@ -325,26 +277,8 @@ export default function Section09Contact() {
                       </li>
                     ))}
                   </ul>
-
-                  {/* Approval stamp */}
-                  <div className="mt-7 flex justify-end">
-                    <div className="relative inline-block">
-                      <div className="border-2 border-oxblood/70 px-3 py-1.5 rotate-[-6deg] origin-center">
-                        <span className="block font-headline font-bold text-[10px] tracking-[0.18em] text-oxblood/85 uppercase">
-                          OPEN FOR
-                        </span>
-                        <span className="block font-headline font-bold text-[16px] tracking-[0.05em] text-oxblood/85 uppercase leading-tight">
-                          ENGAGEMENTS
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
-
-              <p className="font-mono text-[10px] tracking-[0.16em] text-ink/45 uppercase mt-3 text-center">
-                FORM A-7 · REV 02 · 2026.05
-              </p>
             </div>
           </aside>
         </div>

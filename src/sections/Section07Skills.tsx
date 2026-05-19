@@ -16,7 +16,6 @@ interface Skill {
 interface Column {
   code: string;
   title: string;
-  caption: string;
   skills: Skill[];
 }
 
@@ -24,7 +23,6 @@ const COLUMNS: Column[] = [
   {
     code: 'I',
     title: 'LANGUAGES',
-    caption: 'Core dialects of thought.',
     skills: [
       { name: 'Python', experience: '7 yrs', active: true },
       { name: 'Go', experience: 'Learning', active: true },
@@ -37,7 +35,6 @@ const COLUMNS: Column[] = [
   {
     code: 'II',
     title: 'FRAMEWORKS',
-    caption: 'Architectures shipped.',
     skills: [
       { name: 'Next.js', experience: 'Production', active: true },
       { name: 'React', experience: 'Production', active: true },
@@ -52,7 +49,6 @@ const COLUMNS: Column[] = [
   {
     code: 'III',
     title: 'INFRASTRUCTURE',
-    caption: 'Cloud, transport, telemetry.',
     skills: [
       { name: 'AWS', experience: 'Production' },
       { name: 'OCI', experience: 'Production' },
@@ -68,7 +64,6 @@ const COLUMNS: Column[] = [
   {
     code: 'IV',
     title: 'DOMAINS',
-    caption: 'Specialist territories.',
     skills: [
       { name: 'Distributed Systems', experience: 'Focus', active: true },
       { name: 'System Design', experience: 'Production', active: true },
@@ -103,7 +98,7 @@ function SkillRow({ skill }: { skill: Skill }) {
   );
 }
 
-function ColumnBlock({ column, idx }: { column: Column; idx: number }) {
+function ColumnBlock({ column }: { column: Column }) {
   return (
     <div className="matrix-column opacity-0 relative flex flex-col">
       {/* Column header */}
@@ -116,13 +111,7 @@ function ColumnBlock({ column, idx }: { column: Column; idx: number }) {
             {column.title}
           </h3>
         </div>
-        <span className="font-mono text-[10px] tracking-[0.14em] text-stone uppercase">
-          {String(column.skills.length).padStart(2, '0')}
-        </span>
       </div>
-      <p className="font-body italic text-[12px] text-stone mt-2 leading-snug">
-        {column.caption}
-      </p>
 
       {/* Skill list */}
       <ul className="mt-4">
@@ -130,11 +119,6 @@ function ColumnBlock({ column, idx }: { column: Column; idx: number }) {
           <SkillRow key={skill.name} skill={skill} />
         ))}
       </ul>
-
-      {/* Footer index */}
-      <div className="mt-auto pt-4 font-mono text-[10px] tracking-[0.16em] text-stone/60 uppercase">
-        — {idx + 1} / {COLUMNS.length}
-      </div>
     </div>
   );
 }
@@ -173,17 +157,11 @@ export default function Section07Skills() {
     );
   }, { scope: sectionRef, dependencies: [reducedMotion] });
 
-  const total = COLUMNS.reduce((sum, col) => sum + col.skills.length, 0);
-  const active = COLUMNS.reduce(
-    (sum, col) => sum + col.skills.filter((s) => s.active).length,
-    0
-  );
-
   return (
     <section
       ref={sectionRef}
       id="skills"
-      className="w-full bg-ink py-28 lg:py-36 px-6 lg:px-20 relative overflow-hidden"
+      className="w-full bg-ink py-20 lg:py-24 px-6 lg:px-20 relative overflow-hidden"
     >
       {/* Faint engineering grid backdrop */}
       <div
@@ -198,49 +176,20 @@ export default function Section07Skills() {
         }}
       />
 
-      {/* Decorative numeral */}
-      <span
-        aria-hidden="true"
-        className="hidden lg:block absolute -top-6 right-6 font-headline font-bold text-[180px] leading-none text-creme/[0.04] select-none pointer-events-none tracking-tighter"
-      >
-        07
-      </span>
-
       <div className="max-w-[1280px] mx-auto relative z-10">
-        {/* Registry strip */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-stone uppercase border-b border-creme/15 pb-3 mb-12">
-          <span>SHEET · DSR/2026/007 — TECHNICAL MATRIX</span>
-          <span className="text-cobalt">
-            {total} CAPABILITIES · {active} ACTIVE
-          </span>
-          <span>SORT · BY CATEGORY</span>
-        </div>
-
         <SectionEyebrow text="COMPETENCIES" color="var(--color-stone)" />
-        <div className="mt-4 lg:flex lg:items-end lg:justify-between gap-8">
+        <div className="mt-4 mb-12">
           <h2 className="font-headline font-bold text-[36px] sm:text-display-lg uppercase text-creme leading-[0.95] tracking-[-0.015em]">
             OPERATIONAL<br />
             <span className="text-cobalt">MATRIX</span>
           </h2>
-          <p className="font-body italic text-[14px] text-stone mt-4 lg:mt-0 max-w-sm">
-            Four columns of capability — every tool, indexed.
-            <span className="block mt-1 not-italic font-mono text-[10px] tracking-[0.14em] text-cobalt uppercase">
-              ● = current focus
-            </span>
-          </p>
         </div>
 
         {/* Matrix grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 lg:gap-12 mt-16">
-          {COLUMNS.map((col, i) => (
-            <ColumnBlock key={col.code} column={col} idx={i} />
+          {COLUMNS.map((col) => (
+            <ColumnBlock key={col.code} column={col} />
           ))}
-        </div>
-
-        {/* Bottom signature row */}
-        <div className="mt-16 pt-6 border-t border-creme/15 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between font-mono text-[10px] tracking-[0.18em] text-stone/70 uppercase">
-          <span>VERIFIED · SELF-CERTIFIED · OPEN TO AUDIT</span>
-          <span>// COMPILED 2026.05</span>
         </div>
       </div>
     </section>

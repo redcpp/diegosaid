@@ -1,17 +1,17 @@
 # diegosaid
 
-Personal portfolio for **Diego Said** — a single-page editorial site built with React, Vite, Tailwind, and GSAP, deployed on Cloudflare Pages.
+Personal portfolio site — editorial layout, scroll-driven animation, deployed on Cloudflare Pages.
 
-**Live**: https://diegosaid.com
+**Live:** https://diegosaid.com
 
 ## Stack
 
-- **React 19** + **TypeScript**
-- **Vite 7** for dev/build
-- **Tailwind CSS v3** + **shadcn/ui** primitives
-- **GSAP** + **Lenis** for scroll-driven animation and smooth scrolling
-- **React Router v7**
-- **Cloudflare Pages** for hosting
+- React 19 + TypeScript
+- Vite 7 (dev/build) — requires Node 20.19+
+- Tailwind CSS 3 + shadcn/ui (Radix primitives)
+- GSAP + Lenis for scroll choreography; Framer Motion for component-level motion
+- React Router 7
+- Cloudflare Pages (Wrangler)
 
 ## Getting started
 
@@ -22,45 +22,45 @@ npm run dev          # http://localhost:5173
 
 ## Scripts
 
-| Script           | Purpose                                                        |
-| ---------------- | -------------------------------------------------------------- |
-| `npm run dev`    | Start the Vite dev server with HMR.                            |
-| `npm run build`  | Type-check (`tsc -b`) and build for production into `dist/`.   |
-| `npm run lint`   | Run ESLint over the codebase.                                  |
-| `npm run preview`| Preview the production build locally.                          |
-| `npm run deploy`     | Build and deploy `dist/` to Cloudflare Pages via Wrangler.     |
-| `npm run deploy:prod`| Push to GitHub, then build and deploy to Cloudflare Pages.     |
+| Script                  | Purpose                                                      |
+| ----------------------- | ------------------------------------------------------------ |
+| `npm run dev`           | Vite dev server with HMR.                                    |
+| `npm run build`         | Type-check (`tsc -b`) then build to `dist/`.                 |
+| `npm run lint`          | ESLint over the codebase.                                    |
+| `npm run preview`       | Serve the production build locally.                          |
+| `npm run deploy`        | Build and upload `dist/` to Cloudflare Pages via Wrangler.   |
+| `npm run deploy:prod`   | `git push origin main`, then build and deploy.               |
+
+## Routes
+
+- `/` — Home (hero, manifesto, selected projects, profile, timeline, skills, awards, contact, social, blog preview)
+- `/projects` — Project index and case studies
+- `/blog` — Writing index
+- `/blog/:slug` — Individual posts
 
 ## Project layout
 
 ```
 src/
-  components/        Layout chrome (Navbar, Footer) + reusable atoms
+  components/        Layout chrome (Navbar, Footer, ErrorBoundary) + reusable atoms
     ui/              shadcn/ui primitives
-  hooks/             Reusable React hooks (matchMedia, lazy video, etc.)
+  hooks/             matchMedia, lazy video, reduced-motion
   lib/               Utilities and the Lenis scroll context
-  pages/             Route entry points (Home, Projects, Blog, blog posts)
-  sections/          Home/Projects page sections in render order
+  pages/             Route entry points
+  sections/          Home sections in render order (Section01..Section11)
   index.css          Global styles, focus rings, texture utilities
   main.tsx           Application entry
 public/              Static assets (videos, SVGs, _redirects)
-docs/                Planning artifacts
-output/              Phase-1 audit, redesign brief, swarm-voting outputs
 ```
 
 ## Deployment
 
-Push code to GitHub and deploy to Cloudflare Pages in one step:
-
 ```bash
-npm run deploy:prod   # git push origin main + build + deploy via wrangler
+npm run deploy:prod   # push to GitHub, then build and deploy
+npm run deploy        # build and deploy without pushing
 ```
 
-For a build-and-deploy without pushing to Git:
-
-```bash
-npm run deploy        # build and upload dist/ via wrangler
-```
+Wrangler reads the Cloudflare Pages project name from the script (`--project-name=diegosaid`); auth is handled by `wrangler login` on first use.
 
 ## License
 

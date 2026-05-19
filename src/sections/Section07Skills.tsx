@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -10,85 +10,131 @@ gsap.registerPlugin(ScrollTrigger);
 interface Skill {
   name: string;
   experience: string;
-  ring: number;
+  active?: boolean;
 }
 
-const SKILLS: Skill[] = [
-  // Ring 1 — Core Languages
-  { name: 'Python', experience: '7 YEARS', ring: 1 },
-  { name: 'Go', experience: 'LEARNING', ring: 1 },
-  { name: 'TypeScript', experience: '5 YEARS', ring: 1 },
-  { name: 'Java', experience: '2 YEARS', ring: 1 },
-  { name: 'SQL', experience: '7 YEARS', ring: 1 },
-  { name: 'C/C++', experience: '2 YEARS', ring: 1 },
-  // Ring 2 — Frameworks & Platforms
-  { name: 'Next.js', experience: 'EXPERIENCED', ring: 2 },
-  { name: 'React', experience: 'EXPERIENCED', ring: 2 },
-  { name: 'Vue.js', experience: 'EXPERIENCED', ring: 2 },
-  { name: 'Node.js', experience: 'EXPERIENCED', ring: 2 },
-  { name: 'Django', experience: 'EXPERIENCED', ring: 2 },
-  { name: 'PostgreSQL', experience: 'EXPERIENCED', ring: 2 },
-  { name: 'Redis', experience: 'EXPERIENCED', ring: 2 },
-  { name: 'Docker', experience: 'EXPERIENCED', ring: 2 },
-  // Ring 3 — Infrastructure & Cloud
-  { name: 'AWS', experience: 'EXPERIENCED', ring: 3 },
-  { name: 'OCI', experience: 'EXPERIENCED', ring: 3 },
-  { name: 'Terraform', experience: 'EXPERIENCED', ring: 3 },
-  { name: 'CI/CD', experience: 'EXPERIENCED', ring: 3 },
-  { name: 'Linux', experience: 'EXPERIENCED', ring: 3 },
-  { name: 'gRPC', experience: 'EXPERIENCED', ring: 3 },
-  { name: 'REST APIs', experience: 'EXPERIENCED', ring: 3 },
-  { name: 'RabbitMQ', experience: 'EXPERIENCED', ring: 3 },
-  { name: 'Kafka', experience: 'EXPERIENCED', ring: 3 },
-  // Ring 4 — Specialized Domains
-  { name: 'DeFi Protocols', experience: 'EXPERIENCED', ring: 4 },
-  { name: 'Smart Contracts', experience: 'EXPERIENCED', ring: 4 },
-  { name: 'Genomics', experience: 'EXPERIENCED', ring: 4 },
-  { name: 'LLM Inference', experience: 'EXPERIENCED', ring: 4 },
-  { name: 'Quantitative Analysis', experience: 'EXPERIENCED', ring: 4 },
-  { name: 'System Design', experience: 'EXPERIENCED', ring: 4 },
-  { name: 'Risk Analysis', experience: 'EXPERIENCED', ring: 4 },
+interface Column {
+  code: string;
+  title: string;
+  caption: string;
+  skills: Skill[];
+}
+
+const COLUMNS: Column[] = [
+  {
+    code: 'I',
+    title: 'LANGUAGES',
+    caption: 'Core dialects of thought.',
+    skills: [
+      { name: 'Python', experience: '7 yrs', active: true },
+      { name: 'Go', experience: 'Learning', active: true },
+      { name: 'TypeScript', experience: '5 yrs', active: true },
+      { name: 'SQL', experience: '7 yrs' },
+      { name: 'Java', experience: '2 yrs' },
+      { name: 'C / C++', experience: '2 yrs' },
+    ],
+  },
+  {
+    code: 'II',
+    title: 'FRAMEWORKS',
+    caption: 'Architectures shipped.',
+    skills: [
+      { name: 'Next.js', experience: 'Production', active: true },
+      { name: 'React', experience: 'Production', active: true },
+      { name: 'Vue.js', experience: 'Production' },
+      { name: 'Node.js', experience: 'Production' },
+      { name: 'Django', experience: 'Production' },
+      { name: 'PostgreSQL', experience: 'Production' },
+      { name: 'Redis', experience: 'Production' },
+      { name: 'Docker', experience: 'Production' },
+    ],
+  },
+  {
+    code: 'III',
+    title: 'INFRASTRUCTURE',
+    caption: 'Cloud, transport, telemetry.',
+    skills: [
+      { name: 'AWS', experience: 'Production' },
+      { name: 'OCI', experience: 'Production' },
+      { name: 'Terraform', experience: 'Production' },
+      { name: 'CI/CD', experience: 'Production' },
+      { name: 'Linux', experience: 'Production', active: true },
+      { name: 'gRPC', experience: 'Production' },
+      { name: 'REST APIs', experience: 'Production' },
+      { name: 'RabbitMQ', experience: 'Production' },
+      { name: 'Kafka', experience: 'Production' },
+    ],
+  },
+  {
+    code: 'IV',
+    title: 'DOMAINS',
+    caption: 'Specialist territories.',
+    skills: [
+      { name: 'Distributed Systems', experience: 'Focus', active: true },
+      { name: 'System Design', experience: 'Production', active: true },
+      { name: 'LLM Inference', experience: 'R&D' },
+      { name: 'Quantitative Analysis', experience: 'Production' },
+      { name: 'Risk Analysis', experience: 'Production' },
+      { name: 'DeFi Protocols', experience: 'Shipped' },
+      { name: 'Smart Contracts', experience: 'Shipped' },
+      { name: 'Genomics', experience: 'Published' },
+    ],
+  },
 ];
 
-function SkillBadge({ skill }: { skill: Skill }) {
-  const [active, setActive] = useState(false);
-  const [pressed, setPressed] = useState(false);
-
-  const handleClick = useCallback(() => {
-    setPressed(true);
-    setTimeout(() => {
-      setPressed(false);
-      setActive((a) => !a);
-    }, 150);
-  }, []);
-
+function SkillRow({ skill }: { skill: Skill }) {
   return (
-    <div className="relative inline-block">
-      <button
-        onClick={handleClick}
-        className={`skill-badge font-headline font-medium text-[11px] uppercase tracking-[0.04em]
-          px-4 py-2 border rounded-sm transition-all duration-200 cursor-pointer select-none
-          ${pressed
-            ? 'bg-oxblood border-oxblood text-creme scale-[0.96]'
-            : active
-              ? 'bg-cobalt border-cobalt text-creme'
-              : 'bg-transparent border-stone text-creme hover:bg-cobalt hover:border-cobalt hover:text-creme'
-          }`}
-        style={{
-          transitionTimingFunction: pressed ? undefined : 'var(--ease-bounce)',
-        }}
+    <li className="skill-row opacity-0 group flex items-baseline gap-3 py-2.5 border-b border-creme/10 hover:border-cobalt/40 transition-colors">
+      <span
+        className={`inline-block w-1.5 h-1.5 rounded-full shrink-0 translate-y-[1px]
+          ${skill.active ? 'bg-cobalt shadow-[0_0_0_3px_rgba(43,76,140,0.18)]' : 'bg-stone/40'}`}
+        aria-hidden="true"
+      />
+      <span
+        className={`font-headline font-medium text-[14px] tracking-[0.005em] flex-1 min-w-0
+          ${skill.active ? 'text-creme' : 'text-creme/85'} group-hover:text-cobalt transition-colors`}
       >
         {skill.name}
-      </button>
-      {active && (
-        <div
-          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-ink border border-cobalt rounded-sm
-            font-mono text-[11px] text-creme whitespace-nowrap z-20"
-        >
-          {skill.experience}
-          <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-ink border-l border-t border-cobalt rotate-45" />
+      </span>
+      <span className="font-mono text-[10px] tracking-[0.14em] text-stone uppercase shrink-0">
+        {skill.experience}
+      </span>
+    </li>
+  );
+}
+
+function ColumnBlock({ column, idx }: { column: Column; idx: number }) {
+  return (
+    <div className="matrix-column opacity-0 relative flex flex-col">
+      {/* Column header */}
+      <div className="flex items-baseline justify-between border-b border-creme/30 pb-3">
+        <div className="flex items-baseline gap-3">
+          <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt">
+            COL. {column.code}
+          </span>
+          <h3 className="font-headline font-bold text-[16px] sm:text-[18px] uppercase text-creme tracking-[0.01em]">
+            {column.title}
+          </h3>
         </div>
-      )}
+        <span className="font-mono text-[10px] tracking-[0.14em] text-stone uppercase">
+          {String(column.skills.length).padStart(2, '0')}
+        </span>
+      </div>
+      <p className="font-body italic text-[12px] text-stone mt-2 leading-snug">
+        {column.caption}
+      </p>
+
+      {/* Skill list */}
+      <ul className="mt-4">
+        {column.skills.map((skill) => (
+          <SkillRow key={skill.name} skill={skill} />
+        ))}
+      </ul>
+
+      {/* Footer index */}
+      <div className="mt-auto pt-4 font-mono text-[10px] tracking-[0.16em] text-stone/60 uppercase">
+        — {idx + 1} / {COLUMNS.length}
+      </div>
     </div>
   );
 }
@@ -100,51 +146,101 @@ export default function Section07Skills() {
   useGSAP(() => {
     if (!sectionRef.current || reducedMotion) return;
 
-    const badges = sectionRef.current.querySelectorAll('.skill-badge');
     gsap.fromTo(
-      badges,
-      { opacity: 0, scale: 0.8 },
+      sectionRef.current.querySelectorAll('.matrix-column'),
+      { y: 24, opacity: 0 },
       {
+        y: 0,
         opacity: 1,
-        scale: 1,
-        duration: 0.5,
-        stagger: 0.04,
-        ease: 'back.out(1.5)',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 70%',
-        },
+        duration: 0.7,
+        stagger: 0.1,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      }
+    );
+
+    gsap.fromTo(
+      sectionRef.current.querySelectorAll('.skill-row'),
+      { x: -8, opacity: 0 },
+      {
+        x: 0,
+        opacity: 1,
+        duration: 0.4,
+        stagger: 0.02,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 65%' },
       }
     );
   }, { scope: sectionRef, dependencies: [reducedMotion] });
 
+  const total = COLUMNS.reduce((sum, col) => sum + col.skills.length, 0);
+  const active = COLUMNS.reduce(
+    (sum, col) => sum + col.skills.filter((s) => s.active).length,
+    0
+  );
+
   return (
     <section
       ref={sectionRef}
-      className="w-full bg-ink py-32 lg:py-40 px-6 lg:px-20"
+      id="skills"
+      className="w-full bg-ink py-28 lg:py-36 px-6 lg:px-20 relative overflow-hidden"
     >
-      <div className="max-w-[1200px] mx-auto">
-        <SectionEyebrow text="COMPETENCIES" color="var(--color-stone)" />
-        <h2 className="font-headline font-bold text-[36px] sm:text-display-lg uppercase text-creme text-center mt-4">
-          SKILLS CONSTELLATION
-        </h2>
-        <p className="font-body text-[14px] text-stone italic text-center mt-3">
-          Click any skill to see its depth.
-        </p>
+      {/* Faint engineering grid backdrop */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
+        style={{
+          backgroundImage:
+            'linear-gradient(rgba(245,243,239,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(245,243,239,0.6) 1px, transparent 1px)',
+          backgroundSize: '56px 56px',
+          maskImage:
+            'radial-gradient(ellipse at center, black 0%, black 55%, transparent 100%)',
+        }}
+      />
 
-        {/* Center Diamond */}
-        <div className="flex flex-col items-center my-10">
-          <div className="w-12 h-12 border-2 border-creme rotate-45 animate-diamond-pulse" />
-          <span className="font-headline font-bold text-[10px] uppercase tracking-[0.1em] text-creme mt-4">
-            SYSTEMS
+      {/* Decorative numeral */}
+      <span
+        aria-hidden="true"
+        className="hidden lg:block absolute -top-6 right-6 font-headline font-bold text-[180px] leading-none text-creme/[0.04] select-none pointer-events-none tracking-tighter"
+      >
+        07
+      </span>
+
+      <div className="max-w-[1280px] mx-auto relative z-10">
+        {/* Registry strip */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-stone uppercase border-b border-creme/15 pb-3 mb-12">
+          <span>SHEET · DSR/2026/007 — TECHNICAL MATRIX</span>
+          <span className="text-cobalt">
+            {total} CAPABILITIES · {active} ACTIVE
           </span>
+          <span>SORT · BY CATEGORY</span>
         </div>
 
-        {/* Skills Grid */}
-        <div className="flex flex-wrap justify-center gap-3 mt-12">
-          {SKILLS.map((skill) => (
-            <SkillBadge key={skill.name} skill={skill} />
+        <SectionEyebrow text="COMPETENCIES" color="var(--color-stone)" />
+        <div className="mt-4 lg:flex lg:items-end lg:justify-between gap-8">
+          <h2 className="font-headline font-bold text-[36px] sm:text-display-lg uppercase text-creme leading-[0.95] tracking-[-0.015em]">
+            OPERATIONAL<br />
+            <span className="text-cobalt">MATRIX</span>
+          </h2>
+          <p className="font-body italic text-[14px] text-stone mt-4 lg:mt-0 max-w-sm">
+            Four columns of capability — every tool, indexed.
+            <span className="block mt-1 not-italic font-mono text-[10px] tracking-[0.14em] text-cobalt uppercase">
+              ● = current focus
+            </span>
+          </p>
+        </div>
+
+        {/* Matrix grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 lg:gap-12 mt-16">
+          {COLUMNS.map((col, i) => (
+            <ColumnBlock key={col.code} column={col} idx={i} />
           ))}
+        </div>
+
+        {/* Bottom signature row */}
+        <div className="mt-16 pt-6 border-t border-creme/15 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between font-mono text-[10px] tracking-[0.18em] text-stone/70 uppercase">
+          <span>VERIFIED · SELF-CERTIFIED · OPEN TO AUDIT</span>
+          <span>// COMPILED 2026.05</span>
         </div>
       </div>
     </section>

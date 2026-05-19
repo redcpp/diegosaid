@@ -100,7 +100,7 @@ export default function Blog() {
       {/* Dossier hero */}
       <header
         ref={heroRef}
-        className="w-full bg-ink pt-28 pb-16 lg:pt-32 lg:pb-20 px-6 lg:px-20 relative overflow-hidden"
+        className="w-full bg-ink pt-24 pb-12 lg:pt-28 lg:pb-16 px-6 lg:px-20 relative overflow-hidden"
       >
         {/* Faint grid */}
         <div
@@ -113,31 +113,8 @@ export default function Blog() {
             maskImage: 'radial-gradient(ellipse at center, black 0%, black 55%, transparent 100%)',
           }}
         />
-        {/* Decorative numeral */}
-        <span
-          aria-hidden="true"
-          className="hidden lg:block absolute -top-6 right-6 font-headline font-bold text-[180px] leading-none text-creme/[0.04] select-none pointer-events-none tracking-tighter"
-        >
-          09
-        </span>
 
         <div className="max-w-[1240px] mx-auto relative z-10">
-          {/* Registry strip */}
-          <div className="hero-stagger flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-stone uppercase border-b border-creme/15 pb-3 mb-12">
-            <span>VOLUME · DSR/2026/W — WRITINGS</span>
-            <span className="text-cobalt">{POSTS.length} ARTICLES · OPEN ACCESS</span>
-            <span>SORTED · LATEST FIRST</span>
-          </div>
-
-          <div className="hero-stagger flex items-baseline gap-3 mb-6">
-            <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase">
-              § VOL. W
-            </span>
-            <span className="font-mono text-[10px] tracking-[0.18em] text-stone/70 uppercase">
-              TECHNICAL WRITING
-            </span>
-          </div>
-
           <h1 className="hero-stagger font-headline font-bold text-[56px] sm:text-[80px] lg:text-display-xl uppercase text-creme leading-[0.9] tracking-[-0.025em]">
             FIELD<br />
             <span className="text-cobalt">NOTES.</span>
@@ -145,8 +122,7 @@ export default function Blog() {
 
           <p className="hero-stagger font-body italic text-[15px] sm:text-[17px] text-stone mt-6 max-w-[60ch] leading-[1.65]">
             Long-form essays on protocol design, distributed systems, and on-premise AI
-            infrastructure. Each piece is a complete argument with sources, benchmarks, and a
-            commit hash.
+            infrastructure.
           </p>
         </div>
       </header>
@@ -154,18 +130,8 @@ export default function Blog() {
       {/* Articles table */}
       <div
         ref={sectionRef}
-        className="max-w-[1240px] mx-auto px-6 lg:px-20 py-20 lg:py-28"
+        className="max-w-[1240px] mx-auto px-6 lg:px-20 py-14 lg:py-20"
       >
-        {/* Column legend */}
-        <div className="hidden lg:grid grid-cols-12 gap-x-6 pb-3 mb-2 font-mono text-[10px] tracking-[0.18em] text-ink/40 uppercase border-b border-ink/15">
-          <span className="col-span-1">№</span>
-          <span className="col-span-1">DATE</span>
-          <span className="col-span-5">TITLE</span>
-          <span className="col-span-3">SYNOPSIS</span>
-          <span className="col-span-1">TOPIC</span>
-          <span className="col-span-1 text-right">PP.</span>
-        </div>
-
         {POSTS.map((post) => (
           <Link
             key={post.slug}
@@ -178,26 +144,14 @@ export default function Blog() {
               className="absolute left-0 top-0 bottom-0 w-[2px] bg-cobalt scale-y-0 group-hover:scale-y-100 origin-top transition-transform duration-500"
             />
 
-            {/* Index */}
-            <span className="col-span-2 lg:col-span-1 font-mono text-[11px] tracking-[0.16em] text-cobalt">
-              Nº.{post.serial}
-            </span>
-
             {/* Date */}
-            <span className="col-span-10 lg:col-span-1 font-mono text-[11px] tracking-[0.14em] text-ink/55 uppercase">
+            <span className="col-span-12 lg:col-span-1 font-mono text-[11px] tracking-[0.14em] text-ink/55 uppercase">
               {post.dateCode}
             </span>
 
             {/* Title + tags */}
-            <div className="col-span-12 lg:col-span-5 mt-3 lg:mt-0">
-              <div className="flex items-baseline gap-3">
-                {post.featured && (
-                  <span className="font-mono text-[9px] tracking-[0.18em] text-cobalt border border-cobalt/60 px-1.5 py-[1px] uppercase">
-                    ★ FEATURED
-                  </span>
-                )}
-              </div>
-              <h2 className="font-headline font-bold text-[22px] sm:text-[28px] uppercase text-ink leading-[1.05] tracking-[-0.005em] group-hover:text-cobalt transition-colors mt-1">
+            <div className="col-span-12 lg:col-span-6 mt-3 lg:mt-0">
+              <h2 className="font-headline font-bold text-[22px] sm:text-[28px] uppercase text-ink leading-[1.05] tracking-[-0.005em] group-hover:text-cobalt transition-colors">
                 {post.title}
               </h2>
               <div className="flex flex-wrap gap-1.5 mt-3">
@@ -213,17 +167,12 @@ export default function Blog() {
             </div>
 
             {/* Synopsis */}
-            <p className="col-span-12 lg:col-span-3 font-body text-[13.5px] text-ink/75 leading-[1.65] mt-3 lg:mt-0">
+            <p className="col-span-12 lg:col-span-4 font-body text-[13.5px] text-ink/75 leading-[1.65] mt-3 lg:mt-0">
               {post.subtitle}
             </p>
 
-            {/* Topic */}
-            <span className="col-span-6 lg:col-span-1 font-mono text-[10px] tracking-[0.12em] text-cobalt uppercase mt-3 lg:mt-0">
-              {post.topic}
-            </span>
-
             {/* Read time + arrow */}
-            <div className="col-span-6 lg:col-span-1 flex items-center justify-end gap-2 mt-3 lg:mt-0">
+            <div className="col-span-12 lg:col-span-1 flex items-center justify-end gap-2 mt-3 lg:mt-0">
               <span className="font-mono text-[10px] tracking-[0.14em] text-ink/55 uppercase">
                 {post.readTime}
               </span>
@@ -233,12 +182,6 @@ export default function Blog() {
             </div>
           </Link>
         ))}
-
-        {/* Footer */}
-        <div className="mt-6 flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-ink/40 uppercase">
-          <span>// END OF VOLUME W</span>
-          <span>NEXT PUBLICATION — TBA</span>
-        </div>
       </div>
     </div>
   );

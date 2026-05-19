@@ -109,13 +109,6 @@ export default function BlogPostLayout({
         />
 
         <div ref={headerRef} className="max-w-[920px] mx-auto relative z-10">
-          {/* Registry strip */}
-          <div className="hero-row flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 font-mono text-[10px] tracking-[0.18em] text-stone uppercase border-b border-creme/15 pb-3 mb-10">
-            <span>ARTICLE · DSR/W/{serial}</span>
-            <span className="text-cobalt">CLEARANCE · PUBLIC</span>
-            <span>READ · {readTime}</span>
-          </div>
-
           {/* Back link */}
           <Link
             to="/blog"
@@ -125,13 +118,16 @@ export default function BlogPostLayout({
             ALL ARTICLES
           </Link>
 
-          {/* Serial + topic */}
-          <div className="hero-row flex items-baseline gap-4 mb-4">
+          {/* Serial + date + read time */}
+          <div className="hero-row flex flex-wrap items-baseline gap-4 mb-4">
             <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase">
               Nº.{serial}
             </span>
             <span className="font-mono text-[10px] tracking-[0.18em] text-stone/70 uppercase">
               {date}
+            </span>
+            <span className="font-mono text-[10px] tracking-[0.18em] text-stone/70 uppercase">
+              {readTime}
             </span>
           </div>
 
@@ -164,61 +160,23 @@ export default function BlogPostLayout({
         ref={contentRef}
         className="max-w-[760px] mx-auto px-6 lg:px-0 py-16 lg:py-24"
       >
-        {/* Drop cap accent */}
-        <div className="mb-10 flex items-center gap-4">
-          <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase">
-            § BEGIN ARTICLE
-          </span>
-          <span className="flex-1 h-px bg-ink/15" />
-        </div>
-
         <article className="blog-article">{children}</article>
 
         {/* End mark */}
         <div className="mt-16 flex items-center gap-4">
           <span className="flex-1 h-px bg-ink/15" />
-          <span className="font-mono text-[10px] tracking-[0.18em] text-ink/45 uppercase">
-            ∎ END OF ARTICLE
-          </span>
-          <span className="flex-1 h-px bg-ink/15" />
+          <span className="font-mono text-[12px] text-ink/45">∎</span>
         </div>
 
-        {/* Continue reading */}
-        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-6">
+        {/* Back to index */}
+        <div className="mt-14">
           <Link
             to="/blog"
-            className="group flex flex-col gap-2 p-6 border border-ink/15 hover:border-cobalt hover:bg-ink/[0.025] transition-colors"
+            className="group inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.14em] uppercase text-ink/65 hover:text-cobalt transition-colors"
           >
-            <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase">
-              ← BACK
-            </span>
-            <span className="font-headline font-bold text-[18px] uppercase text-ink group-hover:text-cobalt transition-colors">
-              FULL INDEX
-            </span>
-            <span className="font-body text-[13px] text-ink/65">
-              Every article in this volume.
-            </span>
+            <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform" />
+            ALL ARTICLES
           </Link>
-          <Link
-            to="/"
-            className="group flex flex-col gap-2 p-6 border border-ink/15 hover:border-cobalt hover:bg-ink/[0.025] transition-colors"
-          >
-            <span className="font-mono text-[10px] tracking-[0.18em] text-cobalt uppercase">
-              ↑ COVER
-            </span>
-            <span className="font-headline font-bold text-[18px] uppercase text-ink group-hover:text-cobalt transition-colors">
-              RETURN TO DOSSIER
-            </span>
-            <span className="font-body text-[13px] text-ink/65">
-              The personal record.
-            </span>
-          </Link>
-        </div>
-
-        {/* Footer caption */}
-        <div className="mt-10 pt-4 border-t border-ink/10 flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-ink/40 uppercase">
-          <span>// EOF · ARTICLE</span>
-          <span>FILE CLOSED · OK</span>
         </div>
       </div>
     </div>

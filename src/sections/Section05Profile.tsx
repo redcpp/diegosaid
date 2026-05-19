@@ -9,15 +9,15 @@ gsap.registerPlugin(ScrollTrigger);
 
 const TERMINAL_LINES = [
   { key: 'whoami', value: 'Diego Said Anaya Mancilla' },
-  { key: 'role', value: 'Backend systems engineer' },
-  { key: 'credentials', value: "Harvard CORe '22\n  ADR-47 Published" },
-  { key: 'contact', value: 'diego@camgrupo.com\n  +52 322 111 7595' },
+  { key: 'role', value: 'Applied AI engineer · Backend systems' },
+  { key: 'credentials', value: "Harvard CORe '22\n  ADR-47 · ADR-46 · xBacked Litepaper v2.0" },
+  { key: 'contact', value: 'redcpp@gmail.com\n  +52 322 111 7595' },
 ];
 
 const IDENTITY_FACTS = [
-  { label: 'DISCIPLINE', value: 'Backend systems engineering' },
-  { label: 'POSTURE', value: 'Strategic return to full-time' },
-  { label: 'STACK', value: 'Go · Distributed · Cloud-native' },
+  { label: 'DISCIPLINE', value: 'Applied AI · Backend · Protocol' },
+  { label: 'SEEKING', value: 'Remote Applied AI / FDE / Backend' },
+  { label: 'STACK', value: 'MCP · LLM Inference · Cloud · DeFi' },
   { label: 'TENURE', value: '7+ yrs shipping production code' },
 ];
 
@@ -174,9 +174,11 @@ export default function Section05Profile() {
 
             {/* Bio */}
             <p className="font-body text-[14px] sm:text-[16px] text-ink/85 leading-[1.75] mt-8 max-w-[58ch]">
-              Returning to full-time engineering with focus on
-              <span className="text-cobalt"> Go</span>, distributed systems, and cloud-native
-              backend architecture. Prior work spans cloud infrastructure, DeFi, and genomics.
+              Applied AI engineer shipping production LLM systems on top of a strong
+              <span className="text-cobalt"> systems and protocol-engineering</span> foundation.
+              7+ years across enterprise cloud, DeFi protocol design, healthcare platforms,
+              and clinical genomics — co-author of a paper in <em>Bioinformatics</em> (Oxford
+              Academic).
             </p>
 
             {/* Identity facts */}

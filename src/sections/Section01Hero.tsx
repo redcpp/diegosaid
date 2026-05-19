@@ -23,7 +23,6 @@ const getMobileServerSnapshot = () => false;
 export default function Section01Hero() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const eyebrowRef = useRef<HTMLSpanElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -98,17 +97,11 @@ export default function Section01Hero() {
     const tl = gsap.timeline({ delay: 0.2 });
 
     tl.fromTo(
-      eyebrowRef.current,
-      { opacity: 0, y: -10 },
-      { opacity: 0.85, y: 0, duration: 0.6, ease: 'power2.out' },
-      0.2
+      titleRef.current,
+      { scale: 0.5, opacity: 0, letterSpacing: '0.2em' },
+      { scale: 1, opacity: 1, letterSpacing: '-0.02em', duration: 0.8, ease: 'power4.out' },
+      0.4
     )
-      .fromTo(
-        titleRef.current,
-        { scale: 0.5, opacity: 0, letterSpacing: '0.2em' },
-        { scale: 1, opacity: 1, letterSpacing: '-0.02em', duration: 0.8, ease: 'power4.out' },
-        0.4
-      )
       .fromTo(
         subtitleRef.current,
         { opacity: 0, y: 15 },
@@ -252,13 +245,6 @@ export default function Section01Hero() {
         ref={contentRef}
         className="relative z-10 flex flex-col items-center text-center gap-4 px-6"
       >
-        <span
-          ref={eyebrowRef}
-          className="font-mono text-[11px] uppercase tracking-[0.32em] text-creme/85 opacity-0"
-        >
-          EST. 1996 · ENGINEER
-        </span>
-
         <h1
           ref={titleRef}
           className="font-headline font-bold text-[48px] sm:text-[64px] lg:text-display-xl uppercase text-creme opacity-0"

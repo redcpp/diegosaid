@@ -20,14 +20,14 @@ interface FormField {
 
 const FIELDS: FormField[] = [
   { key: 'name', label: 'name', type: 'text', placeholder: 'Your name', required: true },
-  { key: 'email', label: 'email', type: 'email', placeholder: 'diego@camgrupo.com', required: true },
+  { key: 'email', label: 'email', type: 'email', placeholder: 'you@company.com', required: true },
   { key: 'subject', label: 'subject', type: 'text', placeholder: 'System Architecture Consulting Inquiry', required: true },
   { key: 'message', label: 'message', type: 'textarea', placeholder: 'Briefly describe your project, timeline, and budget.', required: true, rows: 6 },
   { key: 'engagement_type', label: 'engagement_type', type: 'select', placeholder: '', required: false, options: ['Full-Time Engineering', 'Contract Consulting', 'System Architecture Review', 'DeFi Protocol Audit', 'Other'] },
 ];
 
 const QUICK_CONTACT = [
-  { label: 'EMAIL', value: 'diego@camgrupo.com', href: 'mailto:diego@camgrupo.com' },
+  { label: 'EMAIL', value: 'redcpp@gmail.com', href: 'mailto:redcpp@gmail.com' },
   { label: 'PHONE', value: '+52 322 111 7595', href: 'tel:+523221117595' },
   { label: 'LINKEDIN', value: 'linkedin.com/in/redcpp', href: 'https://linkedin.com/in/redcpp' },
 ];

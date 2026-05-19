@@ -22,56 +22,72 @@ interface Column {
 const COLUMNS: Column[] = [
   {
     code: 'I',
-    title: 'LANGUAGES',
+    title: 'AI & LLM SYSTEMS',
     skills: [
-      { name: 'Python', experience: '7 yrs', active: true },
-      { name: 'Go', experience: 'Learning', active: true },
-      { name: 'TypeScript', experience: '5 yrs', active: true },
-      { name: 'SQL', experience: '7 yrs' },
-      { name: 'Java', experience: '2 yrs' },
-      { name: 'C / C++', experience: '2 yrs' },
+      { name: 'MCP Servers', experience: 'Production', active: true },
+      { name: 'Claude API & SDK', experience: 'Production', active: true },
+      { name: 'Claude Code', experience: 'Production', active: true },
+      { name: 'Claude Skills', experience: 'Production', active: true },
+      { name: 'Agentic Workflows', experience: 'Production' },
+      { name: 'Tool-use Design', experience: 'Production' },
+      { name: 'Prompt Engineering', experience: 'Production' },
+      { name: 'RAG', experience: 'Shipped' },
+      { name: 'On-Prem Inference (vMLX)', experience: 'Production', active: true },
+      { name: 'n8n Automation', experience: 'Production' },
     ],
   },
   {
     code: 'II',
-    title: 'FRAMEWORKS',
+    title: 'LANGUAGES',
+    skills: [
+      { name: 'Python', experience: 'Proficient', active: true },
+      { name: 'TypeScript / JavaScript', experience: 'Proficient', active: true },
+      { name: 'C++', experience: 'Proficient' },
+      { name: 'Java', experience: 'Working' },
+      { name: 'SQL', experience: 'Working' },
+    ],
+  },
+  {
+    code: 'III',
+    title: 'FRAMEWORKS & DATA',
     skills: [
       { name: 'Next.js', experience: 'Production', active: true },
       { name: 'React', experience: 'Production', active: true },
       { name: 'Vue.js', experience: 'Production' },
       { name: 'Node.js', experience: 'Production' },
+      { name: 'Flask', experience: 'Production' },
       { name: 'Django', experience: 'Production' },
-      { name: 'PostgreSQL', experience: 'Production' },
-      { name: 'Redis', experience: 'Production' },
-      { name: 'Docker', experience: 'Production' },
-    ],
-  },
-  {
-    code: 'III',
-    title: 'INFRASTRUCTURE',
-    skills: [
-      { name: 'AWS', experience: 'Production' },
-      { name: 'OCI', experience: 'Production' },
-      { name: 'Terraform', experience: 'Production' },
-      { name: 'CI/CD', experience: 'Production' },
-      { name: 'Linux', experience: 'Production', active: true },
-      { name: 'gRPC', experience: 'Production' },
       { name: 'REST APIs', experience: 'Production' },
-      { name: 'RabbitMQ', experience: 'Production' },
-      { name: 'Kafka', experience: 'Production' },
+      { name: 'PostgreSQL', experience: 'Production' },
+      { name: 'Supabase', experience: 'Production' },
+      { name: 'Tailwind / HTML / CSS', experience: 'Production' },
+      { name: 'NumPy · Pandas · Matplotlib', experience: 'Production' },
     ],
   },
   {
     code: 'IV',
-    title: 'DOMAINS',
+    title: 'CLOUD & INFRA',
     skills: [
-      { name: 'Distributed Systems', experience: 'Focus', active: true },
-      { name: 'System Design', experience: 'Production', active: true },
-      { name: 'LLM Inference', experience: 'R&D' },
-      { name: 'Quantitative Analysis', experience: 'Production' },
-      { name: 'Risk Analysis', experience: 'Production' },
-      { name: 'DeFi Protocols', experience: 'Shipped' },
-      { name: 'Smart Contracts', experience: 'Shipped' },
+      { name: 'AWS (S3, EC2, Lambda, RDS, CloudFront, IAM, ECS)', experience: 'Production' },
+      { name: 'Oracle Cloud (OCI)', experience: 'Production' },
+      { name: 'Docker', experience: 'Production' },
+      { name: 'Linux', experience: 'Production', active: true },
+      { name: 'Bash & Python scripting', experience: 'Production' },
+      { name: 'tmux', experience: 'Daily', active: true },
+      { name: 'Git', experience: 'Daily', active: true },
+      { name: 'CI/CD', experience: 'Production' },
+    ],
+  },
+  {
+    code: 'V',
+    title: 'SPECIALIZED DOMAINS',
+    skills: [
+      { name: 'DeFi Protocol Design', experience: 'Shipped' },
+      { name: 'Algorand Smart Contracts (Python)', experience: 'Shipped' },
+      { name: 'Computer Vision (CLAHE · HDR · LUT)', experience: 'Production' },
+      { name: 'Quantitative Finance Modeling', experience: 'Production' },
+      { name: 'DCF · IRR · Monte Carlo', experience: 'Production' },
+      { name: 'Algorithmic Problem Solving', experience: 'ICPC' },
       { name: 'Genomics', experience: 'Published' },
     ],
   },
@@ -186,7 +202,7 @@ export default function Section07Skills() {
         </div>
 
         {/* Matrix grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 lg:gap-12 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-10 lg:gap-12 mt-16">
           {COLUMNS.map((col) => (
             <ColumnBlock key={col.code} column={col} />
           ))}

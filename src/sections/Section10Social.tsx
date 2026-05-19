@@ -162,7 +162,7 @@ export default function Section10Social() {
 
           {/* Coordinates / location card */}
           <div className="lg:col-span-5">
-            <div className="location-card opacity-0 h-full bg-ink border border-creme/15 p-7 lg:p-8 flex flex-col">
+            <div className="location-card opacity-0 bg-ink border border-creme/15 p-7 lg:p-8 flex flex-col">
               {/* Compass */}
               <div className="mt-2">
                 <CompassRose />
@@ -198,6 +198,33 @@ export default function Section10Social() {
                   <p className="font-headline font-medium text-[12px] text-creme mt-1 uppercase tracking-[0.04em]">
                     UTC-6
                   </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Spoken languages */}
+            <div className="location-card opacity-0 mt-4 bg-ink border border-creme/15 p-6 lg:p-7">
+              <p className="font-mono text-[9px] tracking-[0.18em] text-stone/70 uppercase">
+                LANGUAGES
+              </p>
+              <div className="mt-3 grid grid-cols-3 gap-3 text-center">
+                <div>
+                  <p className="font-headline font-medium text-[13px] text-creme uppercase tracking-[0.04em]">
+                    Spanish
+                  </p>
+                  <p className="font-body italic text-[11px] text-stone mt-1">Native</p>
+                </div>
+                <div>
+                  <p className="font-headline font-medium text-[13px] text-creme uppercase tracking-[0.04em]">
+                    English
+                  </p>
+                  <p className="font-body italic text-[11px] text-stone mt-1">Fluent</p>
+                </div>
+                <div>
+                  <p className="font-headline font-medium text-[13px] text-creme uppercase tracking-[0.04em]">
+                    Italian
+                  </p>
+                  <p className="font-body italic text-[11px] text-stone mt-1">Conversational</p>
                 </div>
               </div>
             </div>

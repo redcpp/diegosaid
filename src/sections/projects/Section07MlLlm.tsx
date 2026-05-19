@@ -7,7 +7,7 @@ import useReducedMotion from '@/hooks/use-reduced-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const METRICS = ['MLX INFERENCE', 'MONTE CARLO', '1,500+ MLS RECORDS', 'CLAUDE API'];
+const METRICS = ['MCP SERVERS', 'vMLX INFERENCE', '1,500+ MLS RECORDS', 'DCF · IRR · MONTE CARLO'];
 
 export default function Section07MlLlm() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -82,10 +82,12 @@ export default function Section07MlLlm() {
 
           <div ref={rightRef} className="opacity-0 lg:col-span-7 lg:pt-1">
             <p className="font-body text-[15px] text-ink leading-[1.7]">
-              Deployed a private on-premise LLM inference stack on Apple Silicon (MLX) over
-              Tailscale for secure remote access. Built Claude-based skills for contract comparison
-              alongside a quantitative toolkit (DCF, IRR, Monte Carlo) analyzing 1,500+ MLS
-              transactions.
+              Architecting and operating MCP (Model Context Protocol) automation pipelines and a
+              private on-premise vMLX inference stack on Apple Silicon over Tailscale for
+              confidential workflows. Built a Claude-skill library (contract comparison, document
+              classification, intelligent file organization) and a quantitative toolkit (DCF, IRR,
+              Monte Carlo) analyzing 1,500+ MLS transactions, with absorption metrics by
+              micro-market and price segment.
             </p>
 
             <div className="flex flex-wrap gap-1.5 mt-6">

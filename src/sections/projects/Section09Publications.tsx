@@ -28,12 +28,36 @@ const PUBLICATIONS: Publication[] = [
     authors: 'Diego Said',
     venue: 'Architecture Decision Record · xBacked DAO · 2022',
     description:
-      'A formal mathematical proof showing the proposed PACT/xUSD LP-seeding mechanism contained fundamental economic flaws. The analysis prevented the mechanism from launching and anticipated systemic risk patterns later observed in the 2022 algorithmic stablecoin failures.',
+      'Proof-by-contradiction case against an LP-backed mint: the proposed PACT/xUSD seeding mechanism would have diluted collateral or extracted value from external LPs. The analysis blocked the launch and anticipated systemic patterns observed in the 2022 algorithmic stablecoin failures.',
     tags: ['FORMAL PROOF', 'DeFi', 'RISK ANALYSIS', 'ALGORAND'],
     cta: [{ label: 'READ ADR-47 →', to: '/blog/adr47', variant: 'filled-cobalt' }],
   },
   {
-    serial: 'PUB-2019/02',
+    serial: 'PUB-2022/02',
+    type: 'TECHNICAL ANALYSIS',
+    typeColor: 'text-oxblood border-oxblood/50',
+    title: 'ADR-46: Vault Looping — Recursive Leverage Limits',
+    authors: 'Diego Said',
+    venue: 'Architecture Decision Record · xBacked DAO · 2022',
+    description:
+      'Closed-form derivation of recursive-leverage limits, bidirectional liquidation thresholds, and carry-vs-directional decomposition for vault looping in the xUSD CDP system.',
+    tags: ['FORMAL ANALYSIS', 'LEVERAGE', 'LIQUIDATION', 'ALGORAND'],
+    cta: [],
+  },
+  {
+    serial: 'PUB-2022/03',
+    type: 'PROTOCOL SPECIFICATION',
+    typeColor: 'text-cobalt border-cobalt/60',
+    title: 'xBacked Litepaper v2.0',
+    authors: 'Co-authored — xBacked DAO core team',
+    venue: 'Protocol Specification · xBacked DAO · 2022',
+    description:
+      'Co-authored specification of the xUSD CDP-style stablecoin on Algorand: vault contracts, liquidation engine, redemption mechanism, isolated risk markets, staking, governance, and keeper economy.',
+    tags: ['LITEPAPER', 'STABLECOIN', 'CDP', 'ALGORAND'],
+    cta: [],
+  },
+  {
+    serial: 'PUB-2019/04',
     type: 'PEER-REVIEWED · JOURNAL',
     typeColor: 'text-cobalt border-cobalt/60',
     title: 'VCF/Plotein: Clinical Genomic Interpretation From Exome Sequencing',
@@ -43,6 +67,7 @@ const PUBLICATIONS: Publication[] = [
       'A web application for visualizing, annotating, and interpreting VCF variants from next-generation exome sequencing pipelines.',
     tags: ['BIOINFORMATICS', 'GENOMICS', 'VUE.JS', 'NODE.JS'],
     cta: [
+      { label: 'LAUNCH VCF/PLOTEIN →', href: 'https://vcfplotein.liigh.unam.mx', variant: 'outline' },
       { label: 'VIEW ON GITHUB →', href: 'https://github.com/redcpp/vcfplotein', variant: 'outline' },
       { label: 'VIEW ON PUBMED →', href: 'https://pubmed.ncbi.nlm.nih.gov/31161195/', variant: 'outline' },
     ],
@@ -86,18 +111,20 @@ function PublicationCard({ pub }: { pub: Publication }) {
           ))}
         </div>
 
-        <div className="flex flex-wrap gap-3 mt-6 pt-5 border-t border-ink/10">
-          {pub.cta.map((c) => (
-            <MechanicalButton
-              key={c.label}
-              variant={c.variant}
-              href={c.href}
-              to={c.to}
-            >
-              {c.label}
-            </MechanicalButton>
-          ))}
-        </div>
+        {pub.cta.length > 0 && (
+          <div className="flex flex-wrap gap-3 mt-6 pt-5 border-t border-ink/10">
+            {pub.cta.map((c) => (
+              <MechanicalButton
+                key={c.label}
+                variant={c.variant}
+                href={c.href}
+                to={c.to}
+              >
+                {c.label}
+              </MechanicalButton>
+            ))}
+          </div>
+        )}
       </div>
     </article>
   );

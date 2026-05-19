@@ -8,7 +8,7 @@ import useReducedMotion from '@/hooks/use-reduced-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const METRICS = ['HIPAA COMPLIANT', 'AWS GLUE ETL', '100+ NURSES', 'REACT.JS'];
+const METRICS = ['350+ CLINICIANS', 'REACT · FLASK · AWS', 'TWO CLIENT BUILDS', 'CONTRACTOR'];
 
 export default function Section06Decentracare() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -67,7 +67,7 @@ export default function Section06Decentracare() {
 
             <div className="mt-6">
               <h2 className="font-headline font-bold text-[24px] sm:text-[30px] uppercase text-ink leading-[1.05] tracking-[-0.01em]">
-                HEALTHCARE CRM &amp; ETL PIPELINES
+                AUGUSTO CONSULTING — HEALTHCARE &amp; ADHD PLATFORMS
               </h2>
               <div className="mt-4 flex flex-wrap items-baseline gap-x-4 gap-y-1">
                 <span className="font-mono text-[11px] tracking-[0.14em] text-stone-text uppercase">
@@ -75,7 +75,7 @@ export default function Section06Decentracare() {
                 </span>
                 <span className="font-mono text-[11px] tracking-[0.14em] text-stone-text/60 uppercase">·</span>
                 <span className="font-body italic text-[13px] text-cobalt">
-                  Full Stack · Contractor
+                  Full Stack Developer · Contractor
                 </span>
               </div>
             </div>
@@ -83,9 +83,14 @@ export default function Section06Decentracare() {
 
           <div ref={rightRef} className="opacity-0 lg:col-span-7 lg:pt-1">
             <p className="font-body text-[15px] text-ink leading-[1.7]">
-              Built Decentracare, a CRM platform serving hundreds of nurses. Developed AWS Glue
-              ETL pipelines for the Michigan Health Information Network (MiHIN), processing
-              healthcare data in full HIPAA compliance.
+              <strong>Decentracare</strong> — took over the MVP of a healthcare gig-economy
+              staffing platform and shipped new functionality, improvements, and bug fixes across
+              a React frontend, Python/Flask backend, and AWS deployment. Platform grew to 350+
+              clinicians on the network.
+            </p>
+            <p className="font-body text-[15px] text-ink leading-[1.7] mt-4">
+              <strong>ADHD Online</strong> — implemented features for the core online ADHD
+              assessment flow and dashboard in Vue.js; resolved long-standing application bugs.
             </p>
 
             <div className="flex flex-wrap gap-1.5 mt-6">
@@ -101,7 +106,7 @@ export default function Section06Decentracare() {
 
             <div className="mt-7">
               <MechanicalButton variant="outline" href="https://augustoconsulting.com">
-                VIEW PROJECT →
+                AUGUSTO CONSULTING →
               </MechanicalButton>
             </div>
           </div>

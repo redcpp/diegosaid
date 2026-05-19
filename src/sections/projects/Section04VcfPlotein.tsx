@@ -116,6 +116,9 @@ export default function Section04VcfPlotein() {
             </div>
 
             <div className="mt-7 flex flex-wrap items-center gap-3">
+              <MechanicalButton variant="outline" href="https://vcfplotein.liigh.unam.mx">
+                LAUNCH VCF/PLOTEIN →
+              </MechanicalButton>
               <MechanicalButton variant="outline" href="https://github.com/redcpp/vcfplotein">
                 VIEW ON GITHUB →
               </MechanicalButton>

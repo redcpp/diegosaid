@@ -8,7 +8,7 @@ import useReducedMotion from '@/hooks/use-reduced-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const METRICS = ['DEFI PROTOCOL', 'PROOF BY CONTRADICTION', 'RISK PREVENTION', 'ALGORAND'];
+const METRICS = ['xUSD CDP STABLECOIN', 'LITEPAPER V2.0', 'ADR-46 · ADR-47', 'ALGORAND'];
 
 export default function Section03Xbacked() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -83,11 +83,18 @@ export default function Section03Xbacked() {
 
           <div ref={rightRef} className="opacity-0 lg:col-span-7 lg:pt-1">
             <p className="font-body text-[15px] text-ink leading-[1.7]">
-              Core developer on xBacked DAO, an Algorand DeFi lending protocol with the xUSD
-              stablecoin. Shipped staking and governance. Authored ADR-47: The Case Against Pact
-              xUSD Launch — a proof by contradiction showing the proposed LP-seeding mechanism
-              contained fundamental economic flaws. The analysis blocked the launch and anticipated
-              risk patterns seen in the 2022 algorithmic stablecoin failures.
+              Core engineer on <strong>xUSD</strong>, a CDP-style stablecoin on Algorand:
+              contributed to vault contracts (mint, withdraw, repay) over Algorand Standard Asset
+              (ASA) collateral, the liquidation engine with keeper-bot incentives, the redemption
+              mechanism establishing the xUSD price floor, and isolated risk markets per
+              collateral type. Built xUSD staking, governance staking, and the keeper economy
+              (fee collectors, supply-fee settlers, liquidator keepers, vault proposers) underpinning
+              protocol revenue. Co-authored the <strong>xBacked Litepaper v2.0</strong>; authored
+              <strong> ADR-46 (Vault Looping)</strong> — closed-form recursive-leverage limits,
+              bidirectional liquidation thresholds, and carry-vs-directional decomposition — and
+              <strong> ADR-47</strong>, a proof-by-contradiction case against an LP-backed mint
+              that prevented a launch which would have diluted collateral or extracted value from
+              external LPs.
             </p>
 
             <div className="mt-6 bg-ink rounded-sm p-5 lg:p-6 relative">

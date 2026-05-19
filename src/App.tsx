@@ -1,23 +1,30 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Layout from '@/components/Layout';
-import Home from '@/pages/Home';
-import Projects from '@/pages/Projects';
-import Blog from '@/pages/Blog';
-import Adr47Post from '@/pages/blog/Adr47Post';
-import DistributedSystemsPost from '@/pages/blog/DistributedSystemsPost';
-import LlmInferencePost from '@/pages/blog/LlmInferencePost';
+import ErrorBoundary from '@/components/ErrorBoundary';
+
+const Home = lazy(() => import('@/pages/Home'));
+const Projects = lazy(() => import('@/pages/Projects'));
+const Blog = lazy(() => import('@/pages/Blog'));
+const Adr47Post = lazy(() => import('@/pages/blog/Adr47Post'));
+const DistributedSystemsPost = lazy(() => import('@/pages/blog/DistributedSystemsPost'));
+const LlmInferencePost = lazy(() => import('@/pages/blog/LlmInferencePost'));
 
 export default function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/blog/adr47" element={<Adr47Post />} />
-        <Route path="/blog/distributed-systems" element={<DistributedSystemsPost />} />
-        <Route path="/blog/llm-inference" element={<LlmInferencePost />} />
-      </Routes>
-    </Layout>
+    <ErrorBoundary>
+      <Layout>
+        <Suspense fallback={<div className="min-h-screen bg-creme" aria-hidden="true" />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/adr47" element={<Adr47Post />} />
+            <Route path="/blog/distributed-systems" element={<DistributedSystemsPost />} />
+            <Route path="/blog/llm-inference" element={<LlmInferencePost />} />
+          </Routes>
+        </Suspense>
+      </Layout>
+    </ErrorBoundary>
   );
 }

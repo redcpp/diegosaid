@@ -1,6 +1,6 @@
 # diegosaid
 
-Personal portfolio site — editorial layout, scroll-driven animation, shipped on Cloudflare Pages.
+Personal portfolio site — a hand-built React SPA that holds scroll-driven animation, a strict performance budget, and a full accessibility baseline in balance. Shipped on Cloudflare Pages.
 
 **Live:** https://diegosaid.com
 
@@ -14,6 +14,8 @@ A production single-page app written from scratch with an emphasis on three thin
 - **Resilience** — top-level `ErrorBoundary` catches render errors per route so a broken section never blanks the page.
 - **A11y baseline** — visible focus rings, skip link, semantic landmarks, reduced-motion fallbacks, alt text on every illustrative asset.
 - **SEO / PWA** — sitemap, robots, OpenGraph image, web manifest, Apple touch icon, and `_headers` with CSP, HSTS, and referrer policy live in [`public/`](public/).
+
+Read end to end, it's a small system kept disciplined: explicit performance and motion budgets, a top-level failure mode that degrades gracefully instead of blanking the page, and a section layout you can reorder without hunting through imports. The same systems-thinking and maintenance instincts, applied to a small surface.
 
 ## Stack
 

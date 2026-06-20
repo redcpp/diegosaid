@@ -1,4 +1,6 @@
 import BlogPostLayout from './BlogPostLayout';
+import Code from '@/components/Code';
+import Math from '@/components/Math';
 
 export default function Adr47Post() {
   return (
@@ -26,13 +28,10 @@ export default function Adr47Post() {
       <p>
         In any efficient market, the no-arbitrage condition states that there should exist no risk-free profit opportunity from price discrepancies between venues. For AMM liquidity pools, this means:
       </p>
-      <pre>
-{`Pool Price = External Market Price
-
-If Pool Price ≠ External Market Price:
-  → Arbitrageurs trade until equality is restored
-  → LPs suffer impermanent loss proportional to the deviation`}
-      </pre>
+      <Math display>{`P_{\\text{pool}} = P_{\\text{market}}`}</Math>
+      <p>
+        If <Math>{`P_{\\text{pool}} \\neq P_{\\text{market}}`}</Math>, arbitrageurs trade until equality is restored, and LPs suffer impermanent loss proportional to the deviation.
+      </p>
       <p>
         The LP-seeding mechanism violated this by creating a massive, one-sided liquidity injection at a price point not validated by external markets. The protocol would effectively be setting the initial price arbitrarily — a price that sophisticated actors could exploit before retail users even accessed the pool.
       </p>
@@ -41,18 +40,20 @@ If Pool Price ≠ External Market Price:
       <p>
         Here is the core argument from ADR-47, reconstructed for clarity:
       </p>
-      <pre>
-{`Assume: The LP-seeding mechanism maintains the peg.
-
-Step 1: The protocol deposits (X, Y) into the pool at ratio R = X/Y.
-Step 2: R is set by the protocol team, not by market discovery.
-Step 3: If R > Market Price, arbitrageurs sell xUSD to the pool.
-Step 4: If R < Market Price, arbitrageurs buy xUSD from the pool.
-Step 5: In both cases, the protocol's deposited liquidity is drained.
-Step 6: Therefore, the peg cannot be maintained.
-
-Contradiction. ∎`}
-      </pre>
+      <p>
+        <strong>Assume:</strong> The LP-seeding mechanism maintains the peg.
+      </p>
+      <ol>
+        <li>The protocol deposits <Math>{`(X, Y)`}</Math> into the pool at ratio <Math>{`R = X / Y`}</Math>.</li>
+        <li><Math>{`R`}</Math> is set by the protocol team, not by market discovery.</li>
+        <li>If <Math>{`R > P_{\\text{market}}`}</Math>, arbitrageurs sell xUSD to the pool.</li>
+        <li>If <Math>{`R < P_{\\text{market}}`}</Math>, arbitrageurs buy xUSD from the pool.</li>
+        <li>In both cases, the protocol's deposited liquidity is drained.</li>
+        <li>Therefore, the peg cannot be maintained.</li>
+      </ol>
+      <p>
+        <strong>Contradiction.</strong> <Math>{`\\blacksquare`}</Math>
+      </p>
       <p>
         The key insight is Step 2: any protocol-set price is informationally inferior to a market-discovered price. By injecting liquidity at an arbitrary ratio, the protocol becomes the counterparty to every arbitrage trade — and arbitrageurs have better information.
       </p>
@@ -85,19 +86,17 @@ Contradiction. ∎`}
       <p>
         The xBacked protocol was implemented in PyTeal, Algorand's Python smart contract language. The LP-seeding mechanism would have been a stateful smart contract managing the initial liquidity deposit. Here is a simplified representation of the vulnerable logic:
       </p>
-      <pre>
-{`# Simplified vulnerable logic (NOT deployed)
+      <Code language="python">{`# Simplified vulnerable logic (NOT deployed)
 def seed_liquidity(xusd_amount, pact_amount):
     # Protocol sets the ratio arbitrarily
     ratio = xusd_amount / pact_amount
-    
+
     # Deposit into constant-product pool
     pool.deposit(xusd_amount, pact_amount)
-    
+
     # Mint LP tokens to protocol treasury
     lp_tokens = sqrt(xusd_amount * pact_amount)
-    treasury.mint(lp_tokens)`}
-      </pre>
+    treasury.mint(lp_tokens)`}</Code>
       <p>
         The corrected approach, proposed in ADR-47, was to use a gradual liquidity build-up through incentivized user deposits over a 14-day period, allowing market forces to discover the price organically before protocol capital was committed.
       </p>

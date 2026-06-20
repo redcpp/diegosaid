@@ -1,4 +1,5 @@
 import BlogPostLayout from './BlogPostLayout';
+import Code from '@/components/Code';
 
 export default function LlmInferencePost() {
   return (
@@ -26,8 +27,7 @@ export default function LlmInferencePost() {
       <p>
         Apple's MLX framework is not just a PyTorch clone for Macs. It is designed specifically for the Unified Memory Architecture of Apple Silicon, where CPU, GPU, and Neural Engine share a single memory pool. This has a profound implication for LLM inference:
       </p>
-      <pre>
-{`Traditional GPU (CUDA):
+      <Code>{`Traditional GPU (CUDA):
   - Model weights in VRAM (24GB max on consumer cards)
   - Activations copied between CPU RAM and VRAM
   - Context window limited by VRAM capacity
@@ -35,8 +35,7 @@ export default function LlmInferencePost() {
 Apple Silicon (MLX):
   - Model weights in unified memory (up to 192GB on Mac Studio)
   - Zero-copy tensor operations
-  - Context window limited by total RAM, not VRAM`}
-      </pre>
+  - Context window limited by total RAM, not VRAM`}</Code>
       <p>
         On a Mac Studio with 64GB unified memory, I can run a 70B parameter model with 4-bit quantization — something that requires multiple A100s in a traditional setup. The throughput is lower, but for our use case (batch contract analysis, not real-time chat), latency is acceptable.
       </p>
@@ -45,8 +44,7 @@ Apple Silicon (MLX):
       <p>
         Our inference stack has three layers:
       </p>
-      <pre>
-{`Layer 1: Model Serving (MLX Server)
+      <Code>{`Layer 1: Model Serving (MLX Server)
   - Framework: mlx-lm
   - Model: Meta-Llama-3.1-70B-Instruct (4-bit quantized)
   - Interface: OpenAI-compatible HTTP API
@@ -61,34 +59,31 @@ Layer 2: Network (Tailscale)
 Layer 3: Application Integration
   - Claude API for non-sensitive tasks (marketing copy)
   - Local MLX for sensitive tasks (contract review)
-  - Router decides based on data classification`}
-      </pre>
+  - Router decides based on data classification`}</Code>
 
       <h2>Setting Up MLX Server</h2>
       <p>
         The setup is surprisingly minimal. MLX provides a drop-in server compatible with the OpenAI API format:
       </p>
-      <pre>
-{`# Install
+      <Code language="bash">{`# Install
 pip install mlx-lm
 
 # Download quantized model
 huggingface-cli download mlx-community/Meta-Llama-3.1-70B-Instruct-4bit
 
 # Start server
-python -m mlx_lm.server \
-  --model mlx-community/Meta-Llama-3.1-70B-Instruct-4bit \
-  --host 127.0.0.1 \
+python -m mlx_lm.server \\
+  --model mlx-community/Meta-Llama-3.1-70B-Instruct-4bit \\
+  --host 127.0.0.1 \\
   --port 8080
 
 # Test
- curl http://localhost:8080/v1/chat/completions \
-  -H "Content-Type: application/json" \
+curl http://localhost:8080/v1/chat/completions \\
+  -H "Content-Type: application/json" \\
   -d '{
     "model": "local",
     "messages": [{"role": "user", "content": "Hello"}]
-  }'`}
-      </pre>
+  }'`}</Code>
       <p>
         The key advantage is API compatibility. Existing code that calls OpenAI's API works with minimal changes — just change the base URL.
       </p>
@@ -97,9 +92,7 @@ python -m mlx_lm.server \
       <p>
         Tailscale makes the Mac Studio accessible from anywhere without opening firewall ports or managing static IPs. Each agent installs Tailscale on their laptop, and I configure ACLs so only authorized devices can reach the inference endpoint:
       </p>
-      <pre>
-{`// tailscale ACL
-{
+      <Code language="json">{`{
   "acls": [
     {
       "action": "accept",
@@ -107,8 +100,7 @@ python -m mlx_lm.server \
       "dst": ["tag:inference-server:8080"]
     }
   ]
-}`}
-      </pre>
+}`}</Code>
       <p>
         The connection is encrypted with WireGuard and routed through Tailscale's DERP relays only when direct connections fail. In practice, two Macs on the same Tailscale network communicate directly with ~2ms latency.
       </p>
@@ -117,29 +109,27 @@ python -m mlx_lm.server \
       <p>
         Raw inference is not enough. We built a "skill" layer that structures LLM calls into reusable workflows. The contract comparison skill, for example:
       </p>
-      <pre>
-{`class ContractComparisonSkill:
+      <Code language="python">{`class ContractComparisonSkill:
     def __init__(self, mlx_client):
         self.client = mlx_client
-    
+
     def compare(self, contract_a, contract_b):
         prompt = f"""
         Compare these two real estate contracts.
-        Identify differences in: payment terms, delivery dates, 
+        Identify differences in: payment terms, delivery dates,
         penalty clauses, and force majeure provisions.
-        
+
         Contract A: {contract_a}
         Contract B: {contract_b}
         """
-        
+
         response = self.client.chat.completions.create(
             model="local",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.1,  # Low temperature for consistency
         )
-        
-        return self.parse_comparison(response.choices[0].message.content)`}
-      </pre>
+
+        return self.parse_comparison(response.choices[0].message.content)`}</Code>
       <p>
         The temperature of 0.1 is critical for legal analysis. High temperatures produce creative language; legal review requires deterministic outputs.
       </p>
@@ -148,8 +138,7 @@ python -m mlx_lm.server \
       <p>
         On a Mac Studio (M2 Ultra, 64GB RAM):
       </p>
-      <pre>
-{`Model: Meta-Llama-3.1-70B-Instruct (4-bit)
+      <Code>{`Model: Meta-Llama-3.1-70B-Instruct (4-bit)
 Context: 4096 tokens
 Throughput: ~18 tokens/second
 Memory usage: ~42GB unified memory
@@ -158,8 +147,7 @@ Comparison: GPT-4 API
 Cost per 1M tokens: ~$30
 Our usage: ~500K tokens/month
 Monthly savings: ~$15 (direct inference)
-                        + $0 (data never leaves premises)`}
-      </pre>
+              + $0 (data never leaves premises)`}</Code>
       <p>
         The raw cost savings are modest because our volume is low. The real value is data sovereignty and zero latency for batch processing. A contract review job that would queue on OpenAI's API runs immediately on our stack.
       </p>

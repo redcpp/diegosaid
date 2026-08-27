@@ -21,7 +21,10 @@ const {
   personSchema = false,
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site).href.replace(/(.)\/$/, '$1');
+// Keep the trailing slash: Cloudflare Pages 308-redirects /blog/adr47 to
+// /blog/adr47/, and the sitemap emits the slashed form. Stripping it here would
+// point the canonical at a URL that redirects to the canonical.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageUrl = new URL(ogImage, Astro.site).href;
 
 const fontHref =

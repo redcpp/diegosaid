@@ -5,6 +5,7 @@
 @layer base {
   html {
     scroll-padding-top: 5rem;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -45,13 +46,16 @@
     margin-bottom: 1.25rem;
   }
 
+  /* Shiki renders <pre class="astro-code"> with an inline background from the
+     theme; override it to the paper-toned block the site used previously. */
   .blog-article pre {
-    background-color: #1C1C1C;
-    color: #E4E4E7;
-    padding: 1.5rem;
+    background-color: #F4F4F2 !important;
+    color: #2C2C2C;
+    padding: 1.25rem 1.5rem;
     border-radius: 0.5rem;
+    border: 1px solid #E4E4E7;
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 0.8125rem;
+    font-size: 14px;
     line-height: 1.7;
     overflow-x: auto;
     margin-bottom: 1.5rem;
@@ -78,6 +82,14 @@
     padding-left: 1.5rem;
   }
 
+  .blog-article ul {
+    list-style-type: disc;
+  }
+
+  .blog-article ol {
+    list-style-type: decimal;
+  }
+
   .blog-article li {
     font-size: 1rem;
     line-height: 1.75;
@@ -96,6 +108,13 @@
 
   .blog-article a:hover {
     color: #2C2C2C;
+  }
+
+  /* KaTeX display blocks scroll rather than overflow the measure. */
+  .blog-article .katex-display {
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 }
 

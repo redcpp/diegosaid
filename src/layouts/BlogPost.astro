@@ -1,0 +1,64 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { monthYearUpper, readTimeUpper } from '@/lib/format';
+import 'katex/dist/katex.min.css';
+
+interface Props {
+  title: string;
+  subtitle: string;
+  excerpt: string;
+  date: Date;
+  readMinutes: number;
+  tags: string[];
+  slug: string;
+}
+
+const { title, subtitle, excerpt, date, readMinutes, tags, slug } = Astro.props;
+---
+
+<BaseLayout
+  title={`${title} — Diego Said`}
+  description={excerpt}
+  ogImage={`/og/blog/${slug}.png`}
+  ogType="article"
+>
+  <div class="max-w-[780px] mx-auto px-6 lg:px-8 py-16 lg:py-24">
+    <a href="/blog" class="text-[14px] font-mono text-muted hover:text-accent transition-colors">
+      ← All articles
+    </a>
+
+    <header class="mt-8">
+      <div class="flex flex-wrap items-baseline gap-3 text-[13px] font-mono text-muted">
+        <span>{monthYearUpper(date)}</span>
+        <span>·</span>
+        <span>{readTimeUpper(readMinutes)}</span>
+      </div>
+      <h1 class="text-[28px] lg:text-[32px] font-bold tracking-tight mt-3">{title}</h1>
+      <p class="text-[17px] text-muted mt-3 italic leading-relaxed">{subtitle}</p>
+      <div class="flex flex-wrap gap-2 mt-4">
+        {
+          tags.map((tag) => (
+            <span class="text-[12px] font-mono text-muted border border-rule px-2 py-0.5 rounded">
+              {tag}
+            </span>
+          ))
+        }
+      </div>
+    </header>
+
+    <article class="blog-article mt-12 border-t border-rule pt-8">
+      <slot />
+    </article>
+
+    <div class="mt-16 flex items-center gap-4">
+      <span class="flex-1 h-px bg-rule"></span>
+      <span class="text-muted text-[13px]">∎</span>
+    </div>
+
+    <div class="mt-8">
+      <a href="/blog" class="text-[14px] font-mono text-muted hover:text-accent transition-colors">
+        ← All articles
+      </a>
+    </div>
+  </div>
+</BaseLayout>

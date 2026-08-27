@@ -1,0 +1,32 @@
+---
+// The Contact link used to be a React button wired through useLocation/useNavigate
+// so it could scroll on the home page and route-then-scroll from anywhere else.
+// A plain fragment link does both: same-page anchors scroll (html has
+// scroll-behavior: smooth), and off-page it navigates home and lands on #contact.
+---
+
+<nav class="fixed top-0 inset-x-0 z-50 bg-paper/95 backdrop-blur-sm border-b border-rule">
+  <div class="max-w-[780px] mx-auto px-6 lg:px-8 h-14 flex items-center justify-between">
+    <a
+      href="/"
+      class="text-[15px] font-bold font-serif text-ink hover:text-accent transition-colors"
+    >
+      Diego Said
+    </a>
+
+    <div class="flex items-center gap-6">
+      <a
+        href="/blog"
+        class="text-[14px] font-serif text-muted hover:text-ink transition-colors"
+      >
+        Writing
+      </a>
+      <a
+        href="/#contact"
+        class="text-[14px] font-serif text-muted hover:text-ink transition-colors"
+      >
+        Contact
+      </a>
+    </div>
+  </div>
+</nav>

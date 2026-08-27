@@ -1,6 +1,7 @@
 node_modules
 dist
 output
+.astro
 .DS_Store
 .wrangler
 *.local

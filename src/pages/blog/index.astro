@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { monthYear, readTime } from '@/lib/format';
+
+// Ascending by date, matching the order the hand-maintained POSTS array used.
+const posts = (await getCollection('blog')).sort(
+  (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
+);
+---
+
+<BaseLayout
+  title="Writing — Diego Said"
+  description="Long-form essays on protocol design, distributed systems, and AI infrastructure."
+  ogImage="/og/blog.png"
+>
+  <div class="max-w-[780px] mx-auto px-6 lg:px-8 py-16 lg:py-24">
+    <h1 class="text-[28px] lg:text-[32px] font-bold tracking-tight">Writing</h1>
+    <p class="mt-3 text-[17px] text-muted leading-relaxed">
+      Long-form essays on protocol design, distributed systems, and AI infrastructure.
+    </p>
+    <div class="mt-12 border-t border-rule divide-y divide-rule">
+      {
+        posts.map((post) => (
+          <a href={`/blog/${post.id}`} class="block py-8 group">
+            <div class="flex items-baseline gap-3 text-[13px] font-mono text-muted">
+              <span>{monthYear(post.data.date)}</span>
+              <span>·</span>
+              <span>{readTime(post.data.readMinutes)}</span>
+            </div>
+            <h2 class="text-[20px] font-bold mt-2 group-hover:text-accent transition-colors">
+              {post.data.title}
+            </h2>
+            <p class="text-[15px] text-muted mt-2 leading-relaxed">{post.data.excerpt}</p>
+            <div class="flex flex-wrap gap-2 mt-3">
+              {post.data.tags.map((tag) => (
+                <span class="text-[12px] font-mono text-muted border border-rule px-2 py-0.5 rounded">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

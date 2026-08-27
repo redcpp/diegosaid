@@ -139,7 +139,7 @@ const HONORS = [
   personSchema
 >
   <div class="max-w-[780px] mx-auto px-6 lg:px-8 pb-16">
-    <!-- 1. HEADER -->
+    {/* 1. HEADER */}
     <header class="py-16 lg:py-24 text-center">
       <h1 class="text-[28px] lg:text-[32px] font-bold tracking-tight text-ink font-serif">
         Diego Said Anaya Mancilla
@@ -149,7 +149,14 @@ const HONORS = [
       </p>
       <p class="text-[14px] font-mono text-muted mt-6">Nuevo Vallarta, Nayarit, Mexico</p>
       <p class="text-[14px] font-mono mt-1">
+        {/* Cloudflare's Email Address Obfuscation rewrites mailto: links into a
+            __cf_email__ span that needs JavaScript to decode, so the address is
+            absent from the HTML a recruiter's scraper or an LLM screener reads.
+            These markers opt the region out; they must stay HTML comments,
+            because Cloudflare reads them from the response body. */}
+        <!--email_off-->
         <a href="mailto:redcpp@gmail.com" class="text-accent">redcpp@gmail.com</a>
+        <!--email_on-->
         <span class="text-muted"> &middot; </span>
         <a
           href="https://github.com/redcpp"
@@ -167,7 +174,7 @@ const HONORS = [
       </p>
     </header>
 
-    <!-- 2. ABOUT -->
+    {/* 2. ABOUT */}
     <section class="border-t border-rule pt-12 mt-12">
       <h2 class="text-[22px] font-bold font-serif">About</h2>
       <p class="mt-4 text-[17px] leading-[1.75] font-serif text-ink">
@@ -178,7 +185,7 @@ const HONORS = [
       </p>
     </section>
 
-    <!-- 3. EXPERIENCE -->
+    {/* 3. EXPERIENCE */}
     <section class="border-t border-rule pt-12 mt-12">
       <h2 class="text-[22px] font-bold font-serif mb-8">Experience</h2>
       <div class="space-y-0">
@@ -199,7 +206,7 @@ const HONORS = [
       </div>
     </section>
 
-    <!-- 4. OPEN SOURCE -->
+    {/* 4. OPEN SOURCE */}
     <section class="border-t border-rule pt-12 mt-12">
       <h2 class="text-[22px] font-bold font-serif mb-8">Open Source</h2>
       {
@@ -229,7 +236,7 @@ const HONORS = [
       }
     </section>
 
-    <!-- 5. PUBLICATIONS -->
+    {/* 5. PUBLICATIONS */}
     <section class="border-t border-rule pt-12 mt-12">
       <h2 class="text-[22px] font-bold font-serif mb-6">Publications</h2>
       {
@@ -239,7 +246,7 @@ const HONORS = [
       }
     </section>
 
-    <!-- 6. EDUCATION -->
+    {/* 6. EDUCATION */}
     <section class="border-t border-rule pt-12 mt-12">
       <h2 class="text-[22px] font-bold font-serif mb-8">Education</h2>
       <div class="space-y-0">
@@ -260,13 +267,13 @@ const HONORS = [
       </div>
     </section>
 
-    <!-- 7. HONORS -->
+    {/* 7. HONORS */}
     <section class="border-t border-rule pt-12 mt-12">
       <h2 class="text-[22px] font-bold font-serif mb-6">Honors</h2>
       {HONORS.map((honor) => <p class="text-[15px] leading-[1.7] font-serif text-ink">{honor}</p>)}
     </section>
 
-    <!-- 8. SKILLS -->
+    {/* 8. SKILLS */}
     <section class="border-t border-rule pt-12 mt-12">
       <h2 class="text-[22px] font-bold font-serif mb-6">Technical Competencies</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
@@ -284,16 +291,16 @@ const HONORS = [
       </p>
     </section>
 
-    <!-- 9. CONTACT -->
+    {/* 9. CONTACT */}
     <section id="contact" class="border-t border-rule pt-12 mt-12 scroll-mt-20">
       <h2 class="text-[22px] font-bold font-serif mb-6">Contact</h2>
       <div class="space-y-2 font-mono text-[15px]">
         <p>
-          Email: <a
+          Email: <!--email_off--><a
             href="mailto:redcpp@gmail.com"
             class="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent"
             >redcpp@gmail.com</a
-          >
+          ><!--email_on-->
         </p>
         <p class="text-ink">Phone: +52 322 111 7595</p>
         <p>

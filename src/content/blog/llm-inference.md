@@ -1,9 +1,9 @@
 ---
 title: LLM Inference On-Premise
-subtitle: Running private MLX + Tailscale + Apple Silicon for secure, cost-effective LLM serving.
-excerpt: Running private MLX + Tailscale + Apple Silicon for secure, cost-effective LLM serving. A practical guide to the hardware, software, and trade-offs.
-date: 2024-09-01
-readMinutes: 5
+subtitle: A Mac mini, Gemma 3 under MLX, and Tailscale. What it takes to keep client documents off third-party APIs at a small firm.
+excerpt: A practical account of running a private LLM server for a real estate brokerage on a 2025 Mac mini with Apple's MLX framework and Gemma 3, reachable only over Tailscale. Architecture, setup, throughput, and when not to do this.
+date: 2026-09-07
+readMinutes: 7
 tags:
   - LLM
   - MLX
@@ -11,165 +11,104 @@ tags:
   - Tailscale
 ---
 
-In 2024 I built a private LLM inference stack for CAM Grupo on Apple Silicon, using Apple's MLX framework and Tailscale for remote access. The motive was not cost. It was keeping client documents inside the firm's network. This article explains the architecture, the trade-offs, and why on-premise inference is viable for a small team.
+In 2025 I set up a private LLM inference server for CAM Grupo, a real estate brokerage, on a Mac mini. The model runs under Apple's MLX framework and the machine is reachable only over a Tailscale network. The motive was not cost. At our volume a hosted API is cheap. The motive was that contracts, client communications, and pre-sale pricing should not leave the firm's network, whatever a provider's retention policy says.
 
-## The Problem: API Costs and Data Sovereignty
+This is what the stack looks like, what it took to set up, and where it stops being the right answer.
 
-CAM Grupo processes legal contracts, client communications, and proprietary market data. Sending this to a hosted API means the data leaves our infrastructure. For a brokerage handling pre-sale developments with confidential pricing, that is not acceptable, whatever the provider's retention policy says.
+## Why a Mac and not a GPU box
 
-The alternative — running models locally — was historically impractical. CUDA dependencies, power consumption, and model availability made self-hosting a full-time job. MLX changed that.
+Apple Silicon shares one memory pool between CPU and GPU. For LLM inference that matters more than raw compute, because the constraint on running a model is whether the weights fit in memory the GPU can address. On a discrete GPU that is VRAM, and consumer cards top out around 24 GB. On a Mac it is the whole machine's RAM.
 
-## MLX: Why Apple Silicon?
+MLX is Apple's array framework built for that architecture. Tensors live in unified memory and move between CPU and GPU without copies. The practical effect is that a quiet, low-power desktop can hold a model that would otherwise need a workstation GPU, at the cost of generation speed.
 
-Apple's MLX framework is not just a PyTorch clone for Macs. It is designed specifically for the Unified Memory Architecture of Apple Silicon, where CPU, GPU, and Neural Engine share a single memory pool. This has a profound implication for LLM inference:
+A 2025 Mac mini with an M4 Pro is enough. It is small, silent, draws little power at idle, and sits on a shelf in the office.
 
-```text
-Traditional GPU (CUDA):
-  - Model weights in VRAM (24GB max on consumer cards)
-  - Activations copied between CPU RAM and VRAM
-  - Context window limited by VRAM capacity
+## The model
 
-Apple Silicon (MLX):
-  - Model weights in unified memory (up to 192GB on Mac Studio)
-  - Zero-copy tensor operations
-  - Context window limited by total RAM, not VRAM
-```
+The server runs Gemma 3, Google's open-weight model, in the 27B-parameter instruction-tuned variant quantized to 4 bits. At that size the weights take roughly 16 GB, which leaves the rest of memory for the KV cache and long documents. Gemma 3 handles Spanish well, which matters for Mexican real estate contracts, and its 128k context window means a full contract fits in one prompt.
 
-On a Mac Studio with 64GB unified memory, I can run a 70B parameter model with 4-bit quantization — something that requires multiple A100s in a traditional setup. The throughput is lower, but for our use case (batch contract analysis, not real-time chat), latency is acceptable.
+The 4-bit quantization costs some quality against the full-precision model. For our tasks, comparing contract versions, extracting clauses, summarizing communications, the difference has not been material. For anything where it might be, the router below sends the job elsewhere.
 
-## The Stack
-
-Our inference stack has three layers:
+## The stack
 
 ```text
-Layer 1: Model Serving (MLX Server)
-  - Framework: mlx-lm
-  - Model: Meta-Llama-3.1-70B-Instruct (4-bit quantized)
-  - Interface: OpenAI-compatible HTTP API
-  - Local endpoint: http://localhost:8080/v1/completions
+Model serving
+  mlx-lm server, OpenAI-compatible HTTP API
+  model: mlx-community/gemma-3-27b-it-4bit
+  bound to the Tailscale interface, not 0.0.0.0
 
-Layer 2: Network (Tailscale)
-  - VPN mesh network over WireGuard
-  - Each agent's MacBook is a node
-  - Mac Studio is the "server" node
-  - ACLs restrict who can reach port 8080
+Network
+  Tailscale mesh over WireGuard
+  every staff laptop is a node
+  ACL: only tagged staff devices may reach the server's port
 
-Layer 3: Application Integration
-  - Claude API when the inputs are not confidential
-  - Local MLX when a document must stay on premises
-  - Router decides based on data classification
+Application
+  hosted Claude API when the inputs are not confidential
+  local Gemma when a document must stay on premises
+  the caller decides based on data classification, not on convenience
 ```
 
-## Setting Up MLX Server
+## Setup
 
-The setup is surprisingly minimal. MLX provides a drop-in server compatible with the OpenAI API format:
+MLX ships a server that speaks the OpenAI chat-completions format, so existing client code needs only a new base URL.
 
 ```bash
-# Install
 pip install mlx-lm
 
-# Download quantized model
-huggingface-cli download mlx-community/Meta-Llama-3.1-70B-Instruct-4bit
-
-# Start server
-python -m mlx_lm.server \
-  --model mlx-community/Meta-Llama-3.1-70B-Instruct-4bit \
-  --host 127.0.0.1 \
+mlx_lm.server \
+  --model mlx-community/gemma-3-27b-it-4bit \
+  --host 100.x.y.z \
   --port 8080
-
-# Test
-curl http://localhost:8080/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "local",
-    "messages": [{"role": "user", "content": "Hello"}]
-  }'
 ```
 
-The key advantage is API compatibility. Existing code that calls OpenAI's API works with minimal changes — just change the base URL.
+The host is the machine's Tailscale address. Binding there instead of to all interfaces means the port does not exist on the office LAN or the public internet, only inside the mesh.
 
-## Tailscale: The Networking Layer
+```python
+from openai import OpenAI
 
-Tailscale makes the Mac Studio accessible from anywhere without opening firewall ports or managing static IPs. Each agent installs Tailscale on their laptop, and I configure ACLs so only authorized devices can reach the inference endpoint:
+client = OpenAI(base_url="http://100.x.y.z:8080/v1", api_key="unused")
+
+response = client.chat.completions.create(
+    model="local",
+    messages=[{"role": "user", "content": prompt}],
+    temperature=0.1,
+)
+```
+
+The low temperature is deliberate. Contract review wants the same answer to the same question every time, and a near-greedy decode is the closest a sampling model gets to that.
+
+## Tailscale
+
+Tailscale gives every device a stable address on a private WireGuard mesh, with no port forwarding, no static IP, and no VPN concentrator. Access control is a policy file:
 
 ```json
 {
   "acls": [
     {
       "action": "accept",
-      "src": ["group:agents"],
-      "dst": ["tag:inference-server:8080"]
+      "src": ["group:staff"],
+      "dst": ["tag:inference:8080"]
     }
   ]
 }
 ```
 
-The connection is encrypted with WireGuard and routed through Tailscale's DERP relays only when direct connections fail. In practice, two Macs on the same Tailscale network communicate directly with ~2ms latency.
+Devices in the staff group can reach the inference tag on that port. Nothing else can, including other devices on the same office network. Connections between two Macs on the mesh are direct once the initial hole-punch succeeds, and relayed through Tailscale's DERP servers only when it fails.
 
-## Custom Skills: Contract Comparison
+## Throughput, and how to estimate it
 
-Raw inference is not enough. We built a "skill" layer that structures LLM calls into reusable workflows. The contract comparison skill, for example:
+Single-stream generation on this class of hardware is bound by memory bandwidth, not compute. Each generated token reads the full set of weights once, so the ceiling is bandwidth divided by weight size. An M4 Pro moves about 273 GB/s and a 4-bit 27B model is about 16 GB, so the theoretical ceiling is around 17 tokens per second. In practice, with cache reads and overhead, expect something on the order of ten.
 
-```python
-class ContractComparisonSkill:
-    def __init__(self, mlx_client):
-        self.client = mlx_client
+That is slow for interactive chat and fine for what we use it for. Contract review is a batch job. A document goes in, an analysis comes out a minute later, and nobody is watching the cursor. Prompt processing, the phase where the model reads the input, is compute-bound and much faster per token, so long documents are not the bottleneck they look like.
 
-    def compare(self, contract_a, contract_b):
-        prompt = f"""
-        Compare these two real estate contracts.
-        Identify differences in: payment terms, delivery dates,
-        penalty clauses, and force majeure provisions.
+## Where it stops working
 
-        Contract A: {contract_a}
-        Contract B: {contract_b}
-        """
+- **Concurrency.** One machine serves one stream well. Two simultaneous users halve each other's speed. Ten need a queue or more machines.
+- **Model lag.** The strongest models are hosted-only, and open weights arrive later and smaller. For hard reasoning tasks the hosted API is better, and the router sends non-confidential hard tasks there.
+- **Operations.** Someone updates the model, watches memory, and restarts the server when it wedges. At a firm this size that someone is me. The stack is simple enough that this costs an hour a month, but it is not zero.
 
-        response = self.client.chat.completions.create(
-            model="local",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.1,  # Low temperature for consistency
-        )
+## When this is the right call
 
-        return self.parse_comparison(response.choices[0].message.content)
-```
+On-premise inference makes sense when the data cannot leave, when the workload is batch rather than interactive, when a model that fits in 32 to 64 GB is good enough for the task, and when one person can own the box part-time. All four held for us.
 
-The temperature of 0.1 is critical for legal analysis. High temperatures produce creative language; legal review requires deterministic outputs.
-
-## Performance Benchmarks
-
-On a Mac Studio (M2 Ultra, 64GB RAM):
-
-```text
-Model: Meta-Llama-3.1-70B-Instruct (4-bit)
-Context: 4096 tokens
-Throughput: ~18 tokens/second
-Memory usage: ~42GB unified memory
-
-Comparison: GPT-4 API
-Cost per 1M tokens: ~$30
-Our usage: ~500K tokens/month
-Monthly savings: ~$15 (direct inference)
-              + $0 (data never leaves premises)
-```
-
-The raw cost savings are modest because our volume is low. The real value is data sovereignty and zero latency for batch processing. A contract review job that would queue on OpenAI's API runs immediately on our stack.
-
-## Limitations and Trade-offs
-
-On-premise inference is not a universal replacement for API services:
-
-- **Throughput ceiling.** A Mac Studio handles one inference stream well. Concurrent users require queuing or multiple machines.
-- **Model lag.** New models appear on Hugging Face days or weeks after API release. If you need GPT-4-level reasoning on day one, APIs win.
-- **Operational burden.** Someone has to update models, monitor memory usage, and restart the server. At CAM Grupo, that is me.
-
-## When to Choose On-Premise
-
-Based on our experience, on-premise LLM inference makes sense when:
-
-1. Data cannot leave your infrastructure (legal, medical, financial).
-2. Usage is batch-oriented, not real-time (report generation, document review).
-3. You have Apple Silicon with 32GB+ unified memory available.
-4. You have one person who can manage the stack part-time.
-
-If you need real-time chat for thousands of users, use the APIs. If you need to analyze sensitive documents without sending them to San Francisco, MLX + Tailscale is a pragmatic, surprisingly powerful solution.
+If you need a frontier model, or real-time responses for many users, use a hosted API and put the confidential data somewhere else. If you need to read sensitive documents without sending them to a third party, a Mac mini on a Tailscale network is a small, quiet, and sufficient answer.

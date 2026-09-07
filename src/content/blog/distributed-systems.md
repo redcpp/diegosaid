@@ -1,9 +1,9 @@
 ---
 title: Distributed Systems Patterns
-subtitle: Lessons learned building resilient infrastructure at Oracle Cloud Infrastructure and CAM Grupo.
-excerpt: Lessons learned building resilient infrastructure at Oracle Cloud and CAM Grupo — failure modes, retries, idempotency, and the patterns that earn their keep.
-date: 2024-07-01
-readMinutes: 5
+subtitle: Four habits that survived the move from a Fortune 500 cloud provider to a firm where the on-call rotation is one person.
+excerpt: What carried over from building image pipelines and holding a Severity-1 pager at Oracle Cloud to running everything at a small real estate firm. State machines, idempotency, dependency-aware health, and picking the smallest tool.
+date: 2026-09-07
+readMinutes: 6
 tags:
   - Systems Design
   - Cloud
@@ -11,118 +11,40 @@ tags:
   - Oracle
 ---
 
-Between 2019 and 2021, I built OCI image pipelines at Oracle Cloud Infrastructure, migrating on-premise Big Data applications to the cloud. Since 2024 I have run engineering at Century 21 CAM Grupo, a real estate brokerage in Riviera Nayarit. These two environments, a Fortune 500 cloud provider and a small firm, taught me that distributed systems patterns are universal, but their implementation depends entirely on constraints.
+Between 2019 and 2021 I worked on Oracle Cloud Infrastructure's Big Data Service, building the image pipelines that moved on-premise Big Data applications into the cloud and taking my turn on the global on-call rotation for Severity-1 incidents. Since 2024 I have run engineering for Century 21 CAM Grupo, a real estate brokerage in Riviera Nayarit, where the infrastructure is a handful of Astro sites on Cloudflare, a PostgreSQL database of MLS transactions, a document-generation service, and a private LLM server.
 
-## Pattern 1: The Image Pipeline as a State Machine
+The two environments have almost nothing in common in scale. Four habits transferred anyway. I have come to think they are the part of distributed systems that is actually about systems, as opposed to the part that is about Kubernetes.
 
-At Oracle, every server re-imaging operation had to be atomic and recoverable. A failed firmware update on a production Big Data node could cost millions. We modeled the entire pipeline as a state machine:
+## A pipeline is a state machine, and every state needs an exit
 
-```text
-States: PENDING → DOWNLOADING → VERIFYING → FLASHING → VALIDATING → ACTIVE
-        ↓           ↓            ↓           ↓          ↓            ↓
-     TIMEOUT     RETRY        CORRUPT    ROLLBACK   FAILED       COMMIT
+An image pipeline takes a base image, applies a stack of software, verifies the result, and publishes an artifact. Written as a script, it is a sequence of steps. Written as a state machine, it is a set of states with explicit transitions, including the transitions you do not want.
 
-Transitions are triggered by events:
-  - checksum_verified  → VERIFYING → FLASHING
-  - flash_timeout      → FLASHING → ROLLBACK
-  - health_check_pass  → VALIDATING → ACTIVE
-```
+The difference shows up on failure. A script that dies during publish leaves an artifact that is half-uploaded, or uploaded but unverified, and the next run has to guess what happened. A state machine forces the question at design time: if verification fails, what state are we in, and what is the only legal move from there? At Oracle the answer was usually "discard and rebuild from the last verified stage," and encoding that in TeamCity as separate stages with artifacts between them meant a failed run could resume rather than restart.
 
-The critical insight: every state must have a defined recovery path. If FLASHING fails, ROLLBACK is not optional — it is the only valid transition. At CAM Grupo, I applied the same pattern to our HDR photography pipeline: perspective correction → sharpening → CLAHE → LUT application. Each stage is a state with a rollback to the previous valid output.
+At CAM Grupo the pipeline is a document generator: property data goes in, a regulated contract comes out. The states are fewer, but the rule is identical. A contract is either fully generated and validated or it does not exist. There is no state where a partially rendered document has been handed to a client.
 
-## Pattern 2: CI/CD as a Directed Acyclic Graph
+## Every boundary is a retry boundary, so every operation must be idempotent
 
-Our TeamCity pipelines at Oracle started as linear scripts. They quickly became unmaintainable. The solution was to model CI/CD as a DAG where nodes are build stages and edges are artifact dependencies:
+Networks retry. Queues redeliver. Users double-click. If an operation is not safe to run twice, it will eventually run twice, and the second run will be the expensive one.
 
-```text
-compile → unit_test → integration_test → artifact_build
-   ↓           ↓              ↓                  ↓
-   └──→ static_analysis ←────┘                  ↓
-                                                ↓
-   security_scan → deploy_staging → e2e_test → deploy_prod
-        ↓
-   gate_approval (manual)
-```
+At Oracle this was a rule for the Python REST services that drove the pipelines: every mutating request carried a client-supplied key, and replaying a key returned the original result instead of doing the work again. The pattern is old and boring and it removed a whole class of incidents.
 
-The DAG structure enforces two properties: (1) no circular dependencies, and (2) parallel execution where possible. At CAM Grupo, our property portal deployment follows the same DAG pattern but with different stage definitions: build → lint → test → dockerize → deploy to staging → visual regression → deploy to production.
+The same rule shaped the contract generator. Generation is a pure function of its inputs. Regenerating a contract for the same property, client, and terms produces the same document, byte for byte, so a retry after a timeout cannot create a second, subtly different contract in a legal workflow. Determinism is idempotency you get for free.
 
-## Pattern 3: Idempotency at Every Boundary
+## Healthy means the dependencies are healthy
 
-The most expensive bugs in distributed systems are not crashes — they are duplicate operations. A retried HTTP request that creates two orders. A reprocessed SQS message that charges a customer twice. At Oracle, we enforced idempotency through UUID-based deduplication:
+A Severity-1 rotation teaches one thing quickly: a service that answers 200 on its health endpoint while its database is unreachable has lied to you at the worst possible moment. Root-cause analysis on enterprise outages, over and over, traced back to a component that was up but not functional, and to monitoring that could not tell the difference.
 
-```python
-class IdempotentOperation:
-    def execute(self, request_id, operation):
-        if self.store.exists(request_id):
-            return self.store.get_result(request_id)
+The habit that stuck is to make a health check a contract about dependencies. Each thing the service needs in order to do its job gets its own line: the database, the cache, the external API, the disk. Health is the conjunction. When something degrades, the check says which dependency, and the pager tells you where to look instead of that something is wrong.
 
-        result = operation()
-        self.store.set(request_id, result, ttl=86400)
-        return result
-```
+At the brokerage the same idea applies to data rather than services. The market-intelligence pipeline that cleans MLS transactions runs anomaly detection on its own output before anything downstream reads it. A dashboard that silently renders bad data is the data-pipeline version of a health check that returns 200.
 
-At CAM Grupo, this pattern appears in our contract generation system. Each NOM-247 document has a unique hash based on property ID + client ID + timestamp. Regenerating the same contract returns the cached PDF instead of creating a duplicate.
+## Constraints pick the tool, not the other way around
 
-## Pattern 4: Health Checks as Contracts
+Oracle had effectively unlimited compute and a process to match. CAM Grupo has a very limited budget and complete autonomy. The patterns above apply in both places. The implementations do not.
 
-Oracle's Severity 1 support rotation taught me that health checks should not just return HTTP 200. They should verify every dependency the service needs to function:
+- Oracle published images through Artifactory with TeamCity orchestrating. The brokerage's sites build on Cloudflare from a git push.
+- Oracle had SRE teams on follow-the-sun rotation. The brokerage has me, and the systems are chosen so that a page at 3 a.m. is rare and simple.
+- Oracle needed a stateful service for nearly everything. The brokerage runs static sites wherever a static site will do, which is most places.
 
-```json
-GET /health
-
-{
-  "status": "healthy",
-  "checks": {
-    "database": { "status": "ok", "latency_ms": 12 },
-    "cache": { "status": "ok", "hit_ratio": 0.94 },
-    "external_api": { "status": "ok", "last_success": "2024-07-15T10:23:00Z" },
-    "disk": { "status": "ok", "free_percent": 34 }
-  }
-}
-```
-
-This granularity saved us during a critical incident when the main application was responding but the cache was in a split-brain state. A simple HTTP 200 would have masked the problem. Detailed checks exposed it within seconds.
-
-## Pattern 5: Circuit Breakers for External Dependencies
-
-CAM Grupo's MLS data integration relies on third-party APIs with unpredictable latency. A circuit breaker prevents cascading failures:
-
-```text
-State Machine:
-  CLOSED    → error_rate > 0.5 → OPEN
-  OPEN      → wait 30s         → HALF_OPEN
-  HALF_OPEN → success          → CLOSED
-  HALF_OPEN → failure          → OPEN
-
-In OPEN state:
-  - All requests fail fast with cached data
-  - No network calls to the degraded service
-  - Background probes test recovery
-```
-
-Without this pattern, a slow MLS API would eventually exhaust our connection pool and crash the entire property search service. With the circuit breaker, users see slightly stale data instead of an error page.
-
-## Pattern 6: Event Sourcing for Auditability
-
-Real estate transactions require immutable audit trails. At CAM Grupo, we use an event-sourced model where every state change is an append-only event:
-
-```text
-Events:
-  PropertyListed { property_id, price, agent_id, timestamp }
-  PriceUpdated   { property_id, old_price, new_price, reason }
-  ContractSigned { property_id, client_id, document_hash }
-
-Current state = fold(apply_event, events)
-```
-
-This is overkill for simple CRUD applications. But when a transaction involves seven-figure sums and legal compliance, being able to replay every decision point is not a luxury — it is a requirement.
-
-## The Meta-Pattern: Constraints Determine Architecture
-
-Oracle had infinite compute but infinite process. CAM Grupo has limited resources but unlimited autonomy. The same patterns apply, but their implementations diverge:
-
-- Oracle used Kubernetes and Artifactory. CAM Grupo uses Docker Compose and GitHub Actions.
-- Oracle had 24/7 SRE teams. CAM Grupo has me, on-call by default.
-- Oracle's state machine had 12 states. CAM Grupo's has 4.
-
-The lesson: start with the pattern, not the tool. Understand what property you need (atomicity, idempotency, observability) and then choose the simplest implementation that satisfies your constraints. Complexity is a constraint failure.
+The mistake I see most often, in both large and small teams, is picking the tool first and then discovering which properties it gives you. It works better in the other order. Decide what you need: atomic publishes, safe retries, honest health signals. Then pick the simplest thing that provides it. Complexity that does not buy one of those properties is a constraint you added yourself.

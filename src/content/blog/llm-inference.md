@@ -3,7 +3,7 @@ title: LLM Inference On-Premise
 subtitle: Running private MLX + Tailscale + Apple Silicon for secure, cost-effective LLM serving.
 excerpt: Running private MLX + Tailscale + Apple Silicon for secure, cost-effective LLM serving. A practical guide to the hardware, software, and trade-offs.
 date: 2024-09-01
-readMinutes: 10
+readMinutes: 5
 tags:
   - LLM
   - MLX
@@ -11,11 +11,11 @@ tags:
   - Tailscale
 ---
 
-In 2023, I made a decision that saved CAM Grupo thousands of dollars monthly and kept our client data out of third-party APIs: I built a private LLM inference stack on Apple Silicon using Apple's MLX framework, connected via Tailscale for secure remote access. This article explains the architecture, the trade-offs, and why on-premise inference is viable for small teams.
+In 2024 I built a private LLM inference stack for CAM Grupo on Apple Silicon, using Apple's MLX framework and Tailscale for remote access. The motive was not cost. It was keeping client documents inside the firm's network. This article explains the architecture, the trade-offs, and why on-premise inference is viable for a small team.
 
 ## The Problem: API Costs and Data Sovereignty
 
-CAM Grupo processes legal contracts, client communications, and proprietary market data. Sending this to OpenAI or Anthropic's APIs introduces two problems: (1) recurring costs that scale with usage, and (2) data leaving our infrastructure. For a brokerage handling pre-sale developments with confidential pricing, data sovereignty is not optional.
+CAM Grupo processes legal contracts, client communications, and proprietary market data. Sending this to a hosted API means the data leaves our infrastructure. For a brokerage handling pre-sale developments with confidential pricing, that is not acceptable, whatever the provider's retention policy says.
 
 The alternative — running models locally — was historically impractical. CUDA dependencies, power consumption, and model availability made self-hosting a full-time job. MLX changed that.
 
@@ -55,8 +55,8 @@ Layer 2: Network (Tailscale)
   - ACLs restrict who can reach port 8080
 
 Layer 3: Application Integration
-  - Claude API for non-sensitive tasks (marketing copy)
-  - Local MLX for sensitive tasks (contract review)
+  - Claude API when the inputs are not confidential
+  - Local MLX when a document must stay on premises
   - Router decides based on data classification
 ```
 

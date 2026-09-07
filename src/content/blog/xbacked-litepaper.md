@@ -3,7 +3,7 @@ title: "xUSD by Design: The xBacked Litepaper, Annotated"
 subtitle: How an over-collateralized stablecoin held its peg on Algorand. Vaults, partial liquidation, a redemption floor, and the keepers who ran it, with the reasoning the litepaper left implicit.
 excerpt: The xBacked Litepaper v2.0 described xUSD in examples. This is the same design explained mechanism by mechanism, including the liquidation formula derived from first principles and the arithmetic behind the peg band.
 date: 2026-09-07
-readMinutes: 12
+readMinutes: 10
 tags:
   - DeFi
   - Stablecoins

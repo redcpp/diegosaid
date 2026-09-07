@@ -3,7 +3,7 @@ title: Distributed Systems Patterns
 subtitle: Lessons learned building resilient infrastructure at Oracle Cloud Infrastructure and CAM Grupo.
 excerpt: Lessons learned building resilient infrastructure at Oracle Cloud and CAM Grupo — failure modes, retries, idempotency, and the patterns that earn their keep.
 date: 2024-07-01
-readMinutes: 15
+readMinutes: 5
 tags:
   - Systems Design
   - Cloud
@@ -11,7 +11,7 @@ tags:
   - Oracle
 ---
 
-Between 2019 and 2021, I built OCI image pipelines at Oracle Cloud Infrastructure, migrating on-premise Big Data applications to the cloud. Then, starting in 2020, I architected the entire technology stack for CAM Grupo, a 20+ agent luxury real estate brokerage. These two environments — a Fortune 500 cloud provider and a lean startup — taught me that distributed systems patterns are universal, but their implementation depends entirely on constraints.
+Between 2019 and 2021, I built OCI image pipelines at Oracle Cloud Infrastructure, migrating on-premise Big Data applications to the cloud. Since 2024 I have run engineering at Century 21 CAM Grupo, a real estate brokerage in Riviera Nayarit. These two environments, a Fortune 500 cloud provider and a small firm, taught me that distributed systems patterns are universal, but their implementation depends entirely on constraints.
 
 ## Pattern 1: The Image Pipeline as a State Machine
 

@@ -3,7 +3,7 @@ title: "ADR-47: The Case Against the Pact xUSD Launch"
 subtitle: LP tokens cannot back the stablecoin that was minted to create them. Three short proofs, and the launch that did not happen.
 excerpt: In early 2022 a partner proposed minting xUSD with no collateral and declaring the resulting LP tokens the backing. Three short proofs showed the backing was circular, the losses were someone else's, and a 75% drawdown made the issuer insolvent.
 date: 2026-09-07
-readMinutes: 13
+readMinutes: 12
 tags:
   - DeFi
   - Stablecoins
@@ -13,7 +13,7 @@ tags:
 
 In February 2022 I was a core developer at xBacked DAO, the issuer of xUSD, an over-collateralized stablecoin on Algorand. Pact, a DEX on the same chain, was preparing its token launch and proposed a way to seed a PACT/xUSD pool with the protocol's help. The proposal was popular: deep paired liquidity for a partner from day one, at no visible cost.
 
-ADR-47 was the architecture decision record arguing against it. The argument fits on a few pages and needs nothing beyond algebra. The launch did not go ahead in the proposed form. This post reconstructs the argument as I would write it today.
+ADR-47 was the architecture decision record arguing against it. The argument fits on a few pages and needs nothing beyond algebra. The launch did not go ahead in the proposed form. This post reconstructs the argument as I would write it today. If you would rather read it as code than as proofs, there is a [version for software engineers](/blog/adr47-for-engineers).
 
 ## The proposal
 

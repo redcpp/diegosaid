@@ -111,6 +111,42 @@
   }
 
   /* KaTeX display blocks scroll rather than overflow the measure. */
+  .blog-article table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .blog-article th,
+  .blog-article td {
+    padding: 0.5rem 0.75rem;
+    vertical-align: top;
+  }
+
+  .blog-article th {
+    font-weight: 600;
+    text-align: left;
+    border-top: 1.5px solid #2C2C2C;
+    border-bottom: 1px solid #2C2C2C;
+  }
+
+  .blog-article tr:last-child td {
+    border-bottom: 1.5px solid #2C2C2C;
+  }
+
+  .blog-article th[align='right'],
+  .blog-article td[align='right'] {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .blog-article th[align='center'],
+  .blog-article td[align='center'] {
+    text-align: center;
+  }
+
   .blog-article .katex-display {
     margin: 1.5rem 0;
     overflow-x: auto;

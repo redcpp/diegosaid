@@ -3,46 +3,39 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
 const EXPERIENCE = [
   {
-    years: '2025 – present',
-    title: 'Founder & Broker — AI-Native Brokerage',
+    years: '2024 – present',
+    title: 'Software Engineer Technical Lead',
     org: 'Century 21 CAM Grupo',
     description:
-      'Lead a 20+ agent luxury brokerage in Riviera Nayarit. Architected MCP servers for NOM-247 contract generation; operate a private vMLX inference stack on Apple Silicon; Claude-skill library for legal workflows; HDR computer-vision pipeline; market intelligence over 1,500+ MLS transactions with DCF / IRR / Monte Carlo pricing.',
+      'Lead operations and commercial strategy for C21 CAM Grupo in Riviera Nayarit. Built an automated contract-generation service for regulated (NOM-247) real estate documents using document templating and MCP servers over the Claude API, cutting drafting time from days to under 1 hour. Designed and shipped a market-intelligence dashboard over MLS transaction data (Python, pandas, PostgreSQL): automated cleaning pipelines, anomaly detection, and absorption metrics by micro-market and price segment. Deployed and operate a private on-premise LLM inference stack (Apple Silicon, MLX, Tailscale) so confidential client data never leaves the firm’s network. Build and maintain four production marketing sites on Astro + Cloudflare (camgrupo.com and one per development), plus DNS, email infrastructure, and Airtable-based operations tracking.',
   },
   {
     years: '2021 – 2023',
     title: 'Full Stack Developer (Contractor)',
-    org: 'Augusto Consulting',
+    org: 'Augusto Digital',
     description:
-      'Decentracare — healthcare gig-economy staffing platform on React + Python/Flask + AWS; grew to 350+ clinicians. ADHD Online -- Vue.js assessment flow and dashboard.',
+      'Decentracare — took over the MVP of a healthcare staffing platform (clinicians and outpatient providers) and owned its evolution for two years across a React frontend, Python/Flask REST backend, PostgreSQL, and AWS (EC2, S3, RDS); network grew to 350+ clinicians. ADHD Online — implemented and maintained the core assessment flow and patient dashboard in Vue.js; fixed long-standing production bugs. Worked fully async with a US-based team: scoped tickets, shipped weekly, and owned deploys and production support.',
   },
   {
     years: '2021 – 2022',
-    title: 'Core Developer — Protocol & Smart Contracts',
+    title: 'Core Developer',
     org: 'xBacked DAO',
     description:
-      'Core engineer on xUSD (CDP stablecoin on Algorand): vault contracts, liquidation engine, redemption mechanism, staking, governance, keeper economy. Co-authored Litepaper v2.0; authored ADR-46 (Vault Looping) and ADR-47.',
-  },
-  {
-    years: '2020 – present',
-    title: 'Operations & IT (Part-Time)',
-    org: 'CAM Grupo -- Construction & Development',
-    description:
-      'Airtable operations (project tracking, document workflows, lead management); corporate email infrastructure and the marketing website camgrupo.com plus individual sites per development.',
+      'Core engineer on xUSD, a collateralized stablecoin on Algorand: vault contracts (mint/withdraw/repay), the liquidation engine with keeper incentives, the redemption mechanism, and isolated risk markets per collateral type, in Python with a TypeScript SDK. Co-authored the Litepaper v2.0 and design documents ADR-46 and ADR-47 on leverage limits and collateral safety; ADR-47 prevented a launch that would have diluted collateral.',
   },
   {
     years: '2019 – 2021',
     title: 'Software Developer II',
-    org: 'Oracle -- Big Data Service',
+    org: 'Oracle — Big Data Service (OCI)',
     description:
-      'OCI image pipelines migrating on-prem Big Data apps to cloud (TeamCity CI/CD, Docker, Artifactory, Java/Python REST APIs). Global Severity 1 incident support.',
+      'Built OCI image pipelines to migrate on-premise Big Data applications to the cloud using Python REST services, Docker, TeamCity CI/CD, and Artifactory. Global on-call rotation for Severity-1 incidents; root-cause analysis on enterprise production outages.',
   },
   {
     years: '2018',
     title: 'Software Engineer Intern',
-    org: 'ILHGR -- Cancer Genomics Lab',
+    org: 'LIIGH — Cancer Genomics Lab',
     description:
-      'Built VCF/Plotein (Vue.js, Node.js). Co-author on the resulting paper in Bioinformatics (Oxford Academic), with collaborators from UNAM, Oxford, and Cambridge.',
+      'Designed and built VCF/Plotein (Vue.js, Node.js), a web application for clinical interpretation of genomic variants from exome sequencing; co-author on the resulting Bioinformatics (Oxford Academic, 2019) paper with UNAM and Cambridge.',
   },
 ];
 
@@ -50,7 +43,7 @@ const PROJECTS = [
   {
     title: 'VCF/Plotein',
     description:
-      'Clinical genomics web app for visualizing and prioritizing exome VCF variants on protein structures. Published in Bioinformatics (Oxford Academic, 2019). Co-authored with researchers from UNAM, Oxford, and Cambridge.',
+      'Clinical genomics web app for visualizing and prioritizing exome VCF variants on protein structures. Published in Bioinformatics (Oxford Academic, 2019). Co-authored with researchers from UNAM and Cambridge.',
     image: '/img/vcfplotein.webp',
     link: 'https://github.com/redcpp/vcfplotein',
   },
@@ -79,50 +72,53 @@ const PROJECTS = [
 
 const EDUCATION = [
   {
+    years: '2026 – present',
+    title: 'M.S. Computer Science (in progress)',
+    org: 'University of Colorado Boulder',
+    description: '',
+  },
+  {
     years: '2022',
     title: 'Credential of Readiness (CORe)',
     org: 'Harvard Business School Online',
-    description: 'Business Analytics, Economics, Financial Accounting.',
+    description: 'Business Analytics, Economics for Managers, Financial Accounting.',
   },
   {
     years: '2015 – 2018',
     title: 'B.Sc. Software Engineering',
     org: 'Universidad Autonoma de Queretaro',
-    description: 'Grade: 9.5/10.',
+    description: 'GPA 9.5/10.',
   },
 ];
 
 const SKILLS = [
   {
-    title: 'AI & LLM Systems',
-    items:
-      'MCP Servers, Claude API & SDK, Claude Code, Claude Skills, Agentic Workflows, Tool-use Design, Prompt Engineering, RAG, On-Prem Inference (vMLX), n8n Automation',
-  },
-  {
     title: 'Languages',
-    items: 'Python, TypeScript / JavaScript, C++, Java, SQL',
+    items: 'Python, TypeScript / JavaScript, SQL, C++',
   },
   {
-    title: 'Frameworks & Data',
-    items:
-      'Next.js, React, Vue.js, Node.js, Flask, Django, REST APIs, PostgreSQL, Supabase, Tailwind / HTML / CSS, NumPy, Pandas, Matplotlib',
+    title: 'Backend & Data',
+    items: 'Flask, Django, Node.js, REST API design, PostgreSQL, pandas, data pipelines, ETL',
+  },
+  {
+    title: 'Frontend',
+    items: 'React, Next.js, Vue.js, Astro',
   },
   {
     title: 'Cloud & Infra',
     items:
-      'AWS (S3, EC2, Lambda, RDS, CloudFront, IAM, ECS), Oracle Cloud (OCI), Docker, Linux, Bash & Python scripting, tmux, Git, CI/CD',
+      'AWS (EC2, S3, Lambda, RDS, ECS, CloudFront), Oracle Cloud (OCI), Cloudflare, Docker, Linux, Git, CI/CD',
   },
   {
-    title: 'Specialized Domains',
-    items:
-      'DeFi Protocol Design, Algorand Smart Contracts (Python), Computer Vision (CLAHE, HDR, LUT), Quantitative Finance Modeling, DCF, IRR, Monte Carlo, Algorithmic Problem Solving, Genomics',
+    title: 'LLM Integration',
+    items: 'Claude / OpenAI APIs, MCP servers, local inference (MLX), document automation',
   },
 ];
 
 const PUBLICATIONS = [
   '[1] D.S. Anaya Mancilla et al. "VCF/Plotein: visualization and prioritization of genomic variants from VCF files." <em>Bioinformatics</em>, Oxford Academic, 2019.',
-  '[2] D.S. Anaya Mancilla. "ADR-47: The Case Against PACT xUSD Launch." xBacked DAO, 2022.',
-  '[3] D.S. Anaya Mancilla. "ADR-46: Vault Looping." xBacked DAO, 2022.',
+  '[2] D.S. Anaya Mancilla et al. "ADR-47: The Case Against PACT xUSD Launch." xBacked DAO, 2022.',
+  '[3] D.S. Anaya Mancilla et al. "ADR-46: Vault Looping." xBacked DAO, 2022.',
   '[4] D.S. Anaya Mancilla et al. "xBacked Litepaper v2.0." xBacked DAO, 2022.',
 ];
 
@@ -134,7 +130,7 @@ const HONORS = [
 
 <BaseLayout
   title="Diego Said Anaya Mancilla"
-  description="Applied AI engineer. Portfolio, publications, and technical writing."
+  description="Software engineer building production backend and full-stack systems. Portfolio, publications, and technical writing."
   ogImage="/og/index.png"
   personSchema
 >
@@ -144,10 +140,8 @@ const HONORS = [
       <h1 class="text-[28px] lg:text-[32px] font-bold tracking-tight text-ink font-serif">
         Diego Said Anaya Mancilla
       </h1>
-      <p class="text-[17px] text-muted mt-2 font-serif">
-        Applied AI Engineer &middot; Systems Architect
-      </p>
-      <p class="text-[14px] font-mono text-muted mt-6">Nuevo Vallarta, Nayarit, Mexico</p>
+      <p class="text-[17px] text-muted mt-2 font-serif">Software Engineer</p>
+      <p class="text-[14px] font-mono text-muted mt-6">Vallarta, Mexico (UTC&minus;6)</p>
       <p class="text-[14px] font-mono mt-1">
         {/* Cloudflare's Email Address Obfuscation rewrites mailto: links into a
             __cf_email__ span that needs JavaScript to decode, so the address is
@@ -178,10 +172,11 @@ const HONORS = [
     <section class="border-t border-rule pt-12 mt-12">
       <h2 class="text-[22px] font-bold font-serif">About</h2>
       <p class="mt-4 text-[17px] leading-[1.75] font-serif text-ink">
-        Applied AI engineer shipping production LLM systems on top of a strong systems and
-        protocol-engineering foundation. 7+ years across enterprise cloud, DeFi protocol design,
-        healthcare platforms, and clinical genomics — co-author of a paper in <em>Bioinformatics</em
-        > (Oxford Academic). Currently seeking remote Applied AI or backend engineering roles.
+        Software engineer with 5+ years building production backend and full-stack systems as a
+        remote contractor and in-house engineer: REST APIs, data pipelines, cloud deployments, and
+        web applications in Python, TypeScript/JavaScript, and SQL. Comfortable taking over an
+        existing codebase, shipping end-to-end, and working async with US/European teams. Currently
+        completing an M.S. in Computer Science at CU Boulder.
       </p>
     </section>
 
@@ -257,9 +252,11 @@ const HONORS = [
               <div class="mt-1 sm:mt-0">
                 <p class="font-semibold font-serif text-ink">{entry.title}</p>
                 <p class="italic text-muted text-[15px] mt-0.5 font-serif">{entry.org}</p>
-                <p class="text-[15px] leading-[1.7] text-ink/85 mt-2 font-serif">
-                  {entry.description}
-                </p>
+                {entry.description && (
+                  <p class="text-[15px] leading-[1.7] text-ink/85 mt-2 font-serif">
+                    {entry.description}
+                  </p>
+                )}
               </div>
             </div>
           ))
@@ -287,7 +284,7 @@ const HONORS = [
         }
       </div>
       <p class="mt-6 text-[15px] text-muted font-serif">
-        Languages: Spanish (native), English (fluent), Italian (conversational).
+        Languages: Spanish (native), English (fluent), Italian.
       </p>
     </section>
 
@@ -302,7 +299,7 @@ const HONORS = [
             >redcpp@gmail.com</a
           ><!--email_on-->
         </p>
-        <p class="text-ink">Phone: +52 322 111 7595</p>
+        <p class="text-ink">Phone: +1 720 331 5493</p>
         <p>
           GitHub: <a
             href="https://github.com/redcpp"

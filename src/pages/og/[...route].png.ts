@@ -41,7 +41,7 @@ export async function getStaticPaths() {
       route: 'index',
       card: {
         title: 'Diego Said Anaya Mancilla',
-        subtitle: 'Applied AI Engineer · Systems Architect',
+        subtitle: 'Software Engineer',
         eyebrow: 'diegosaid.com',
       },
     },

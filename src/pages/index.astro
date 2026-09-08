@@ -109,11 +109,27 @@ const SKILLS = [
   },
 ];
 
+// The reference marker is split out so it can set in mono and in the citation
+// colour, the way a paper's \cite renders under hyperref.
 const PUBLICATIONS = [
-  '[1] D.S. Anaya Mancilla et al. "VCF/Plotein: visualization and prioritization of genomic variants from VCF files." <em>Bioinformatics</em>, Oxford Academic, 2019.',
-  '[2] D.S. Anaya Mancilla et al. "ADR-47: The Case Against PACT xUSD Launch." xBacked DAO, 2022.',
-  '[3] D.S. Anaya Mancilla et al. "ADR-46: Vault Looping." xBacked DAO, 2022.',
-  '[4] D.S. Anaya Mancilla et al. "xBacked Litepaper v2.0." xBacked DAO, 2022.',
+  {
+    ref: '[1]',
+    citation:
+      'D.S. Anaya Mancilla et al. "VCF/Plotein: visualization and prioritization of genomic variants from VCF files." <em>Bioinformatics</em>, Oxford Academic, 2019.',
+  },
+  {
+    ref: '[2]',
+    citation:
+      'D.S. Anaya Mancilla et al. "ADR-47: The Case Against PACT xUSD Launch." xBacked DAO, 2022.',
+  },
+  {
+    ref: '[3]',
+    citation: 'D.S. Anaya Mancilla et al. "ADR-46: Vault Looping." xBacked DAO, 2022.',
+  },
+  {
+    ref: '[4]',
+    citation: 'D.S. Anaya Mancilla et al. "xBacked Litepaper v2.0." xBacked DAO, 2022.',
+  },
 ];
 
 const HONORS = [
@@ -231,7 +247,10 @@ const HONORS = [
       <h2 class="text-[22px] font-bold font-serif mb-6">Publications</h2>
       {
         PUBLICATIONS.map((entry) => (
-          <p class="text-[15px] leading-[1.7] mb-4 font-serif text-ink" set:html={entry} />
+          <p class="text-[15px] leading-[1.7] mb-4 font-serif text-ink flex gap-2">
+            <span class="font-mono text-[13px] text-cite shrink-0 pt-0.5">{entry.ref}</span>
+            <span set:html={entry.citation} />
+          </p>
         ))
       }
     </section>

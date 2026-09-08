@@ -4,7 +4,7 @@
   "description": "Portfolio of Diego Said Anaya Mancilla — software engineer building production backend and full-stack systems.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FAF8F3",
+  "background_color": "#FCFCFA",
   "theme_color": "#1A1A1A",
   "icons": [
     {

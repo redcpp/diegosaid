@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import satori from 'satori';
 import { Resvg } from '@resvg/resvg-js';
+import { tagHex } from '@/lib/tags';
 
 /**
  * Build-time Open Graph images, one per route.
@@ -13,17 +14,18 @@ import { Resvg } from '@resvg/resvg-js';
  * Rendering here means each post gets a preview carrying its own title instead
  * of a single generic card.
  *
- * The card is the site's own palette and type: cream stock, serif title, mono
- * metadata. The burgundy colophon band across the foot is what carries it in a
- * feed — an all-cream card at thumbnail size reads as a blank rectangle.
+ * The card is the site's own palette and type: near-white stock, serif title,
+ * mono metadata, tags in the same four colours they wear on the site. The red
+ * colophon band across the foot is what carries it in a feed — an all-white
+ * card at thumbnail size reads as a blank rectangle.
  */
 
-const PAPER = '#FAF8F3';
-const INK = '#1F1D1A';
-const ACCENT = '#7B2D26';
-const MUTED = '#6B665E';
-/** Cream dimmed against the burgundy band, the counterpart of MUTED on paper. */
-const BAND_MUTED = '#DFC8C4';
+const PAPER = '#FCFCFA';
+const INK = '#1A1A1A';
+const ACCENT = '#C5221F';
+const MUTED = '#6B6B70';
+/** White dimmed against the red band, the counterpart of MUTED on paper. */
+const BAND_MUTED = '#F3C9C8';
 
 // Read from the project root, not import.meta.url: this module is bundled into
 // dist/.prerender during the build, so a relative URL would resolve there. The
@@ -41,8 +43,10 @@ const AUTHOR = 'Diego Said Anaya Mancilla';
 interface Card {
   title: string;
   subtitle: string;
-  /** Mono kicker above the title. Omitted where the title already says it. */
-  eyebrow?: string;
+  /** Plain mono kicker, for cards that have no tags to show. */
+  kicker?: string;
+  /** Post tags, each in the colour it carries on the site. */
+  tags?: string[];
   /**
    * Left half of the colophon band. Omitted on the home card, whose title is
    * already the name — the band would only repeat it.
@@ -57,7 +61,7 @@ export async function getStaticPaths() {
     {
       route: 'index',
       card: {
-        eyebrow: 'Software Engineer',
+        kicker: 'Software Engineer',
         title: AUTHOR,
         subtitle:
           'Production backend and full-stack systems. Portfolio, publications, and technical writing.',
@@ -75,7 +79,7 @@ export async function getStaticPaths() {
     ...posts.map((post) => ({
       route: `blog/${post.id}`,
       card: {
-        eyebrow: post.data.tags.slice(0, 3).join('  ·  '),
+        tags: post.data.tags.slice(0, 3),
         title: post.data.title,
         subtitle: post.data.subtitle,
         byline: AUTHOR,
@@ -114,7 +118,42 @@ function titleSize(title: string) {
   return 80;
 }
 
-function template({ title, subtitle, eyebrow, byline }: Card) {
+const eyebrowText = {
+  fontFamily: MONO,
+  fontSize: '21px',
+  letterSpacing: '0.14em',
+  textTransform: 'uppercase',
+};
+
+/** Tags keep their own colours; a plain kicker takes the accent. */
+function eyebrow({ kicker, tags }: Card) {
+  const row = (children: unknown[]) =>
+    h('div', { style: { display: 'flex', marginBottom: '30px' } }, ...children);
+
+  if (tags?.length) {
+    return row(
+      tags.flatMap((tag, i) => [
+        i > 0
+          ? h(
+              'div',
+              { style: { display: 'flex', ...eyebrowText, color: MUTED, padding: '0 14px' } },
+              '·',
+            )
+          : null,
+        h('div', { style: { display: 'flex', ...eyebrowText, color: tagHex(i) } }, tag),
+      ]),
+    );
+  }
+
+  if (kicker) {
+    return row([h('div', { style: { display: 'flex', ...eyebrowText, color: ACCENT } }, kicker)]);
+  }
+
+  return null;
+}
+
+function template(card: Card) {
+  const { title, subtitle, byline } = card;
   return h(
     'div',
     {
@@ -145,23 +184,7 @@ function template({ title, subtitle, eyebrow, byline }: Card) {
           padding: '0 84px',
         },
       },
-      eyebrow
-        ? h(
-            'div',
-            {
-              style: {
-                display: 'flex',
-                fontFamily: MONO,
-                fontSize: '21px',
-                color: ACCENT,
-                letterSpacing: '0.14em',
-                textTransform: 'uppercase',
-                marginBottom: '30px',
-              },
-            },
-            eyebrow,
-          )
-        : null,
+      eyebrow(card),
       h(
         'div',
         {

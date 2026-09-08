@@ -14,11 +14,11 @@ import { Resvg } from '@resvg/resvg-js';
  * of a single generic card.
  */
 
-const PAPER = '#FAFAF8';
-const INK = '#2C2C2C';
-const ACCENT = '#2B4C8C';
-const RULE = '#E4E4E7';
-const MUTED = '#71717A';
+const PAPER = '#FAF8F3';
+const INK = '#1F1D1A';
+const ACCENT = '#7B2D26';
+const RULE = '#E3DED4';
+const MUTED = '#6B665E';
 
 // Read from the project root, not import.meta.url: this module is bundled into
 // dist/.prerender during the build, so a relative URL would resolve there. The

@@ -15,7 +15,10 @@ export default defineConfig({
       rehypePlugins: [rehypeKatex],
     }),
     shikiConfig: {
-      theme: 'github-light',
+      // Both themes are emitted per token as --shiki-light / --shiki-dark
+      // custom properties; global.css picks one under prefers-color-scheme.
+      // A single light theme would leave dark-mode code unreadable.
+      themes: { light: 'github-light', dark: 'github-dark' },
       wrap: false,
     },
   },

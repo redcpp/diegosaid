@@ -20,6 +20,12 @@ const posts = (await getCollection('blog')).sort(
     <p class="mt-3 text-[17px] text-muted leading-relaxed">
       Long-form essays on protocol design, distributed systems, and AI infrastructure.
     </p>
+    <a
+      href="/rss.xml"
+      class="inline-block mt-4 font-mono text-[13px] text-muted hover:text-accent transition-colors"
+    >
+      RSS
+    </a>
     <div class="mt-12 border-t border-rule divide-y divide-rule">
       {
         posts.map((post) => (

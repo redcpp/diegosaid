@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import ToptalBadge from '@/components/ToptalBadge.astro';
 
 const EXPERIENCE = [
   {
@@ -305,33 +306,43 @@ const HONORS = [
     {/* 9. CONTACT */}
     <section id="contact" class="border-t border-rule pt-12 mt-12 scroll-mt-20">
       <h2 class="text-[22px] font-bold font-serif mb-6">Contact</h2>
-      <div class="space-y-2 font-mono text-[15px]">
-        <p>
-          Email: <!--email_off--><a
-            href="mailto:redcpp@gmail.com"
-            class="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent"
-            >redcpp@gmail.com</a
-          ><!--email_on-->
-        </p>
-        <p class="text-ink">Phone: +1 720 331 5493</p>
-        <p>
-          GitHub: <a
-            href="https://github.com/redcpp"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent"
-            >github.com/redcpp</a
-          >
-        </p>
-        <p>
-          LinkedIn: <a
-            href="https://linkedin.com/in/redcpp"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent"
-            >linkedin.com/in/redcpp</a
-          >
-        </p>
+      {/* The badge sets flush with the right margin, and the list's four lines
+          spread to the badge's full height so both columns start and end
+          together. */}
+      <div class="flex flex-col sm:flex-row sm:justify-between gap-10 sm:gap-14">
+        <div
+          class="space-y-2 sm:space-y-0 sm:flex sm:flex-col sm:justify-between font-mono text-[15px]"
+        >
+          <p>
+            Email: <!--email_off--><a
+              href="mailto:redcpp@gmail.com"
+              class="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent"
+              >redcpp@gmail.com</a
+            ><!--email_on-->
+          </p>
+          <p class="text-ink">Phone: +1 720 331 5493</p>
+          <p>
+            GitHub: <a
+              href="https://github.com/redcpp"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent"
+              >github.com/redcpp</a
+            >
+          </p>
+          <p>
+            LinkedIn: <a
+              href="https://linkedin.com/in/redcpp"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent"
+              >linkedin.com/in/redcpp</a
+            >
+          </p>
+        </div>
+        <div class="shrink-0 self-start [zoom:0.66]">
+          <ToptalBadge />
+        </div>
       </div>
     </section>
   </div>

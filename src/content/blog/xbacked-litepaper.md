@@ -23,7 +23,7 @@ This has a consequence worth stating. There is system debt, the total xUSD suppl
 
 ## Vaults and the two ratios
 
-A vault's collateralization ratio is the value of its collateral over its debt. The contract enforces one number: below 110% a vault can be liquidated. The team's frontend enforced a second: a vault must be created at 120% or above, and collateral cannot be withdrawn if doing so would leave the ratio under 120%.
+A vault's collateralization ratio is the value of its collateral over its debt. The contract enforces one number: below 110% a vault can be liquidated. The frontend, which I built, enforced a second: a vault must be created at 120% or above, and collateral cannot be withdrawn if doing so would leave the ratio under 120%.
 
 The gap between the two is the user's buffer. Alice deposits \$100 of ALGO and mints 80 xUSD, for a ratio of 125%. If her ALGO falls to \$87.55 the ratio is 109% and she is liquidatable. The 10-point band between the withdrawal floor and the liquidation line is what gives her time to add collateral or repay.
 
@@ -104,4 +104,4 @@ The design principle, which the litepaper never states outright, is that a proto
 
 ## What I would write differently now
 
-The litepaper was a description, not an argument. It did not explain why the ratios were 110 and 120, or what the redemption mechanism does to vault owners' incentives, or what happens when users compose xUSD with a lending market. The two architecture decision records I wrote in the months after it, [ADR-46 on vault looping](/blog/adr46) and [ADR-47 on LP-backed issuance](/blog/adr47), were both attempts to supply the reasoning that the launch document skipped. A protocol's public document should carry its own proofs. This one relied on its readers to trust that the numbers had been thought about. They had been, but the document should have shown it.
+The litepaper was a description, not an argument. It did not explain why the ratios were 110 and 120, or what the redemption mechanism does to vault owners' incentives, or what happens when users compose xUSD with a lending market. The two architecture decision records I co-authored, [ADR-46 on vault looping](/blog/adr46) and [ADR-47 on LP-backed issuance](/blog/adr47), were both attempts to supply the reasoning that the launch document skipped. A protocol's public document should carry its own proofs. This one relied on its readers to trust that the numbers had been thought about. They had been, but the document should have shown it.

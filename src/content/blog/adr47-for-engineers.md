@@ -11,7 +11,7 @@ tags:
   - Python
 ---
 
-In 2022 I was a core developer on xBacked, which issued xUSD, an over-collateralized stablecoin on Algorand. A partner, Pact, proposed a mechanism to seed a PACT/xUSD liquidity pool for its token launch. I wrote the architecture decision record against it, ADR-47, and the launch did not happen in that form. The [formal version](/blog/adr47) has the proofs. This one has the code.
+In 2022 I was a core developer on xBacked, which issued xUSD, an over-collateralized stablecoin on Algorand. A partner, Pact, proposed a mechanism to seed a PACT/xUSD liquidity pool for its token launch. I co-authored the architecture decision record against it, ADR-47, and the launch did not happen in that form. The [formal version](/blog/adr47) has the proofs. This one has the code.
 
 If you have reviewed a pull request that added a "temporary" bypass around a validation check, you already know the shape of the argument.
 
@@ -174,8 +174,8 @@ The vault mints less xUSD for the same PACT. That is not a bug in the alternativ
 
 **Every "backed by" is a pointer. Walk it to a root.** If the chain passes through the thing being backed, the backing is a cycle, and a cycle is worth exactly its external content.
 
-**Nominal and real are different fields.** The pool's total value and the pool's external value were both available on chain. The proposal quoted the first. The invariant needs the second. Most economic-mechanism bugs I have seen are a confusion between these two numbers.
+**Nominal and real are different fields.** The pool's total value and the pool's external value were both available on chain. The proposal quoted the first. The invariant needs the second. A common economic-mechanism bug is a confusion between these two numbers.
 
-**The failing test is the argument.** The proposal had momentum and a meeting was not going to stop it. The three tests above fit in forty lines and took an afternoon. Once they existed, the discussion was about whether the model was right, not about whether the concern was valid. It was, and the model was.
+**The failing test is the argument.** The three tests above fit in forty lines. Written this way, the discussion is about whether the model is right, not about whether the concern is valid.
 
 **Never special-case the invariant.** A privileged path around a solvency check is not a partnership feature. It is the one change the contract was written to prevent. When a request needs a bypass to work, the request is the problem, not the check.

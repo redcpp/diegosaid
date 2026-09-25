@@ -11,7 +11,7 @@ tags:
   - Algorand
 ---
 
-In February 2022 I was a core developer at xBacked DAO, the issuer of xUSD, an over-collateralized stablecoin on Algorand. Pact, a DEX on the same chain, was preparing its token launch and proposed a way to seed a PACT/xUSD pool with the protocol's help. The proposal was popular: deep paired liquidity for a partner from day one, at no visible cost.
+In February 2022 I was a core developer at xBacked DAO, the issuer of xUSD, an over-collateralized stablecoin on Algorand. Pact, a DEX on the same chain, was preparing its token launch and proposed a way to seed a PACT/xUSD pool with the protocol's help. The appeal was obvious: deep paired liquidity for a partner from day one, at no visible cost.
 
 ADR-47 was the architecture decision record arguing against it. The argument fits on a few pages and needs nothing beyond algebra. The launch did not go ahead in the proposed form. This post reconstructs the argument as I would write it today. If you would rather read it as code than as proofs, there is a [version for software engineers](/blog/adr47-for-engineers).
 
@@ -143,4 +143,4 @@ The vault is worth opening only if $X$'s price can be oracled with confidence, i
 
 **"Backed by" is a claim about redemption, not about custody.** Holding an asset that references your own liability is not backing. Three months after ADR-47, Terra's UST, whose backing asset derived its value from demand for UST itself, lost its peg. The mechanisms differ, but the structural fault is the same one: a reference cycle where an external asset should be.
 
-**A proof settles what a meeting cannot.** The proposal had momentum and the counterargument was unpopular. Writing the nominal and real inequalities side by side moved the discussion from opinion to arithmetic, and the arithmetic did not have a second side.
+**A proof settles what a meeting cannot.** Writing the nominal and real inequalities side by side moves the discussion from opinion to arithmetic, and the arithmetic does not have a second side.

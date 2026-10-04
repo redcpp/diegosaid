@@ -18,6 +18,8 @@ const blog = defineCollection({
     /** Minutes, as a number: display strings are derived, never stored twice. */
     readMinutes: z.number().int().positive(),
     tags: z.array(z.string()).nonempty(),
+    /** Language the post is written in. Sets <html lang>, og:locale and the header labels. */
+    lang: z.enum(['en', 'es']).default('en'),
   }),
 });
 

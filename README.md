@@ -69,7 +69,7 @@ public/              Static assets, _headers, _redirects, robots, manifest
 
 ## Adding a post
 
-Create `src/content/blog/<slug>.md` with the frontmatter the schema requires — `title`, `subtitle`, `excerpt`, `date`, `readMinutes`, `tags`. The post appears at `/blog/<slug>`, is listed on `/blog`, enters the sitemap, and gets an OG image, with no other file to touch.
+Create `src/content/blog/<slug>.md` with the frontmatter the schema requires — `title`, `subtitle`, `excerpt`, `date`, `readMinutes`, `tags` — plus `lang: es` for a post in Spanish, which sets `<html lang>`, `og:locale` and the header labels (the default is `en`). The post appears at `/blog/<slug>`, is listed on `/blog`, enters the sitemap, and gets an OG image, with no other file to touch.
 
 Write math as `$inline$` or a `$$` block with the delimiters on their own lines. Posts are `.md` because MDX would parse LaTeX braces as JSX expressions; `.mdx` still works for a post that genuinely needs a component.
 

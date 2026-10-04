@@ -11,6 +11,8 @@ interface Props {
   ogType?: 'website' | 'article';
   /** Emit the schema.org Person block (home page only). */
   personSchema?: boolean;
+  /** Language of the page's content. The site chrome stays English either way. */
+  lang?: 'en' | 'es';
 }
 
 const {
@@ -19,7 +21,10 @@ const {
   ogImage = '/og/index.png',
   ogType = 'website',
   personSchema = false,
+  lang = 'en',
 } = Astro.props;
+
+const ogLocale = lang === 'es' ? 'es_MX' : 'en_US';
 
 // Keep the trailing slash: Cloudflare Pages 308-redirects /blog/adr47 to
 // /blog/adr47/, and the sitemap emits the slashed form. Stripping it here would
@@ -35,7 +40,7 @@ const fontHref =
   'https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap';
 ---
 
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -64,7 +69,7 @@ const fontHref =
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="Diego Said" />
-    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale" content={ogLocale} />
 
     {/* Twitter Cards */}
     <meta name="twitter:card" content="summary_large_image" />

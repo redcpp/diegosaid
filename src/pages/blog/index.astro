@@ -35,10 +35,15 @@ const posts = (await getCollection('blog')).sort(
               <span>·</span>
               <span>{readTime(post.data.readMinutes)}</span>
             </div>
-            <h2 class="text-[20px] font-bold mt-2 group-hover:text-accent transition-colors">
+            <h2
+              lang={post.data.lang}
+              class="text-[20px] font-bold mt-2 group-hover:text-accent transition-colors"
+            >
               {post.data.title}
             </h2>
-            <p class="text-[15px] text-muted mt-2 leading-relaxed">{post.data.excerpt}</p>
+            <p lang={post.data.lang} class="text-[15px] text-muted mt-2 leading-relaxed">
+              {post.data.excerpt}
+            </p>
             <div class="flex flex-wrap gap-2 mt-3">
               {post.data.tags.map((tag, i) => (
                 <span class={`text-[12px] font-mono border px-2 py-0.5 rounded ${tagClass(i)}`}>

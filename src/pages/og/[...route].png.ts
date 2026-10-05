@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getCollection } from 'astro:content';
+import { getPosts, LANGS, localizePath, postSlug, UI, type Lang } from '@/i18n';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import satori from 'satori';
@@ -54,30 +54,41 @@ interface Card {
   byline?: string;
 }
 
-export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+const HOME_CARD: Record<Lang, Pick<Card, 'kicker' | 'subtitle'>> = {
+  en: {
+    kicker: 'Software Engineer',
+    subtitle:
+      'Production backend and full-stack systems. Portfolio, publications, and technical writing.',
+  },
+  es: {
+    kicker: 'Ingeniero de software',
+    subtitle:
+      'Sistemas backend y full-stack en producción. Portafolio, publicaciones y escritos técnicos.',
+  },
+};
 
-  const cards: Array<{ route: string; card: Card }> = [
+/** 'index' in English is 'es/index' in Spanish, matching the page's own path. */
+function ogRoute(route: string, lang: Lang) {
+  return localizePath(`/${route}`, lang).slice(1);
+}
+
+async function cardsFor(lang: Lang): Promise<Array<{ route: string; card: Card }>> {
+  const posts = await getPosts(lang);
+  return [
     {
-      route: 'index',
-      card: {
-        kicker: 'Software Engineer',
-        title: AUTHOR,
-        subtitle:
-          'Production backend and full-stack systems. Portfolio, publications, and technical writing.',
-      },
+      route: ogRoute('index', lang),
+      card: { ...HOME_CARD[lang], title: AUTHOR },
     },
     {
-      route: 'blog',
+      route: ogRoute('blog', lang),
       card: {
-        title: 'Writing',
-        subtitle:
-          'Long-form essays on protocol design, distributed systems, and AI infrastructure.',
+        title: UI[lang].writing,
+        subtitle: UI[lang].writingDescription,
         byline: AUTHOR,
       },
     },
     ...posts.map((post) => ({
-      route: `blog/${post.id}`,
+      route: ogRoute(`blog/${postSlug(post)}`, lang),
       card: {
         tags: post.data.tags.slice(0, 3),
         title: post.data.title,
@@ -86,7 +97,10 @@ export async function getStaticPaths() {
       },
     })),
   ];
+}
 
+export async function getStaticPaths() {
+  const cards = (await Promise.all(LANGS.map(cardsFor))).flat();
   return cards.map(({ route, card }) => ({ params: { route }, props: { card } }));
 }
 

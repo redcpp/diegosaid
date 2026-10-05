@@ -47,29 +47,38 @@ npm run dev          # http://localhost:4321
 
 ## Routes
 
-- `/` — CV: about, experience, open source, publications, education, honors, skills, contact.
-- `/blog` — Writing index, generated from the content collection.
-- `/blog/<slug>` — Individual posts.
-- `/og/<route>.png` — Generated Open Graph image per route.
+The site is bilingual: English at the root, Spanish under `/es/`. Every route below exists in both trees, and the EN / ES switch in the navbar links each page to its counterpart. It is a plain link, so the site still ships no client JavaScript.
+
+- `/`, `/es/` — CV: about, experience, open source, publications, education, honors, skills, contact.
+- `/blog/`, `/es/blog/` — Writing index, generated from that language's posts.
+- `/blog/<slug>/`, `/es/blog/<slug>/` — Individual posts.
+- `/rss.xml`, `/es/rss.xml` — One feed per language.
+- `/og/<route>.png`, `/og/es/<route>.png` — Generated Open Graph image per route.
+
+Pages carry `hreflang` alternates, and the sitemap pairs `/x/` with `/es/x/`. Cloudflare Pages serves `es/404.html` for missing paths under `/es/`; a small hook in `astro.config.mjs` moves it there, since Astro writes nested 404 pages as `404/index.html`.
 
 ## Project layout
 
 ```
 src/
   assets/fonts/      Source Serif 4 TTFs, used only by the build to draw OG images
-  components/        Navbar, Footer
-  content/blog/      Posts as Markdown with typed frontmatter
+  components/        Navbar (with the language switch), Footer
+  content/blog/      Posts as Markdown with typed frontmatter, one folder per language (en/, es/)
   content.config.ts  Collection schema
+  i18n/              Languages, path helpers and chrome strings; cv.ts holds the home page in both languages
   layouts/           BaseLayout (head + chrome), BlogPost
   lib/format.ts      Date and read-time display strings
-  pages/             Route entry points, including the OG image endpoint
+  pages/             Thin route entry points per language, plus the OG image endpoint
+  views/             The pages themselves, rendered once per language
   styles/global.css  Tailwind layers, article typography, focus rings
 public/              Static assets, _headers, _redirects, robots, manifest
 ```
 
 ## Adding a post
 
-Create `src/content/blog/<slug>.md` with the frontmatter the schema requires — `title`, `subtitle`, `excerpt`, `date`, `readMinutes`, `tags` — plus `lang: es` for a post in Spanish, which sets `<html lang>`, `og:locale` and the header labels (the default is `en`). The post appears at `/blog/<slug>`, is listed on `/blog`, enters the sitemap, and gets an OG image, with no other file to touch.
+Create `src/content/blog/en/<slug>.md` or `src/content/blog/es/<slug>.md` with the frontmatter the schema requires — `title`, `subtitle`, `excerpt`, `date`, `readMinutes`, `tags`. The folder is the language: it sets `<html lang>`, `og:locale`, the header labels and the URL (`/blog/<slug>/` or `/es/blog/<slug>/`). The post is listed on that language's index and feed, enters the sitemap, and gets an OG image, with no other file to touch.
+
+A translation is the same file name in the other folder; the two link to each other through the navbar switch and `hreflang`. If the translation needs its own slug, set `key:` in its frontmatter to the original's file name. Until a post has a translation, the switch on it leads to the other language's `/blog/`. Links between posts point inside the same tree (`/es/blog/adr47/` from a Spanish post).
 
 Write math as `$inline$` or a `$$` block with the delimiters on their own lines. Posts are `.md` because MDX would parse LaTeX braces as JSX expressions; `.mdx` still works for a post that genuinely needs a component.
 

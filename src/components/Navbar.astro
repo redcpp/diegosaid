@@ -3,30 +3,72 @@
 // so it could scroll on the home page and route-then-scroll from anywhere else.
 // A plain fragment link does both: same-page anchors scroll (html has
 // scroll-behavior: smooth), and off-page it navigates home and lands on #contact.
+//
+// The language switch is a link too: EN and ES always sit in that order, the
+// current one in ink and the other one a link to this page in that language.
+import { LANGS, UI, localizePath, type Lang } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+  /** This page in each language, or the closest page when there is no translation. */
+  switchTo: Record<Lang, string>;
+}
+
+const { lang, switchTo } = Astro.props;
+const t = UI[lang];
+const home = localizePath('/', lang);
 ---
 
 <nav class="fixed top-0 inset-x-0 z-50 bg-paper/95 backdrop-blur-sm border-b border-rule">
-  <div class="max-w-[780px] mx-auto px-6 lg:px-8 h-14 flex items-center justify-between">
+  <div class="max-w-[780px] mx-auto px-6 lg:px-8 h-14 flex items-center justify-between gap-4">
     <a
-      href="/"
+      href={home}
       class="text-[15px] font-bold font-serif text-ink hover:text-accent transition-colors"
     >
       Diego Said
     </a>
 
-    <div class="flex items-center gap-6">
+    <div class="flex items-center gap-4 sm:gap-6">
       <a
-        href="/blog"
+        href={localizePath('/blog/', lang)}
         class="text-[14px] font-serif text-muted hover:text-ink transition-colors"
       >
-        Writing
+        {t.writing}
       </a>
       <a
-        href="/#contact"
+        href={`${home}#contact`}
         class="text-[14px] font-serif text-muted hover:text-ink transition-colors"
       >
-        Contact
+        {t.contact}
       </a>
+      <div class="flex items-center gap-1.5 pl-4 sm:pl-6 border-l border-rule font-mono text-[13px]">
+        {
+          LANGS.map((code, i) => (
+            <>
+              {i > 0 && (
+                <span class="text-muted/60" aria-hidden="true">
+                  /
+                </span>
+              )}
+              {code === lang ? (
+                <span class="text-ink font-medium">
+                  {code.toUpperCase()}
+                </span>
+              ) : (
+                <a
+                  href={switchTo[code]}
+                  hreflang={code}
+                  lang={code}
+                  aria-label={UI[code].switchLabel}
+                  class="text-muted hover:text-accent transition-colors"
+                >
+                  {code.toUpperCase()}
+                </a>
+              )}
+            </>
+          ))
+        }
+      </div>
     </div>
   </div>
 </nav>

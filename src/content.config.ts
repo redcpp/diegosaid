@@ -2,6 +2,10 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
 const blog = defineCollection({
+  // One folder per language: en/<slug>.md is served at /blog/<slug>/ and
+  // es/<slug>.md at /es/blog/<slug>/. The folder is the post's language, so
+  // there is no lang field to keep in step with it.
+  //
   // .md by default: LaTeX braces ($P_{\text{pool}}$) are literal there, whereas
   // MDX would parse them as JSX expressions. .mdx stays available for a post
   // that actually needs a component.
@@ -18,8 +22,12 @@ const blog = defineCollection({
     /** Minutes, as a number: display strings are derived, never stored twice. */
     readMinutes: z.number().int().positive(),
     tags: z.array(z.string()).nonempty(),
-    /** Language the post is written in. Sets <html lang>, og:locale and the header labels. */
-    lang: z.enum(['en', 'es']).default('en'),
+    /**
+     * Pairs a post with its translation. Defaults to the file name, so two
+     * posts with the same slug in en/ and es/ are each other's translation;
+     * set it only when a translation carries a slug of its own.
+     */
+    key: z.string().optional(),
   }),
 });
 

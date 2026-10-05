@@ -1,33 +1,41 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import { monthYearUpper, readTimeUpper, type Lang } from '@/lib/format';
+import type { CollectionEntry } from 'astro:content';
+import {
+  localizePath,
+  otherLang,
+  postLang,
+  postSlug,
+  postTranslations,
+  UI,
+} from '@/i18n';
+import { monthYearUpper, readTimeUpper } from '@/lib/format';
 import { tagClass } from '@/lib/tags';
 import 'katex/dist/katex.min.css';
 
 interface Props {
-  title: string;
-  subtitle: string;
-  excerpt: string;
-  date: Date;
-  readMinutes: number;
-  tags: string[];
-  slug: string;
-  lang: Lang;
+  post: CollectionEntry<'blog'>;
 }
 
-const { title, subtitle, excerpt, date, readMinutes, tags, slug, lang } = Astro.props;
-const allArticles = lang === 'es' ? '← Todos los artículos' : '← All articles';
+const { post } = Astro.props;
+const { title, subtitle, excerpt, date, readMinutes, tags } = post.data;
+const lang = postLang(post);
+const blog = localizePath('/blog/', lang);
+const allArticles = UI[lang].allArticles;
+const other = otherLang(lang);
 ---
 
 <BaseLayout
   title={`${title} — Diego Said`}
   description={excerpt}
-  ogImage={`/og/blog/${slug}.png`}
+  ogImage={localizePath(`/og/blog/${postSlug(post)}.png`, lang)}
   ogType="article"
   lang={lang}
+  alternates={await postTranslations(post)}
+  fallback={{ [other]: localizePath('/blog/', other) }}
 >
   <div class="max-w-[780px] mx-auto px-6 lg:px-8 py-16 lg:py-24">
-    <a href="/blog" class="text-[14px] font-mono text-muted hover:text-accent transition-colors">
+    <a href={blog} class="text-[14px] font-mono text-muted hover:text-accent transition-colors">
       {allArticles}
     </a>
 
@@ -60,7 +68,7 @@ const allArticles = lang === 'es' ? '← Todos los artículos' : '← All articl
     </div>
 
     <div class="mt-8">
-      <a href="/blog" class="text-[14px] font-mono text-muted hover:text-accent transition-colors">
+      <a href={blog} class="text-[14px] font-mono text-muted hover:text-accent transition-colors">
         {allArticles}
       </a>
     </div>

@@ -4,7 +4,6 @@ subtitle: "Leo en inglés desde los 15 años y le debo buena parte de mi carrera
 excerpt: "El inglés me dio la programación, el trabajo remoto y una maestría en Estados Unidos. Pero leer se volvió placer, y el placer me sabe a español. Por qué este blog va en español, con los datos de cuánto contenido y cuántos lectores hay en cada idioma."
 date: 2026-10-04
 readMinutes: 7
-lang: es
 tags:
   - Escritura
   - Idioma

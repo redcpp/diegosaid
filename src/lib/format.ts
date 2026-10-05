@@ -3,7 +3,7 @@
  * header and the /blog index can differ in case without storing two copies.
  */
 
-export type Lang = 'en' | 'es';
+import type { Lang } from '@/i18n';
 
 const MONTH_YEAR: Record<Lang, Intl.DateTimeFormat> = {
   en: new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' }),

@@ -1,6 +1,7 @@
 ---
 import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
+import { LANGS, OG_LOCALE, UI, localizePath, otherLang, type Lang } from '@/i18n';
 import '@/styles/global.css';
 
 interface Props {
@@ -11,8 +12,18 @@ interface Props {
   ogType?: 'website' | 'article';
   /** Emit the schema.org Person block (home page only). */
   personSchema?: boolean;
-  /** Language of the page's content. The site chrome stays English either way. */
-  lang?: 'en' | 'es';
+  /** Language of the page, chrome included. */
+  lang?: Lang;
+  /**
+   * This page's path in each language it exists in, this one included. Feeds
+   * the hreflang links and the navbar switch.
+   */
+  alternates?: Partial<Record<Lang, string>>;
+  /**
+   * Where the switch leads when the page has no translation: a post not yet
+   * written in the other language falls back to that language's /blog/.
+   */
+  fallback?: Partial<Record<Lang, string>>;
 }
 
 const {
@@ -22,9 +33,20 @@ const {
   ogType = 'website',
   personSchema = false,
   lang = 'en',
+  alternates = {},
+  fallback = {},
 } = Astro.props;
 
-const ogLocale = lang === 'es' ? 'es_MX' : 'en_US';
+const ogLocale = OG_LOCALE[lang];
+const switchTo = Object.fromEntries(
+  LANGS.map((code) => [code, alternates[code] ?? fallback[code] ?? localizePath('/', code)]),
+) as Record<Lang, string>;
+// Only real translations become hreflang links; a fallback is a different page.
+const hreflangs = LANGS.filter((code) => alternates[code]).map((code) => ({
+  code,
+  href: new URL(alternates[code]!, Astro.site).href,
+}));
+const xDefault = alternates.en ? new URL(alternates.en, Astro.site).href : undefined;
 
 // Keep the trailing slash: Cloudflare Pages 308-redirects /blog/adr47 to
 // /blog/adr47/, and the sitemap emits the slashed form. Stripping it here would
@@ -56,9 +78,19 @@ const fontHref =
     <link
       rel="alternate"
       type="application/rss+xml"
-      title="Diego Said — Writing"
-      href="/rss.xml"
+      title={`Diego Said — ${UI[lang].writing}`}
+      href={localizePath('/rss.xml', lang)}
     />
+    {
+      hreflangs.length > 1 && (
+        <>
+          {hreflangs.map(({ code, href }) => (
+            <link rel="alternate" hreflang={code} href={href} />
+          ))}
+          <link rel="alternate" hreflang="x-default" href={xDefault} />
+        </>
+      )
+    }
 
     {/* Open Graph */}
     <meta property="og:title" content={title} />
@@ -70,6 +102,11 @@ const fontHref =
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="Diego Said" />
     <meta property="og:locale" content={ogLocale} />
+    {
+      alternates[otherLang(lang)] && (
+        <meta property="og:locale:alternate" content={OG_LOCALE[otherLang(lang)]} />
+      )
+    }
 
     {/* Twitter Cards */}
     <meta name="twitter:card" content="summary_large_image" />
@@ -140,7 +177,7 @@ const fontHref =
   </head>
   <body>
     <div class="min-h-screen flex flex-col bg-paper">
-      <Navbar />
+      <Navbar lang={lang} switchTo={switchTo} />
       <main class="flex-1 pt-14">
         <slot />
       </main>

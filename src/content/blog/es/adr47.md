@@ -4,6 +4,7 @@ subtitle: Los tokens LP no pueden respaldar la stablecoin que se emitió para cr
 excerpt: A principios de 2022 un socio propuso emitir xUSD sin colateral y declarar como respaldo los tokens LP resultantes. Tres demostraciones cortas mostraron que el respaldo era circular, que las pérdidas eran de otros y que una caída de 75% dejaba insolvente al emisor.
 date: 2026-09-07
 readMinutes: 12
+featured: true
 tags:
   - DeFi
   - Stablecoins

@@ -7,6 +7,7 @@
  */
 
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { isPublished } from '@/lib/schedule';
 
 export type Lang = 'en' | 'es';
 
@@ -44,6 +45,13 @@ const EN = {
   writingDescription:
     'Long-form essays on protocol design, distributed systems, and AI infrastructure.',
   allArticles: '← All articles',
+  featured: 'Featured',
+  allWriting: 'All writing',
+  order: 'Order',
+  newest: 'Newest',
+  oldest: 'Oldest',
+  /** Shown only by `astro dev`, on a post whose date has not arrived. */
+  scheduled: 'Scheduled',
   home: '← Home',
   notFound: 'Not Found',
   notFoundBody: 'That page does not exist.',
@@ -63,6 +71,12 @@ export const UI: Record<Lang, Record<keyof typeof EN, string>> = {
     writingDescription:
       'Ensayos largos sobre diseño de protocolos, sistemas distribuidos e infraestructura de IA.',
     allArticles: '← Todos los artículos',
+    featured: 'Destacados',
+    allWriting: 'Todos los escritos',
+    order: 'Orden',
+    newest: 'Más recientes',
+    oldest: 'Más antiguos',
+    scheduled: 'Programado',
     home: '← Inicio',
     notFound: 'Página no encontrada',
     notFoundBody: 'Esa página no existe.',
@@ -90,17 +104,32 @@ function postKey(post: Post): string {
   return post.data.key ?? postSlug(post);
 }
 
-/** Posts in one language, oldest first, the way a bibliography reads. */
+/** Published posts, plus scheduled ones under `astro dev` so they can be previewed. */
+function isVisible(post: Post): boolean {
+  return import.meta.env.DEV || isPublished(post.data.date);
+}
+
+/** True for a post that only `astro dev` shows. */
+export function isScheduled(post: Post): boolean {
+  return !isPublished(post.data.date);
+}
+
+/**
+ * Posts in one language, newest first. Several posts share a date, so the
+ * translation key breaks ties; it is the same in both languages, which keeps
+ * the two indexes in the same order.
+ */
 export async function getPosts(lang: Lang): Promise<Post[]> {
-  return (await getCollection('blog', (post) => postLang(post) === lang)).sort(
-    (a, b) => a.data.date.valueOf() - b.data.date.valueOf(),
+  return (await getCollection('blog', (post) => postLang(post) === lang && isVisible(post))).sort(
+    (a, b) =>
+      b.data.date.valueOf() - a.data.date.valueOf() || postKey(b).localeCompare(postKey(a)),
   );
 }
 
 /** The same post in each language it has been written in, keyed by language. */
 export async function postTranslations(post: Post): Promise<Partial<Record<Lang, string>>> {
   const key = postKey(post);
-  const all = await getCollection('blog', (other) => postKey(other) === key);
+  const all = await getCollection('blog', (other) => postKey(other) === key && isVisible(other));
   return Object.fromEntries(all.map((other) => [postLang(other), postPath(other)]));
 }
 

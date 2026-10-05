@@ -4,6 +4,7 @@ subtitle: Recursive minting through a money market is a geometric series. The se
 excerpt: How far can a user push leverage by minting xUSD, lending it, borrowing collateral, and minting again? A geometric series gives the cap, shows the net exposure never changes, and locates the liquidation risk on unlevered users.
 date: 2026-09-07
 readMinutes: 13
+featured: true
 tags:
   - DeFi
   - Stablecoins

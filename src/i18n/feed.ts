@@ -7,15 +7,15 @@ const FEED_LANGUAGE: Record<Lang, string> = { en: 'en-us', es: 'es-mx' };
 /**
  * Feed for one language's /blog/.
  *
- * Newest first — the reverse of the index page, which reads oldest first the
- * way a bibliography does. A reader pulls the feed to see what is new.
+ * Newest first, the order getPosts returns. A reader pulls the feed to see
+ * what is new.
  *
  * Items carry the excerpt, not the post body. The posts run to several thousand
  * words with KaTeX and highlighted code, none of which survives a feed reader
  * intact, so the description is the blurb and the link is the article.
  */
 export async function feed(context: APIContext, lang: Lang) {
-  const posts = (await getPosts(lang)).reverse();
+  const posts = await getPosts(lang);
   const t = UI[lang];
 
   return rss({

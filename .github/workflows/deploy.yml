@@ -5,6 +5,12 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  # A post dated in the future stays out of the build until its date (see
+  # src/lib/schedule.ts), so the site rebuilds every day at 00:10 in Mexico
+  # City (UTC-6, no daylight saving) to publish whatever came due.
+  schedule:
+    - cron: '10 6 * * *'
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

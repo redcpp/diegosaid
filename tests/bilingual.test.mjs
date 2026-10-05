@@ -20,6 +20,7 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { CV } from '../src/i18n/cv.ts';
+import { isPublished } from '../src/lib/schedule.ts';
 
 const ROOT = new URL('..', import.meta.url).pathname;
 const DIST = join(ROOT, 'dist');
@@ -52,6 +53,11 @@ function posts(lang) {
       const data = frontmatter(join(POSTS, lang, name));
       return { lang, slug, key: data.key ?? slug, data };
     });
+}
+
+/** The posts the build should contain; a scheduled one waits for its date. */
+function published(lang) {
+  return posts(lang).filter((post) => isPublished(new Date(post.data.date)));
 }
 
 /** dist/es/blog/adr47/index.html → /es/blog/adr47/ */
@@ -166,7 +172,7 @@ test('translation keys are unique within each language', () => {
   }
 });
 
-test('a post and its translation share a date and a tag count', () => {
+test('a post and its translation share a date, a tag count and a featured flag', () => {
   const es = new Map(posts('es').map((post) => [post.key, post]));
   for (const en of posts('en')) {
     const other = es.get(en.key);
@@ -174,6 +180,7 @@ test('a post and its translation share a date and a tag count', () => {
     const pair = `en/${en.slug} ↔ es/${other.slug}`;
     assert.equal(other.data.date, en.data.date, `${pair}: dates differ`);
     assert.equal(other.data.tags.length, en.data.tags.length, `${pair}: tag counts differ`);
+    assert.equal(other.data.featured, en.data.featured, `${pair}: featured in one language only`);
   }
 });
 
@@ -315,7 +322,21 @@ buildTest('both feeds carry every post', () => {
   const items = (file) => (readFileSync(join(DIST, file), 'utf8').match(/<item>/g) ?? []).length;
   const en = items('rss.xml');
   const es = items('es/rss.xml');
-  assert.equal(en, posts('en').length, 'rss.xml is missing posts');
-  assert.equal(es, posts('es').length, 'es/rss.xml is missing posts');
+  assert.equal(en, published('en').length, 'rss.xml is missing posts');
+  assert.equal(es, published('es').length, 'es/rss.xml is missing posts');
   assert.equal(en, es, 'the feeds carry different numbers of posts');
+});
+
+buildTest('a scheduled post is not built before its date', () => {
+  for (const lang of LANGS) {
+    const live = new Set(published(lang).map((post) => post.slug));
+    for (const post of posts(lang)) {
+      const route = `${lang === 'en' ? '' : `/${lang}`}/blog/${post.slug}/`;
+      if (live.has(post.slug)) {
+        assert.ok(fileOf(route), `${route} is published but was not built`);
+      } else {
+        assert.equal(fileOf(route), null, `${route} is scheduled for ${post.data.date} but was built`);
+      }
+    }
+  }
 });

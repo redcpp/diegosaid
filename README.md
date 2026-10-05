@@ -51,7 +51,7 @@ npm run dev          # http://localhost:4321
 The site is bilingual: English at the root, Spanish under `/es/`. Every route below exists in both trees, and the EN / ES switch in the navbar links each page to its counterpart. It is a plain link, so the site still ships no client JavaScript.
 
 - `/`, `/es/` — CV: about, experience, open source, publications, education, honors, skills, contact.
-- `/blog/`, `/es/blog/` — Writing index, generated from that language's posts.
+- `/blog/`, `/es/blog/` — Writing index, generated from that language's posts: featured posts first, then every post, newest first, with a switch to read it oldest first. The switch is two radio buttons and a CSS `:has()` rule.
 - `/blog/<slug>/`, `/es/blog/<slug>/` — Individual posts.
 - `/rss.xml`, `/es/rss.xml` — One feed per language.
 - `/og/<route>.png`, `/og/es/<route>.png` — Generated Open Graph image per route.
@@ -79,6 +79,10 @@ public/              Static assets, _headers, _redirects, robots, manifest
 
 Create `src/content/blog/en/<slug>.md` or `src/content/blog/es/<slug>.md` with the frontmatter the schema requires — `title`, `subtitle`, `excerpt`, `date`, `readMinutes`, `tags`. The folder is the language: it sets `<html lang>`, `og:locale`, the header labels and the URL (`/blog/<slug>/` or `/es/blog/<slug>/`). The post is listed on that language's index and feed, enters the sitemap, and gets an OG image, with no other file to touch.
 
+Set `featured: true` to list a post again under Featured at the top of `/blog/`; a translation must carry the same flag.
+
+A post dated in the future is scheduled: it stays out of the pages, index, feeds, sitemap and OG cards until that date in Mexico City, and the deploy workflow rebuilds every day at 00:10 Mexico City time to publish it. `npm run dev` shows scheduled posts anyway, marked on the index, so they can be read before their date. The rule lives in [`src/lib/schedule.ts`](src/lib/schedule.ts).
+
 A translation is the same file name in the other folder; the two link to each other through the navbar switch and `hreflang`. If the translation needs its own slug, set `key:` in its frontmatter to the original's file name. Until a post has a translation, the switch on it leads to the other language's `/blog/`. Links between posts point inside the same tree (`/es/blog/adr47/` from a Spanish post).
 
 Write math as `$inline$` or a `$$` block with the delimiters on their own lines. Posts are `.md` because MDX would parse LaTeX braces as JSX expressions; `.mdx` still works for a post that genuinely needs a component.
@@ -87,8 +91,8 @@ Write math as `$inline$` or a `$$` block with the delimiters on their own lines.
 
 [`tests/bilingual.test.mjs`](tests/bilingual.test.mjs) runs on Node's built-in test runner with no dependencies. Nothing in it is listed by hand: a new post or page is covered as soon as it exists, and fails until its translation does.
 
-- **Source.** Every post in `en/` has a translation in `es/` and the reverse, keys are unique, and each pair shares a date and a tag count. The CV has the same entries in both languages.
-- **Build.** Every page in `dist/` has `hreflang` links to both languages, the targets exist and point back, `<html lang>` matches the tree, and the navbar switch leads to the translation rather than a fallback. Each translation keeps the original's skeleton (headings, code blocks, math, tables, lists, images), so a section dropped in translation fails. Links inside a page stay in its language, except a link to the page's own translation. Every page has its own OG card, each language has its own 404, and both feeds carry every post.
+- **Source.** Every post in `en/` has a translation in `es/` and the reverse, keys are unique, and each pair shares a date, a tag count and its `featured` flag. The CV has the same entries in both languages.
+- **Build.** Every page in `dist/` has `hreflang` links to both languages, the targets exist and point back, `<html lang>` matches the tree, and the navbar switch leads to the translation rather than a fallback. Each translation keeps the original's skeleton (headings, code blocks, math, tables, lists, images), so a section dropped in translation fails. Links inside a page stay in its language, except a link to the page's own translation. Every page has its own OG card, each language has its own 404, both feeds carry every published post, and no scheduled post is built before its date.
 - **Types.** `UI.es` is typed against the English keys, so a chrome string added in one language only fails `npm run check`.
 
 CI runs the type check and the tests after the build and before the deploy, so a post published in one language does not ship until its translation exists.
@@ -100,7 +104,7 @@ npm run deploy:prod   # push to GitHub, build, deploy
 npm run deploy        # build and deploy without pushing
 ```
 
-Pushes to `main` also build and deploy through [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml). Wrangler reads the Cloudflare Pages project name from the script flag (`--project-name=diegosaid`); auth is handled once with `wrangler login`.
+Pushes to `main` also build and deploy through [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), which also runs every day at 00:10 Mexico City time to publish scheduled posts, and can be run by hand from the Actions tab. Wrangler reads the Cloudflare Pages project name from the script flag (`--project-name=diegosaid`); auth is handled once with `wrangler login`.
 
 ## License
 

@@ -17,11 +17,17 @@ const blog = defineCollection({
     subtitle: z.string(),
     /** Longer blurb for the /blog index and the meta description. */
     excerpt: z.string(),
-    /** Real date, so sorting and the sitemap don't depend on a display string. */
+    /**
+     * Real date, so sorting and the sitemap don't depend on a display string.
+     * A future date schedules the post: it stays out of the build until that
+     * day in Mexico City (see src/lib/schedule.ts).
+     */
     date: z.date(),
     /** Minutes, as a number: display strings are derived, never stored twice. */
     readMinutes: z.number().int().positive(),
     tags: z.array(z.string()).nonempty(),
+    /** Listed again under Featured at the top of /blog/. */
+    featured: z.boolean().default(false),
     /**
      * Pairs a post with its translation. Defaults to the file name, so two
      * posts with the same slug in en/ and es/ are each other's translation;

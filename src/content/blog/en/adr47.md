@@ -4,6 +4,7 @@ subtitle: LP tokens cannot back the stablecoin that was minted to create them. T
 excerpt: In early 2022 a partner proposed minting xUSD with no collateral and declaring the resulting LP tokens the backing. Three short proofs showed the backing was circular, the losses were someone else's, and a 75% drawdown made the issuer insolvent.
 date: 2026-09-07
 readMinutes: 12
+featured: true
 tags:
   - DeFi
   - Stablecoins

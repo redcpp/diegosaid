@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getPosts, localizePath, postPath, UI, type Lang } from '@/i18n';
+import { getPosts, localizePath, ogImagePath, postPath, UI, type Lang } from '@/i18n';
 import { monthYear, readTime } from '@/lib/format';
 import { tagClass } from '@/lib/tags';
 
@@ -16,7 +16,7 @@ const posts = await getPosts(lang);
 <BaseLayout
   title={`${t.writing} — Diego Said`}
   description={t.writingDescription}
-  ogImage={localizePath('/og/blog.png', lang)}
+  ogImage={ogImagePath('blog', lang)}
   lang={lang}
   alternates={{ en: '/blog/', es: '/es/blog/' }}
 >

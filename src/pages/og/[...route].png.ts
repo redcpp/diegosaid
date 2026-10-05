@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { getPosts, LANGS, localizePath, postSlug, UI, type Lang } from '@/i18n';
+import { getPosts, LANGS, ogRoute, postSlug, UI, type Lang } from '@/i18n';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import satori from 'satori';
@@ -66,11 +66,6 @@ const HOME_CARD: Record<Lang, Pick<Card, 'kicker' | 'subtitle'>> = {
       'Sistemas backend y full-stack en producción. Portafolio, publicaciones y escritos técnicos.',
   },
 };
-
-/** 'index' in English is 'es/index' in Spanish, matching the page's own path. */
-function ogRoute(route: string, lang: Lang) {
-  return localizePath(`/${route}`, lang).slice(1);
-}
 
 async function cardsFor(lang: Lang): Promise<Array<{ route: string; card: Card }>> {
   const posts = await getPosts(lang);

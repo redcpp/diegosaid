@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ToptalBadge from '@/components/ToptalBadge.astro';
-import { localizePath, type Lang } from '@/i18n';
+import { ogImagePath, type Lang } from '@/i18n';
 import { CV } from '@/i18n/cv';
 
 interface Props {
@@ -15,7 +15,7 @@ const cv = CV[lang];
 <BaseLayout
   title="Diego Said Anaya Mancilla"
   description={cv.meta.description}
-  ogImage={localizePath('/og/index.png', lang)}
+  ogImage={ogImagePath('index', lang)}
   personSchema
   lang={lang}
   alternates={{ en: '/', es: '/es/' }}

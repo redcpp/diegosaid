@@ -32,6 +32,15 @@ jobs:
       - name: Build
         run: npm run build
 
+      # astro check catches a chrome string missing from one language; the
+      # tests catch a post or page without its translation. Either one stops
+      # the deploy below.
+      - name: Type-check
+        run: npm run check
+
+      - name: Test bilingual coverage
+        run: npm test
+
       - name: Deploy to Cloudflare Pages
         if: github.ref == 'refs/heads/main'
         uses: cloudflare/wrangler-action@v4

@@ -24,20 +24,39 @@ export function localizePath(path: string, lang: Lang): string {
   return lang === DEFAULT_LANG ? path : `/${lang}${path}`;
 }
 
+/**
+ * The generated card for a route: ogRoute('blog', 'es') is 'es/blog', served
+ * at /og/es/blog.png. The OG endpoint and the pages both go through here, so
+ * a page can never point at a card under a different path.
+ */
+export function ogRoute(route: string, lang: Lang): string {
+  return localizePath(`/${route}`, lang).slice(1);
+}
+
+export function ogImagePath(route: string, lang: Lang): string {
+  return `/og/${ogRoute(route, lang)}.png`;
+}
+
 /** Strings for the site chrome. Page content lives with its page. */
-export const UI = {
-  en: {
-    writing: 'Writing',
-    contact: 'Contact',
-    writingDescription:
-      'Long-form essays on protocol design, distributed systems, and AI infrastructure.',
-    allArticles: '← All articles',
-    home: '← Home',
-    notFound: 'Not Found',
-    notFoundBody: 'That page does not exist.',
-    /** Label of the link that leads to this language, read from the other one. */
-    switchLabel: 'Read in English',
-  },
+const EN = {
+  writing: 'Writing',
+  contact: 'Contact',
+  writingDescription:
+    'Long-form essays on protocol design, distributed systems, and AI infrastructure.',
+  allArticles: '← All articles',
+  home: '← Home',
+  notFound: 'Not Found',
+  notFoundBody: 'That page does not exist.',
+  /** Label of the link that leads to this language, read from the other one. */
+  switchLabel: 'Read in English',
+};
+
+/**
+ * Typed against the English keys, so a string added to one language and not
+ * the other fails `astro check` instead of rendering undefined.
+ */
+export const UI: Record<Lang, Record<keyof typeof EN, string>> = {
+  en: EN,
   es: {
     writing: 'Escritos',
     contact: 'Contacto',
@@ -49,7 +68,7 @@ export const UI = {
     notFoundBody: 'Esa página no existe.',
     switchLabel: 'Leer en español',
   },
-} satisfies Record<Lang, Record<string, string>>;
+};
 
 type Post = CollectionEntry<'blog'>;
 

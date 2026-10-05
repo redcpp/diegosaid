@@ -41,8 +41,9 @@ npm run dev          # http://localhost:4321
 | `npm run dev`         | Astro dev server with HMR.                                 |
 | `npm run build`       | Build the static site to `dist/`.                          |
 | `npm run check`       | Type-check `.astro` and `.ts` files.                       |
+| `npm test`            | Check that the built site is fully bilingual (build first). |
 | `npm run preview`     | Serve the production build locally.                        |
-| `npm run deploy`      | Build and upload `dist/` to Cloudflare Pages via Wrangler. |
+| `npm run deploy`      | Build, check, test, then upload `dist/` to Cloudflare Pages. |
 | `npm run deploy:prod` | Push `main`, then build and deploy.                        |
 
 ## Routes
@@ -81,6 +82,16 @@ Create `src/content/blog/en/<slug>.md` or `src/content/blog/es/<slug>.md` with t
 A translation is the same file name in the other folder; the two link to each other through the navbar switch and `hreflang`. If the translation needs its own slug, set `key:` in its frontmatter to the original's file name. Until a post has a translation, the switch on it leads to the other language's `/blog/`. Links between posts point inside the same tree (`/es/blog/adr47/` from a Spanish post).
 
 Write math as `$inline$` or a `$$` block with the delimiters on their own lines. Posts are `.md` because MDX would parse LaTeX braces as JSX expressions; `.mdx` still works for a post that genuinely needs a component.
+
+## Bilingual tests
+
+[`tests/bilingual.test.mjs`](tests/bilingual.test.mjs) runs on Node's built-in test runner with no dependencies. Nothing in it is listed by hand: a new post or page is covered as soon as it exists, and fails until its translation does.
+
+- **Source.** Every post in `en/` has a translation in `es/` and the reverse, keys are unique, and each pair shares a date and a tag count. The CV has the same entries in both languages.
+- **Build.** Every page in `dist/` has `hreflang` links to both languages, the targets exist and point back, `<html lang>` matches the tree, and the navbar switch leads to the translation rather than a fallback. Each translation keeps the original's skeleton (headings, code blocks, math, tables, lists, images), so a section dropped in translation fails. Links inside a page stay in its language, except a link to the page's own translation. Every page has its own OG card, each language has its own 404, and both feeds carry every post.
+- **Types.** `UI.es` is typed against the English keys, so a chrome string added in one language only fails `npm run check`.
+
+CI runs the type check and the tests after the build and before the deploy, so a post published in one language does not ship until its translation exists.
 
 ## Deployment
 

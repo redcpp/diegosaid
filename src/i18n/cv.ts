@@ -39,7 +39,7 @@ interface CV {
   experience: Entry[];
   projects: Project[];
   screenshotAlt: (title: string) => string;
-  publications: { ref: string; citation: string }[];
+  publications: { ref: string; citation: string; href: string }[];
   education: Entry[];
   honors: string[];
   skills: { title: string; items: string }[];
@@ -48,26 +48,32 @@ interface CV {
 }
 
 // The reference marker is split out so it can set in mono and in the citation
-// colour, the way a paper's \cite renders under hyperref. Citations are the
-// published titles, so both languages share them.
+// colour, the way a paper's \cite renders under hyperref, and it links to the
+// work the way a \cite does. Citations are the published titles, so both
+// languages share them. A site path (/blog/...) is localized where it renders;
+// the ADRs and the litepaper link to their annotated posts.
 const PUBLICATIONS = [
   {
     ref: '[1]',
     citation:
-      'D.S. Anaya Mancilla et al. "VCF/Plotein: visualization and prioritization of genomic variants from VCF files." <em>Bioinformatics</em>, Oxford Academic, 2019.',
+      'D.S. Anaya Mancilla et al. "VCF/Plotein: visualization and prioritization of genomic variants from human exome sequencing projects." <em>Bioinformatics</em>, Oxford Academic, 2019.',
+    href: 'https://doi.org/10.1093/bioinformatics/btz458',
   },
   {
     ref: '[2]',
     citation:
       'D.S. Anaya Mancilla et al. "ADR-47: The Case Against PACT xUSD Launch." xBacked DAO, 2022.',
+    href: '/blog/adr47/',
   },
   {
     ref: '[3]',
     citation: 'D.S. Anaya Mancilla et al. "ADR-46: Vault Looping." xBacked DAO, 2022.',
+    href: '/blog/adr46/',
   },
   {
     ref: '[4]',
     citation: 'D.S. Anaya Mancilla et al. "xBacked Litepaper v2.0." xBacked DAO, 2022.',
+    href: '/blog/xbacked-litepaper/',
   },
 ];
 

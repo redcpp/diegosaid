@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ToptalBadge from '@/components/ToptalBadge.astro';
-import { ogImagePath, type Lang } from '@/i18n';
+import { localizePath, ogImagePath, type Lang } from '@/i18n';
 import { CV } from '@/i18n/cv';
 
 interface Props {
@@ -119,7 +119,23 @@ const cv = CV[lang];
       {
         cv.publications.map((entry) => (
           <p class="text-[15px] leading-[1.7] mb-4 font-serif text-ink flex gap-2">
-            <span class="font-mono text-[13px] text-cite shrink-0 pt-0.5">{entry.ref}</span>
+            {entry.href.startsWith('/') ? (
+              <a
+                href={localizePath(entry.href, lang)}
+                class="font-mono text-[13px] text-cite hover:underline shrink-0 pt-0.5"
+              >
+                {entry.ref}
+              </a>
+            ) : (
+              <a
+                href={entry.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-mono text-[13px] text-cite hover:underline shrink-0 pt-0.5"
+              >
+                {entry.ref}
+              </a>
+            )}
             <span set:html={entry.citation} />
           </p>
         ))

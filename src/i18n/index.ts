@@ -43,7 +43,7 @@ const EN = {
   writing: 'Writing',
   contact: 'Contact',
   writingDescription:
-    'Long-form essays on protocol design, distributed systems, and AI infrastructure.',
+    'Essays on what I learn building software, running a company, and training to race.',
   allArticles: '← All articles',
   featured: 'Featured',
   allWriting: 'All writing',
@@ -69,7 +69,7 @@ export const UI: Record<Lang, Record<keyof typeof EN, string>> = {
     writing: 'Escritos',
     contact: 'Contacto',
     writingDescription:
-      'Ensayos largos sobre diseño de protocolos, sistemas distribuidos e infraestructura de IA.',
+      'Ensayos sobre lo que aprendo construyendo software, dirigiendo una empresa y entrenando para competir.',
     allArticles: '← Todos los artículos',
     featured: 'Destacado',
     allWriting: 'Todos los escritos',

@@ -75,7 +75,7 @@ The same goes for what I leave out. I don't have Instagram, Facebook or TikTok. 
 
 ## Six fronts
 
-Today is different. I still train, but my athletic focus is cycling. I'm a better cyclist than when I did half Ironmans and ultramarathons, and a worse runner and swimmer. Cycling has a huge amount of statistics and a lot of strategy, and both fill me with joy off the bike, because I can analyze my files and improve for the next race.
+Today is different. I still train, but my athletic focus is cycling. I'm a better cyclist than when I did half Ironmans and ultramarathons, though a worse runner and swimmer. Cycling has a huge amount of statistics and a lot of strategy, and both fill me with joy off the bike, because I can analyze my files and improve for the next race.
 
 I now have a family and more responsibilities, but the foundation is still there. The person I became training for the Ironman puts all his energy and discipline into several things at once. In the Ironman it was three sports plus physical therapy, gym and nutrition: six fronts I had to coordinate.
 

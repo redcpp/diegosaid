@@ -72,7 +72,7 @@ Lo mismo pasa con lo que dejo fuera. No tengo Instagram, Facebook ni TikTok. Blo
 
 ## Seis frentes
 
-Hoy es distinto. Sigo entrenando, pero mi enfoque atlético es el ciclismo. Soy mejor ciclista que cuando hacía medios Ironman y ultramaratones, y peor corredor y nadador. El ciclismo tiene muchísimas estadísticas y mucha estrategia, y las dos cosas me llenan de alegría fuera de la bici, porque puedo analizar mis archivos y mejorar para la siguiente carrera.
+Hoy es distinto. Sigo entrenando, pero mi enfoque atlético es el ciclismo. Soy mejor ciclista que cuando hacía medios Ironman y ultramaratones, aunque peor corredor y nadador. El ciclismo tiene muchísimas estadísticas y mucha estrategia, y las dos cosas me llenan de alegría fuera de la bici, porque puedo analizar mis archivos y mejorar para la siguiente carrera.
 
 Ahora tengo una familia y más responsabilidades, pero la base sigue ahí. La persona en la que me convertí entrenando para el Ironman mete toda su energía y su disciplina en varios temas a la vez. En el Ironman eran tres deportes más fisioterapia, gimnasio y nutrición: seis frentes que debía coordinar.
 

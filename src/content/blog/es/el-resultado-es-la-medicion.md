@@ -3,7 +3,7 @@ title: "El resultado es la medición, no el objetivo"
 subtitle: "Compito cada semana y soy muy minucioso con mis datos, pero el resultado no es el objetivo: es solo la medición. El objetivo es mejorar día con día y disfrutarlo lo suficiente para no dejarlo."
 excerpt: "Del medio Ironman en el que fui el más lento de mi grupo a un calambre entrenando para Cozumel: por qué separo el ranking de mis números, qué me enseñó Marco Aurelio y por qué disfrutar el proceso me sostiene más que la disciplina."
 date: 2026-10-18
-readMinutes: 10
+readMinutes: 11
 tags:
   - Ciclismo
   - Hábitos
@@ -40,6 +40,8 @@ Y necesito esa medición. Me es muy difícil mantenerme motivado si no hay una c
 
 De hecho, muchas veces analizo mis datos después de una carrera que sentí terrible y me impresiono al ver que en realidad voy para arriba. Quizá fui mejor estratega, quizá la carrera estuvo más dura o los competidores de esa semana eran mejores. Puedo terminar peor en el ranking y mejor en mis números. Por eso separo las dos cosas: el ranking depende también de los demás; mis números dependen de mí. Eso no se ve a menos que uno se detenga a analizar todos los números y vea el todo, en lugar de cerrarse a una sola cosa como el resultado.
 
+La investigación en deporte apunta en la misma dirección. Un [metaanálisis de 27 estudios](https://doi.org/10.1080/1750984X.2022.2116723) comparó tres tipos de meta: de proceso (cómo ejecutas: técnica, ritmo), de desempeño (tu propia marca) y de resultado (tu lugar contra otros). Las de proceso tuvieron el mayor efecto en el rendimiento, con un tamaño de 1.36; las de resultado, de apenas 0.09. Como referencia, 0.8 ya se considera un efecto grande (Williamson y colegas, 2022).
+
 ## Me acalambré entrenando
 
 El 3 de octubre, en una simulación de carrera de 4 horas 45 minutos, me acalambré a las 3 horas 10 minutos, cuando me sentía muy bien. Soy propenso a los calambres. Si me pasa en carrera, ya ni modo, y me mantengo firme ante eso. Pero sí sentí feo que me ocurriera entrenando, porque entreno justo para que eso no suceda, y la sesión se recortó en una hora y media.
@@ -58,9 +60,13 @@ Si no estoy disfrutando lo que hago, es muy fácil empezar a buscar excusas. Si 
 
 Cuando la sesión se siente como un examen, mentalmente es muy duro. Puedo tener constancia y sufrir todos los días, pero llega un punto, un lugar oscuro, en el que nuestros demonios nos quieren hacer rendir. Si no estamos en una posición de alegría y de fuerza, es más fácil que fallemos o que huyamos. Por eso es importante la diversión: para atravesar los momentos difíciles por elección y para construir un hábito más fácilmente.
 
+Los datos lo respaldan. En [cinco estudios](https://www.chicagobooth.edu/media-relations-and-communications/press-releases/implement-immediate-rewards-as-you-pursue-that-long-term-goal) sobre propósitos de Año Nuevo, ejercicio y estudio, la gente decía perseguir esas metas por el beneficio a futuro, como la salud. Aun así, lo que mejor predijo quién siguió fue la recompensa inmediata: disfrutar la actividad (Woolley y Fishbach, 2017).
+
 El hábito que he sostenido estas nueve semanas casi sin pensarlo es la carrera semanal. Me subo a la bici con mi ritual: mi desayuno, mi café. Esa rutina me pone en la mentalidad adecuada para entrar en flow en cuanto empieza la carrera.
 
-A alguien que no entrena le diría que tiene que identificarse con lo que hace, y para lograrlo primero tiene que disfrutarlo. Si a alguien que no fuma le ofrecen un cigarro, es muy fácil ser «disciplinado» y decir que no, porque su identidad está ligada a la de una persona que no fuma. El ejemplo es de James Clear en *Hábitos atómicos*, y un [estudio de 2012](https://ideas.repec.org/a/oup/jconrs/doi10.1086-663212.html), con grupos pequeños, encontró algo parecido: decirse «no lo hago» ayuda más a resistir una tentación que decirse «no puedo».
+Construir un hábito así lleva tiempo. En un [estudio de University College London](https://doi.org/10.1002/ejsp.674), un hábito nuevo tardó una mediana de 66 días en volverse automático, con un rango de 18 a 254 según la persona. Fallar un día no cambió el proceso de forma importante (Lally y colegas, 2010).
+
+A alguien que no entrena le diría que tiene que identificarse con lo que hace, y para lograrlo primero tiene que disfrutarlo. Si a alguien que no fuma le ofrecen un cigarro, es muy fácil ser «disciplinado» y decir que no, porque su identidad está ligada a la de una persona que no fuma. El ejemplo es de James Clear en *Hábitos atómicos*. Un [estudio de 2012](https://ideas.repec.org/a/oup/jconrs/doi10.1086-663212.html), con grupos pequeños, encontró algo parecido: de quienes se decían «no lo hago», 8 de cada 10 siguieron con su meta los 10 días; de quienes se decían «no puedo», solo 1 de cada 10.
 
 Lo mismo pasa con lo que dejo fuera. No tengo Instagram, Facebook ni TikTok. Bloqueé Reddit y los shorts de YouTube, y borré de mi celular las aplicaciones que me hacen perder el tiempo. Hasta borré la aplicación de ajedrez: disfruto una partida de vez en cuando, pero cansa la mente y no es parte de mi plan ser un gran ajedrecista. Los 30 minutos que le podría dedicar al ajedrez mejor se los dedico a la programación competitiva, que me define mucho más.
 
@@ -91,3 +97,6 @@ Consultadas el 5 de octubre de 2026.
 - James Clear, *Hábitos atómicos* (*Atomic Habits*, 2018), ejemplo de las dos personas a las que les ofrecen un cigarro.
 - Patrick, V. M. y Hagtvedt, H. (2012). "I Don't" versus "I Can't": When Empowered Refusal Motivates Goal-Directed Behavior. *Journal of Consumer Research*, 39(2), 371–381: [IDEAS/RePEc](https://ideas.repec.org/a/oup/jconrs/doi10.1086-663212.html)
 - GFNY Cozumel 2026, recorrido largo de 154 km (dos vueltas) y medio de 77 km: [Gran Fondo Guide](https://www.granfondoguide.com/Contents/Index/9245/registration-open-for-2026-gfny-cozumel-the-original-gfny-world-classic)
+- Williamson, O. y colegas (2022). The performance and psychological effects of goal setting in sport: A systematic review and meta-analysis. *International Review of Sport and Exercise Psychology*, 17(2), 1050–1078: [doi.org](https://doi.org/10.1080/1750984X.2022.2116723)
+- Woolley, K. y Fishbach, A. (2017). Immediate Rewards Predict Adherence to Long-Term Goals. *Personality and Social Psychology Bulletin*, 43(2), 151–162: [Chicago Booth](https://www.chicagobooth.edu/media-relations-and-communications/press-releases/implement-immediate-rewards-as-you-pursue-that-long-term-goal)
+- Lally, P., van Jaarsveld, C. H. M., Potts, H. W. W. y Wardle, J. (2010). How are habits formed: Modelling habit formation in the real world. *European Journal of Social Psychology*, 40(6), 998–1009: [doi.org](https://doi.org/10.1002/ejsp.674)

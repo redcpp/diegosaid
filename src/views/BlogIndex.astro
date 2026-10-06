@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { getPosts, isScheduled, localizePath, ogImagePath, postPath, UI, type Lang } from '@/i18n';
 import { monthYear, readTime } from '@/lib/format';
 import { tagClass } from '@/lib/tags';
+import Star from '@/components/Star.astro';
 
 interface Props {
   lang: Lang;
@@ -11,7 +12,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = UI[lang];
 const posts = await getPosts(lang);
-const featured = posts.filter((post) => post.data.featured);
+const featuredCount = posts.filter((post) => post.data.featured).length;
 
 // The order switch is two radio buttons and a :has() rule, since the site ships
 // no client JavaScript. The list is rendered once in each order and the rule
@@ -47,54 +48,34 @@ const orders = [
       RSS
     </a>
 
-    {
-      featured.length > 0 && (
-        <section class="mt-12 border-t border-rule pt-10" aria-labelledby="featured">
-          <h2 id="featured" class="text-[22px] font-bold">
-            {t.featured}
-          </h2>
-          <ul class="mt-6 space-y-6">
-            {featured.map((post) => (
-              <li>
-                <a href={postPath(post)} class="block border-l-2 border-accent pl-5 group">
-                  <div class="flex items-baseline gap-3 text-[13px] font-mono text-muted">
-                    <span>{monthYear(post.data.date, lang)}</span>
-                    <span>·</span>
-                    <span>{readTime(post.data.readMinutes)}</span>
-                  </div>
-                  <h3 class="text-[18px] font-bold mt-1 group-hover:text-accent transition-colors">
-                    {post.data.title}
-                  </h3>
-                  <p class="text-[15px] text-muted mt-1 leading-relaxed">{post.data.subtitle}</p>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
-
-    <section class="mt-14 group/order" aria-labelledby="all-writing">
+    <section class="mt-12 group/order" aria-labelledby="all-writing">
       <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3">
         <h2 id="all-writing" class="text-[22px] font-bold">{t.allWriting}</h2>
-        <fieldset class="flex gap-4 font-mono text-[13px]">
-          <legend class="sr-only">{t.order}</legend>
-          {
-            orders.map(({ key, label }) => (
-              <label class="cursor-pointer text-muted hover:text-accent transition-colors underline-offset-4 has-[:checked]:text-ink has-[:checked]:underline has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent">
-                <input
-                  type="radio"
-                  name="order"
-                  id={`order-${key}`}
-                  value={key}
-                  checked={key === 'newest'}
-                  class="sr-only"
-                />
-                {label}
-              </label>
-            ))
-          }
-        </fieldset>
+        <div class="flex flex-wrap items-baseline gap-x-6 gap-y-3">
+          {featuredCount > 0 && (
+            <p class="font-mono text-[13px] text-muted" aria-hidden="true">
+              <Star /> {t.featured}
+            </p>
+          )}
+          <fieldset class="flex gap-4 font-mono text-[13px]">
+            <legend class="sr-only">{t.order}</legend>
+            {
+              orders.map(({ key, label }) => (
+                <label class="cursor-pointer text-muted hover:text-accent transition-colors underline-offset-4 has-[:checked]:text-ink has-[:checked]:underline has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent">
+                  <input
+                    type="radio"
+                    name="order"
+                    id={`order-${key}`}
+                    value={key}
+                    checked={key === 'newest'}
+                    class="sr-only"
+                  />
+                  {label}
+                </label>
+              ))
+            }
+          </fieldset>
+        </div>
       </div>
       {
         orders.map(({ key, posts, visibility }) => (
@@ -115,6 +96,12 @@ const orders = [
                   </div>
                   <h3 class="text-[20px] font-bold mt-2 group-hover:text-accent transition-colors">
                     {post.data.title}
+                    {post.data.featured && (
+                      <span class="ml-1 whitespace-nowrap" title={t.featured}>
+                        <Star />
+                        <span class="sr-only">({t.featured})</span>
+                      </span>
+                    )}
                   </h3>
                   <p class="text-[15px] text-muted mt-2 leading-relaxed">{post.data.excerpt}</p>
                   <div class="flex flex-wrap gap-2 mt-3">

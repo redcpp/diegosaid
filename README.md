@@ -51,7 +51,7 @@ npm run dev          # http://localhost:4321
 The site is bilingual: English at the root, Spanish under `/es/`. Every route below exists in both trees, and the EN / ES switch in the navbar links each page to its counterpart. It is a plain link, so the site still ships no client JavaScript.
 
 - `/`, `/es/` — CV: about, experience, open source, publications, education, honors, skills, contact.
-- `/blog/`, `/es/blog/` — Writing index, generated from that language's posts: featured posts first, then every post, newest first, with a switch to read it oldest first. The switch is two radio buttons and a CSS `:has()` rule.
+- `/blog/`, `/es/blog/` — Writing index, generated from that language's posts: every post, newest first, featured ones marked with a small star, with a switch to read it oldest first. The switch is two radio buttons and a CSS `:has()` rule.
 - `/blog/<slug>/`, `/es/blog/<slug>/` — Individual posts.
 - `/rss.xml`, `/es/rss.xml` — One feed per language.
 - `/og/<route>.png`, `/og/es/<route>.png` — Generated Open Graph image per route.
@@ -79,7 +79,7 @@ public/              Static assets, _headers, _redirects, robots, manifest
 
 Create `src/content/blog/en/<slug>.md` or `src/content/blog/es/<slug>.md` with the frontmatter the schema requires — `title`, `subtitle`, `excerpt`, `date`, `readMinutes`, `tags`. The folder is the language: it sets `<html lang>`, `og:locale`, the header labels and the URL (`/blog/<slug>/` or `/es/blog/<slug>/`). The post is listed on that language's index and feed, enters the sitemap, and gets an OG image, with no other file to touch.
 
-Set `featured: true` to list a post again under Featured at the top of `/blog/`; a translation must carry the same flag.
+Set `featured: true` to mark a post with a small star on `/blog/`; a translation must carry the same flag.
 
 A post dated in the future is scheduled: it stays out of the pages, index, feeds, sitemap and OG cards until that date in Mexico City, and the deploy workflow rebuilds every day at 00:10 Mexico City time to publish it. `npm run dev` shows scheduled posts anyway, marked on the index, so they can be read before their date. The rule lives in [`src/lib/schedule.ts`](src/lib/schedule.ts).
 

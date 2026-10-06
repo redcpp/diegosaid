@@ -71,7 +71,7 @@ export const UI: Record<Lang, Record<keyof typeof EN, string>> = {
     writingDescription:
       'Ensayos largos sobre diseño de protocolos, sistemas distribuidos e infraestructura de IA.',
     allArticles: '← Todos los artículos',
-    featured: 'Destacados',
+    featured: 'Destacado',
     allWriting: 'Todos los escritos',
     order: 'Orden',
     newest: 'Más recientes',

@@ -26,7 +26,7 @@ const blog = defineCollection({
     /** Minutes, as a number: display strings are derived, never stored twice. */
     readMinutes: z.number().int().positive(),
     tags: z.array(z.string()).nonempty(),
-    /** Listed again under Featured at the top of /blog/. */
+    /** Marked with a small star on the /blog/ index. */
     featured: z.boolean().default(false),
     /**
      * Pairs a post with its translation. Defaults to the file name, so two

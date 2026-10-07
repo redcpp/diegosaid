@@ -6,11 +6,19 @@
  * ends, and the date tells the reader how fresh it is. Update both together.
  */
 
-import type { Lang } from '@/i18n';
+import { TOPTAL, type Lang } from '@/i18n';
+
+const DOI = 'https://doi.org/10.1093/bioinformatics/btz458';
 
 interface Home {
   meta: { title: string; description: string };
   tagline: string;
+  /**
+   * Credentials under the tagline, each linked to its evidence: the paper's
+   * DOI, the Toptal profile, the CV. A path starting with / is localized where
+   * it renders. Only facts that a reader can check.
+   */
+  credentials: { label: string; href: string }[];
   location: string;
   headings: { now: string; work: string };
   /** Shown beside the "now" heading. */
@@ -33,6 +41,12 @@ export const HOME: Record<Lang, Home> = {
     },
     tagline:
       'Ingeniero de software y empresario. Escribo sobre lo que aprendo construyendo sistemas, dirigiendo empresas y entrenando para competir.',
+    credentials: [
+      { label: 'Oracle Cloud', href: '/cv/' },
+      { label: 'Publicado en Bioinformatics (Oxford)', href: DOI },
+      { label: 'Toptal, 3% superior', href: TOPTAL },
+      { label: 'Finalista regional ACM-ICPC', href: '/cv/' },
+    ],
     location: 'Vallarta, México (UTC−6)',
     headings: { now: 'Ahora', work: 'Trayectoria' },
     nowUpdated: 'octubre 2026',
@@ -60,6 +74,12 @@ export const HOME: Record<Lang, Home> = {
     },
     tagline:
       'Software engineer and business owner. I write about what I learn building systems, running companies, and training to race.',
+    credentials: [
+      { label: 'Oracle Cloud', href: '/cv/' },
+      { label: 'Published in Bioinformatics (Oxford)', href: DOI },
+      { label: 'Toptal, top 3%', href: TOPTAL },
+      { label: 'ACM-ICPC regional finalist', href: '/cv/' },
+    ],
     location: 'Vallarta, Mexico (UTC−6)',
     headings: { now: 'Now', work: 'Background' },
     nowUpdated: 'October 2026',

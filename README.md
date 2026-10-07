@@ -52,7 +52,7 @@ npm run dev          # http://localhost:4321
 
 The site is bilingual and Spanish comes first: Spanish at the root, English under `/en/`. The essays are written in Spanish; the English versions are translations. Every route below exists in both trees, and the ES / EN switch in the navbar links each page to its counterpart. It is a plain link, so the site still ships no client JavaScript.
 
-- `/`, `/en/` — Home: who Diego is, what he is doing now (dated; update it in [`src/i18n/home.ts`](src/i18n/home.ts)), the three latest essays, a pointer to the CV, and contact.
+- `/`, `/en/` — Home: who Diego is, a line of credentials each linked to its evidence, what he is doing now (dated; update it in [`src/i18n/home.ts`](src/i18n/home.ts)), the three latest essays, a pointer to the CV, and contact.
 - `/cv/`, `/en/cv/` — CV: summary, experience, open source and publications, education and honors, skills, contact.
 - `/blog/`, `/en/blog/` — Writing index, generated from that language's posts: every post, newest first, featured ones marked with a small star, with a switch to read it oldest first. The switch is two radio buttons and a CSS `:has()` rule.
 - `/blog/<slug>/`, `/en/blog/<slug>/` — Individual posts, with a contents list when a post has three or more sections, an author note, and links to the previous and next posts.

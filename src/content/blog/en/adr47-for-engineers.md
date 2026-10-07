@@ -4,7 +4,6 @@ subtitle: How to review a token-economics proposal the way you review a pull req
 excerpt: The same argument as the formal ADR-47, with no theorems. A stablecoin proposal asked for a bypass around the solvency invariant. Forty lines of Python show why the bypass was a reference cycle, and what the failing test looks like.
 date: 2026-09-07
 readMinutes: 10
-featured: true
 tags:
   - DeFi
   - Code Review

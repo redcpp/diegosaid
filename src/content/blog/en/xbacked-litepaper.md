@@ -4,6 +4,7 @@ subtitle: How an over-collateralized stablecoin held its peg on Algorand. Vaults
 excerpt: The xBacked Litepaper v2.0 described xUSD in examples. This is the same design explained mechanism by mechanism, including the liquidation formula derived from first principles and the arithmetic behind the peg band.
 date: 2026-09-07
 origin: "The xBacked Litepaper v2.0 was published in March 2022. Annotated in 2026."
+featured: true
 readMinutes: 10
 tags:
   - DeFi

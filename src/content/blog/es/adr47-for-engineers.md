@@ -4,7 +4,6 @@ subtitle: Cómo revisar una propuesta de economía de tokens como revisas un pul
 excerpt: El mismo argumento del ADR-47 formal, sin teoremas. Una propuesta para una stablecoin pedía saltarse el invariante de solvencia. Cuarenta líneas de Python muestran por qué ese atajo era un ciclo de referencias y cómo se ve la prueba que falla.
 date: 2026-09-07
 readMinutes: 10
-featured: true
 tags:
   - DeFi
   - Code review

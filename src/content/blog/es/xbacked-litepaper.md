@@ -4,6 +4,7 @@ subtitle: Cómo una stablecoin sobrecolateralizada sostuvo su paridad en Algoran
 excerpt: El Litepaper v2.0 de xBacked describía xUSD con ejemplos. Este es el mismo diseño explicado mecanismo por mecanismo, incluida la fórmula de liquidación derivada desde first principles y la aritmética detrás de la banda de paridad.
 date: 2026-09-07
 origin: "El Litepaper v2.0 de xBacked se publicó en marzo de 2022. Comentado en 2026."
+featured: true
 readMinutes: 10
 tags:
   - DeFi

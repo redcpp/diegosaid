@@ -5,7 +5,15 @@
  * stay as they are officially written.
  */
 
+// Type-only: the tests load this file under Node, which cannot resolve '@/'.
 import type { Lang } from '@/i18n';
+
+/** Ironman and Ironman 70.3 results, compiled by CoachCox from the official ones. */
+export const IRONMAN = 'https://www.coachcox.co.uk/imstats/athlete/1189560/';
+
+// Public verification pages: anyone can confirm these without asking Diego.
+const HBS_CORE = 'https://online.hbs.edu/verify-certificate?dvid=Z2EFLPBY';
+const CU_BOULDER_DSA = 'https://coursera.org/verify/specialization/ODT6LV4XF4A2';
 
 interface Entry {
   years: string;
@@ -48,7 +56,8 @@ interface CV {
   screenshotAlt: (title: string) => string;
   publications: { ref: string; citation: string; href: string }[];
   education: Degree[];
-  honors: string[];
+  /** Newest first. `href` links the entry to where it can be verified. */
+  honors: { text: string; href?: string }[];
   skills: { title: string; items: string }[];
   spokenLanguages: string;
 }
@@ -97,11 +106,11 @@ export const CV: Record<Lang, CV> = {
       openSource: 'Open source',
       publications: 'Publications',
       education: 'Education',
-      honors: 'Honors & diplomas',
+      honors: 'Honors, certifications & sport',
       skills: 'Technical competencies',
     },
     about:
-      'Software engineer with 5+ years building production systems: at Oracle Cloud, as a remote contractor for US teams, and now for my own companies. Python, TypeScript and SQL; REST APIs, data pipelines, cloud infrastructure and LLM integration. Completing an M.S. in Computer Science at CU Boulder. I take on selected projects as an independent contractor.',
+      'Software engineer with 5+ years building production systems: at Oracle Cloud, as a remote contractor for US teams, and now for my own companies. Python, TypeScript and SQL; REST APIs, data pipelines, cloud infrastructure and LLM integration. Completing an M.S. in Computer Science at CU Boulder. I take on projects as an independent contractor.',
     experience: [
       {
         years: '2024 – present',
@@ -199,9 +208,21 @@ export const CV: Record<Lang, CV> = {
       },
     ],
     honors: [
-      '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers, Financial Accounting',
-      '2018 — ACM-ICPC Regional Finalist, Mexico & Central America',
-      '2017 — ACM-ICPC Honorable Mention, Mexico & Central America',
+      {
+        text: '2026 — Foundations of Data Structures and Algorithms, University of Colorado Boulder (specialization, 5 courses)',
+        href: CU_BOULDER_DSA,
+      },
+      {
+        text: '2024 – 2025 — Ironman 70.3 finisher: Riviera Nayarit (2024) and Monterrey (2025)',
+        href: IRONMAN,
+      },
+      { text: '2025 — Member of AMPI México, the Mexican Association of Real Estate Professionals' },
+      {
+        text: '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers, Financial Accounting',
+        href: HBS_CORE,
+      },
+      { text: '2018 — ACM-ICPC Regional Finalist, Mexico & Central America' },
+      { text: '2017 — ACM-ICPC Honorable Mention, Mexico & Central America' },
     ],
     skills: [
       { title: 'Languages', items: 'Python, TypeScript / JavaScript, SQL, C++' },
@@ -236,11 +257,11 @@ export const CV: Record<Lang, CV> = {
       openSource: 'Código abierto',
       publications: 'Publicaciones',
       education: 'Formación',
-      honors: 'Distinciones y diplomas',
+      honors: 'Distinciones, certificaciones y deporte',
       skills: 'Competencias técnicas',
     },
     about:
-      'Ingeniero de software con más de 5 años construyendo sistemas en producción: en Oracle Cloud, como contratista remoto para equipos de Estados Unidos y ahora para mis propias empresas. Python, TypeScript y SQL; APIs REST, pipelines de datos, infraestructura en la nube e integración de LLM. Curso la maestría en Ciencias de la Computación en CU Boulder. Tomo proyectos selectos como contratista independiente.',
+      'Ingeniero de software con más de 5 años construyendo sistemas en producción: en Oracle Cloud, como contratista remoto para equipos de Estados Unidos y ahora para mis propias empresas. Python, TypeScript y SQL; APIs REST, pipelines de datos, infraestructura en la nube e integración de LLM. Curso la maestría en Ciencias de la Computación en CU Boulder. Acepto proyectos como contratista independiente.',
     experience: [
       {
         years: '2024 – actualidad',
@@ -338,9 +359,21 @@ export const CV: Record<Lang, CV> = {
       },
     ],
     honors: [
-      '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers y Financial Accounting',
-      '2018 — Finalista regional del ACM-ICPC, México y Centroamérica',
-      '2017 — Mención honorífica en el ACM-ICPC, México y Centroamérica',
+      {
+        text: '2026 — Foundations of Data Structures and Algorithms, University of Colorado Boulder (especialización de 5 cursos)',
+        href: CU_BOULDER_DSA,
+      },
+      {
+        text: '2024 – 2025 — Finisher de Ironman 70.3: Riviera Nayarit (2024) y Monterrey (2025)',
+        href: IRONMAN,
+      },
+      { text: '2025 — Asociado de AMPI México, la Asociación Mexicana de Profesionales Inmobiliarios' },
+      {
+        text: '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers y Financial Accounting',
+        href: HBS_CORE,
+      },
+      { text: '2018 — Finalista regional del ACM-ICPC, México y Centroamérica' },
+      { text: '2017 — Mención honorífica en el ACM-ICPC, México y Centroamérica' },
     ],
     skills: [
       { title: 'Lenguajes', items: 'Python, TypeScript / JavaScript, SQL, C++' },

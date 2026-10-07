@@ -35,17 +35,11 @@ const more =
     <header>
       <h1 class="text-[34px] lg:text-[40px] font-bold tracking-tight leading-tight">Diego Said</h1>
       <p class="mt-4 text-[19px] leading-[1.6] text-ink/85">{home.tagline}</p>
-      {/* One per line on a phone, where a wrapped row would start lines with a
-          dot; a single dotted row from sm up. */}
-      <ul class="mt-5 flex flex-col sm:flex-row sm:flex-wrap gap-y-1.5 font-mono text-[13px]">
+      {/* One per line on a phone, a dotted row from sm up (see .credentials). */}
+      <ul class="credentials mt-5 font-mono text-[13px]">
         {
-          home.credentials.map(({ label, href }, i) => (
-            <li class="whitespace-nowrap">
-              {i > 0 && (
-                <span class="hidden sm:inline text-muted/60 px-2" aria-hidden="true">
-                  ·
-                </span>
-              )}
+          home.credentials.map(({ label, href }) => (
+            <li>
               {href.startsWith('/') ? (
                 <a href={localizePath(href, lang)} class={credential}>
                   {label}

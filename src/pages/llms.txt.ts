@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { EMAIL, getPosts, LANGS, postPath, PROFILES, TOPTAL, type Lang } from '@/i18n';
+import { IRONMAN } from '@/i18n/cv';
 import { HOME } from '@/i18n/home';
 
 /**
@@ -54,7 +55,8 @@ export const GET: APIRoute = async () => {
     `- Email: ${EMAIL}`,
     ...PROFILES.map(({ name, url }) => `- ${name}: ${url}`),
     `- Toptal: ${TOPTAL.split('#')[0]}`,
-    '- Available for selected projects as an independent contractor; not looking for employment.',
+    `- Ironman 70.3 results: ${IRONMAN}`,
+    '- Available for projects as an independent contractor.',
     '',
   );
 

@@ -38,7 +38,7 @@ const subheading = 'text-[18px] font-bold';
         {
           cv.experience.map((entry) => (
             <li class="flex flex-col sm:flex-row sm:gap-6 py-5">
-              <div class="sm:w-[120px] shrink-0 font-mono text-[13px] text-muted pt-0.5">
+              <div class="sm:w-[136px] shrink-0 whitespace-nowrap font-mono text-[13px] text-muted pt-0.5">
                 {entry.years}
               </div>
               <div class="mt-1 sm:mt-0">
@@ -121,7 +121,7 @@ const subheading = 'text-[18px] font-bold';
         {
           cv.education.map((entry) => (
             <div class="flex flex-col sm:flex-row sm:gap-6 py-4">
-              <div class="sm:w-[120px] shrink-0 font-mono text-[13px] text-muted pt-0.5">
+              <div class="sm:w-[136px] shrink-0 whitespace-nowrap font-mono text-[13px] text-muted pt-0.5">
                 {entry.years}
               </div>
               <div class="mt-1 sm:mt-0">
@@ -138,7 +138,24 @@ const subheading = 'text-[18px] font-bold';
 
       <h2 class={`${subheading} mt-8`}>{cv.headings.honors}</h2>
       <ul class="mt-3 space-y-1.5">
-        {cv.honors.map((honor) => <li class="text-[15px] leading-[1.7]">{honor}</li>)}
+        {
+          cv.honors.map(({ text, href }) => (
+            <li class="text-[15px] leading-[1.7]">
+              {href ? (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="underline underline-offset-4 decoration-rule hover:text-accent hover:decoration-accent transition-colors"
+                >
+                  {text}
+                </a>
+              ) : (
+                text
+              )}
+            </li>
+          ))
+        }
       </ul>
     </section>
 

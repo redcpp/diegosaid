@@ -7,6 +7,7 @@
  */
 
 import { TOPTAL, type Lang } from '@/i18n';
+import { IRONMAN } from '@/i18n/cv';
 
 const DOI = 'https://doi.org/10.1093/bioinformatics/btz458';
 
@@ -28,8 +29,8 @@ interface Home {
   work: string;
   workLink: string;
   contactLabels: { email: string; phone: string };
-  /** The contractor line, with a link to the Toptal profile. */
-  contractor: { before: string; link: string; after: string };
+  /** The line under the contact details. The Toptal badge sits beside them. */
+  contractor: string;
 }
 
 export const HOME: Record<Lang, Home> = {
@@ -46,6 +47,7 @@ export const HOME: Record<Lang, Home> = {
       { label: 'Publicado en Bioinformatics (Oxford)', href: DOI },
       { label: 'Toptal, 3% superior', href: TOPTAL },
       { label: 'Finalista regional ACM-ICPC', href: '/cv/' },
+      { label: 'Dos veces finisher de Ironman 70.3', href: IRONMAN },
     ],
     location: 'Vallarta, México (UTC−6)',
     headings: { now: 'Ahora', work: 'Trayectoria' },
@@ -55,16 +57,12 @@ export const HOME: Record<Lang, Home> = {
       'Dirijo el proyecto de una SOFOM.',
       'Curso la maestría en Ciencias de la Computación en CU Boulder.',
       'Entreno para el GFNY Cozumel del 8 de noviembre: dos vueltas a la isla en bici, 154 kilómetros.',
-      'Tomo proyectos selectos como contratista independiente. No busco empleo.',
+      'Acepto proyectos como contratista independiente.',
     ],
     work: 'Antes construí pipelines en Oracle Cloud, fui contratista de plataformas de salud para equipos de Estados Unidos, desarrollador core de una stablecoin en Algorand y coautor de un artículo en Bioinformatics.',
     workLink: 'El detalle está en el CV →',
     contactLabels: { email: 'Correo', phone: 'Teléfono' },
-    contractor: {
-      before: 'Para proyectos como contratista independiente, escríbeme directo o búscame en ',
-      link: 'Toptal',
-      after: ', donde estoy en la red del 3% superior.',
-    },
+    contractor: 'Para proyectos como contratista independiente, escríbeme directamente.',
   },
   en: {
     meta: {
@@ -79,6 +77,7 @@ export const HOME: Record<Lang, Home> = {
       { label: 'Published in Bioinformatics (Oxford)', href: DOI },
       { label: 'Toptal, top 3%', href: TOPTAL },
       { label: 'ACM-ICPC regional finalist', href: '/cv/' },
+      { label: 'Two-time Ironman 70.3 finisher', href: IRONMAN },
     ],
     location: 'Vallarta, Mexico (UTC−6)',
     headings: { now: 'Now', work: 'Background' },
@@ -88,15 +87,11 @@ export const HOME: Record<Lang, Home> = {
       'I lead the project of a SOFOM, a Mexican non-bank lender.',
       'I’m completing an M.S. in Computer Science at CU Boulder.',
       'I’m training for GFNY Cozumel on November 8: two laps of the island by bike, 154 kilometers.',
-      'I take on selected projects as an independent contractor. I’m not looking for employment.',
+      'I take on projects as an independent contractor.',
     ],
     work: 'Before this I built pipelines at Oracle Cloud, contracted on healthcare platforms for US teams, was a core developer of a stablecoin on Algorand, and co-authored a paper in Bioinformatics.',
     workLink: 'The details are in the CV →',
     contactLabels: { email: 'Email', phone: 'Phone' },
-    contractor: {
-      before: 'For independent contract work, write to me directly or find me on ',
-      link: 'Toptal',
-      after: ', where I’m in the top 3% network.',
-    },
+    contractor: 'For independent contract work, write to me directly.',
   },
 };

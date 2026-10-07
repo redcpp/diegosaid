@@ -75,7 +75,7 @@ const EN = {
   scheduled: 'Scheduled',
   home: '← Home',
   notFound: 'Not Found',
-  notFoundBody: 'That page does not exist.',
+  notFoundBody: 'That page does not exist, or it has moved.',
   /** Label of the link that leads to this language, read from the other one. */
   switchLabel: 'Read in English',
   latestWriting: 'Latest writing',
@@ -112,7 +112,7 @@ export const UI: Record<Lang, Record<keyof typeof EN, string>> = {
     scheduled: 'Programado',
     home: '← Inicio',
     notFound: 'Página no encontrada',
-    notFoundBody: 'Esa página no existe.',
+    notFoundBody: 'Esa página no existe o cambió de dirección.',
     switchLabel: 'Leer en español',
     latestWriting: 'Escritos recientes',
     seeAllWriting: 'Todos los escritos →',

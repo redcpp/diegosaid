@@ -1,8 +1,8 @@
 ---
 // The contact block, on the home page and at the foot of the CV: the ways to
-// reach Diego on the left, Toptal's badge on the right, and the contractor
-// line beneath both.
-import { EMAIL, PHONE, PROFILES, TOPTAL, UI, type Lang } from '@/i18n';
+// reach Diego on the left, Toptal's badge on the right, and one line beneath
+// both inviting contract work.
+import { EMAIL, PHONE, PROFILES, UI, type Lang } from '@/i18n';
 import { HOME } from '@/i18n/home';
 import ToptalBadge from '@/components/ToptalBadge.astro';
 
@@ -47,9 +47,5 @@ const link = 'text-accent underline underline-offset-4 decoration-accent/40 hove
       <ToptalBadge />
     </div>
   </div>
-  <p class="mt-6 text-[16px] leading-[1.7] text-ink/85">
-    {contractor.before}<a href={TOPTAL} target="_blank" rel="noopener noreferrer" class={link}
-      >{contractor.link}</a
-    >{contractor.after}
-  </p>
+  <p class="mt-6 text-[16px] leading-[1.7] text-ink/85">{contractor}</p>
 </section>

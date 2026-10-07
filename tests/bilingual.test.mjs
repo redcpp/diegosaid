@@ -190,11 +190,12 @@ test('a post and its translation share a date, a tag count, a featured flag and 
 
 test('the CV has the same entries in both languages', () => {
   const { en, es } = CV;
-  for (const section of ['experience', 'projects', 'education', 'honors', 'skills', 'publications']) {
+  for (const section of ['experience', 'projects', 'education', 'honors', 'sport', 'skills', 'publications']) {
     assert.equal(es[section].length, en[section].length, `CV.${section}: entry counts differ`);
   }
   en.projects.forEach((project, i) => {
     assert.equal(es.projects[i].link, project.link, `CV.projects[${i}]: links differ`);
+    assert.equal(es.projects[i].archive, project.archive, `CV.projects[${i}]: archive links differ`);
     assert.deepEqual(es.projects[i].image, project.image, `CV.projects[${i}]: images differ`);
   });
   en.experience.forEach((entry, i) => {

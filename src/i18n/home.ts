@@ -7,7 +7,7 @@
  */
 
 import { TOPTAL, type Lang } from '@/i18n';
-import { IRONMAN } from '@/i18n/cv';
+import { IRONMAN, LEETCODE } from '@/i18n/cv';
 
 const DOI = 'https://doi.org/10.1093/bioinformatics/btz458';
 
@@ -46,6 +46,7 @@ export const HOME: Record<Lang, Home> = {
       { label: 'Oracle Cloud', href: '/cv/' },
       { label: 'Publicado en Bioinformatics (Oxford)', href: DOI },
       { label: 'Toptal, 3% superior', href: TOPTAL },
+      { label: 'LeetCode: rating 1,733, 12% superior', href: LEETCODE },
       { label: 'Finalista regional ACM-ICPC', href: '/cv/' },
       { label: 'Dos veces finisher de Ironman 70.3', href: IRONMAN },
     ],
@@ -76,6 +77,7 @@ export const HOME: Record<Lang, Home> = {
       { label: 'Oracle Cloud', href: '/cv/' },
       { label: 'Published in Bioinformatics (Oxford)', href: DOI },
       { label: 'Toptal, top 3%', href: TOPTAL },
+      { label: 'LeetCode: 1,733 rating, top 12%', href: LEETCODE },
       { label: 'ACM-ICPC regional finalist', href: '/cv/' },
       { label: 'Two-time Ironman 70.3 finisher', href: IRONMAN },
     ],

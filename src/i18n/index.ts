@@ -48,6 +48,7 @@ export function ogImagePath(route: string, lang: Lang): string {
 export const SOCIAL: { name: string; url: string | null }[] = [
   { name: 'GitHub', url: 'https://github.com/redcpp' },
   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/redcpp' },
+  { name: 'LeetCode', url: 'https://leetcode.com/u/redcpp/' },
   { name: 'YouTube', url: null },
 ];
 

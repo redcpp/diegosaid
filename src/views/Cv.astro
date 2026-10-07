@@ -69,8 +69,18 @@ const subheading = 'text-[18px] font-bold';
               rel="noopener noreferrer"
               class="font-mono text-[14px] text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent mt-2 inline-block"
             >
-              {project.link.replace('https://', '')}
+              {project.link.replace('https://', '').replace(/\/$/, '')}
             </a>
+            {project.archive && (
+              <a
+                href={project.archive}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-mono text-[14px] text-muted underline underline-offset-4 decoration-rule hover:text-accent hover:decoration-accent mt-2 ml-4 inline-block"
+              >
+                {project.archive.replace('https://', '')}
+              </a>
+            )}
             {project.image && (
               <img
                 src={project.image.src}
@@ -136,27 +146,34 @@ const subheading = 'text-[18px] font-bold';
         }
       </div>
 
-      <h2 class={`${subheading} mt-8`}>{cv.headings.honors}</h2>
-      <ul class="mt-3 space-y-1.5">
-        {
-          cv.honors.map(({ text, href }) => (
-            <li class="text-[15px] leading-[1.7]">
-              {href ? (
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="underline underline-offset-4 decoration-rule hover:text-accent hover:decoration-accent transition-colors"
-                >
-                  {text}
-                </a>
-              ) : (
-                text
-              )}
-            </li>
-          ))
-        }
-      </ul>
+      {
+        [
+          { heading: cv.headings.honors, items: cv.honors },
+          { heading: cv.headings.sport, items: cv.sport },
+        ].map(({ heading, items }) => (
+          <>
+            <h2 class={`${subheading} mt-8`}>{heading}</h2>
+            <ul class="mt-3 space-y-1.5">
+              {items.map(({ text, href }) => (
+                <li class="text-[15px] leading-[1.7]">
+                  {href ? (
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="underline underline-offset-4 decoration-rule hover:text-accent hover:decoration-accent transition-colors"
+                    >
+                      {text}
+                    </a>
+                  ) : (
+                    text
+                  )}
+                </li>
+              ))}
+            </ul>
+          </>
+        ))
+      }
     </section>
 
     <section class={group}>

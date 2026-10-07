@@ -11,9 +11,11 @@ import type { Lang } from '@/i18n';
 /** Ironman and Ironman 70.3 results, compiled by CoachCox from the official ones. */
 export const IRONMAN = 'https://www.coachcox.co.uk/imstats/athlete/1189560/';
 
-// Public verification pages: anyone can confirm these without asking Diego.
+/** Contest rating and solved problems. Where the competitive programming lives now. */
+export const LEETCODE = 'https://leetcode.com/u/redcpp/';
+
+// Public verification page: anyone can confirm the credential without asking Diego.
 const HBS_CORE = 'https://online.hbs.edu/verify-certificate?dvid=Z2EFLPBY';
-const CU_BOULDER_DSA = 'https://coursera.org/verify/specialization/ODT6LV4XF4A2';
 
 interface Entry {
   years: string;
@@ -36,6 +38,8 @@ interface Project {
   /** Intrinsic size, so the page reserves the space before the image loads. */
   image: { src: string; width: number; height: number } | null;
   link: string;
+  /** A second, older home for the same work, shown after the main link. */
+  archive?: string;
 }
 
 interface CV {
@@ -48,6 +52,7 @@ interface CV {
     publications: string;
     education: string;
     honors: string;
+    sport: string;
     skills: string;
   };
   about: string;
@@ -58,6 +63,8 @@ interface CV {
   education: Degree[];
   /** Newest first. `href` links the entry to where it can be verified. */
   honors: { text: string; href?: string }[];
+  /** Endurance results, kept apart from the honors. Same shape, newest first. */
+  sport: { text: string; href?: string }[];
   skills: { title: string; items: string }[];
   spokenLanguages: string;
 }
@@ -106,7 +113,8 @@ export const CV: Record<Lang, CV> = {
       openSource: 'Open source',
       publications: 'Publications',
       education: 'Education',
-      honors: 'Honors, certifications & sport',
+      honors: 'Honors & certifications',
+      sport: 'Sport',
       skills: 'Technical competencies',
     },
     about:
@@ -186,9 +194,10 @@ export const CV: Record<Lang, CV> = {
       {
         title: 'Competitive Programming',
         description:
-          '900+ competitive programming solutions in C++ and Python (2015–2018): Codeforces, ACM-ICPC, Project Euler, and more.',
+          'I compete in LeetCode’s weekly contests: a contest rating of 1,733, in the top 12%, with 276 problems solved. Before that, from 2015 to 2018, 900+ solutions in C++ and Python for Codeforces, ACM-ICPC and Project Euler, archived on GitHub.',
         image: null,
-        link: 'https://github.com/redcpp/Competitive-Programming',
+        link: LEETCODE,
+        archive: 'https://github.com/redcpp/Competitive-Programming',
       },
     ],
     screenshotAlt: (title) => `${title} screenshot`,
@@ -208,10 +217,15 @@ export const CV: Record<Lang, CV> = {
       },
     ],
     honors: [
+      { text: '2025 – 2026 — Member of AMPI México, the Mexican Association of Real Estate Professionals' },
       {
-        text: '2026 — Foundations of Data Structures and Algorithms, University of Colorado Boulder (specialization, 5 courses)',
-        href: CU_BOULDER_DSA,
+        text: '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers, Financial Accounting',
+        href: HBS_CORE,
       },
+      { text: '2018 — ACM-ICPC Regional Finalist, Mexico & Central America' },
+      { text: '2017 — ACM-ICPC Honorable Mention, Mexico & Central America' },
+    ],
+    sport: [
       {
         // No link: ZwiftPower shows profiles only to signed-in users.
         text: '2026 — Zwift cycling races, category C: five top-10 finishes, with 4th place twice as the best result',
@@ -220,13 +234,6 @@ export const CV: Record<Lang, CV> = {
         text: '2024 – 2025 — Ironman 70.3 finisher: Riviera Nayarit (2024) and Monterrey (2025)',
         href: IRONMAN,
       },
-      { text: '2025 — Member of AMPI México, the Mexican Association of Real Estate Professionals' },
-      {
-        text: '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers, Financial Accounting',
-        href: HBS_CORE,
-      },
-      { text: '2018 — ACM-ICPC Regional Finalist, Mexico & Central America' },
-      { text: '2017 — ACM-ICPC Honorable Mention, Mexico & Central America' },
     ],
     skills: [
       { title: 'Languages', items: 'Python, TypeScript / JavaScript, SQL, C++' },
@@ -261,7 +268,8 @@ export const CV: Record<Lang, CV> = {
       openSource: 'Código abierto',
       publications: 'Publicaciones',
       education: 'Formación',
-      honors: 'Distinciones, certificaciones y deporte',
+      honors: 'Distinciones y certificaciones',
+      sport: 'Deporte',
       skills: 'Competencias técnicas',
     },
     about:
@@ -341,9 +349,10 @@ export const CV: Record<Lang, CV> = {
       {
         title: 'Programación competitiva',
         description:
-          'Más de 900 soluciones de programación competitiva en C++ y Python (2015–2018): Codeforces, ACM-ICPC, Project Euler y más.',
+          'Compito en los concursos semanales de LeetCode: rating de 1,733, dentro del 12% superior, con 276 problemas resueltos. Antes, de 2015 a 2018, más de 900 soluciones en C++ y Python para Codeforces, ACM-ICPC y Project Euler, archivadas en GitHub.',
         image: null,
-        link: 'https://github.com/redcpp/Competitive-Programming',
+        link: LEETCODE,
+        archive: 'https://github.com/redcpp/Competitive-Programming',
       },
     ],
     screenshotAlt: (title) => `Captura de pantalla de ${title}`,
@@ -363,10 +372,15 @@ export const CV: Record<Lang, CV> = {
       },
     ],
     honors: [
+      { text: '2025 – 2026 — Asociado de AMPI México, la Asociación Mexicana de Profesionales Inmobiliarios' },
       {
-        text: '2026 — Foundations of Data Structures and Algorithms, University of Colorado Boulder (especialización de 5 cursos)',
-        href: CU_BOULDER_DSA,
+        text: '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers y Financial Accounting',
+        href: HBS_CORE,
       },
+      { text: '2018 — Finalista regional del ACM-ICPC, México y Centroamérica' },
+      { text: '2017 — Mención honorífica en el ACM-ICPC, México y Centroamérica' },
+    ],
+    sport: [
       {
         // Sin enlace: ZwiftPower solo muestra perfiles con sesión iniciada.
         text: '2026 — Carreras de ciclismo en Zwift, categoría C: cinco top 10, con un 4.º lugar como mejor resultado (dos veces)',
@@ -375,13 +389,6 @@ export const CV: Record<Lang, CV> = {
         text: '2024 – 2025 — Finisher de Ironman 70.3: Riviera Nayarit (2024) y Monterrey (2025)',
         href: IRONMAN,
       },
-      { text: '2025 — Asociado de AMPI México, la Asociación Mexicana de Profesionales Inmobiliarios' },
-      {
-        text: '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers y Financial Accounting',
-        href: HBS_CORE,
-      },
-      { text: '2018 — Finalista regional del ACM-ICPC, México y Centroamérica' },
-      { text: '2017 — Mención honorífica en el ACM-ICPC, México y Centroamérica' },
     ],
     skills: [
       { title: 'Lenguajes', items: 'Python, TypeScript / JavaScript, SQL, C++' },

@@ -35,7 +35,7 @@ const link = 'text-accent underline underline-offset-4 decoration-accent/40 hove
             <dt class="text-muted">{name}</dt>
             <dd>
               <a href={url} target="_blank" rel="noopener noreferrer me" class={link}>
-                {url.replace(/^https:\/\/(www\.)?/, '')}
+                {url.replace(/^https:\/\/(www\.)?/, '').replace(/\/$/, '')}
               </a>
             </dd>
           </>

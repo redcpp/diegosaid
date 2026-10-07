@@ -213,6 +213,10 @@ export const CV: Record<Lang, CV> = {
         href: CU_BOULDER_DSA,
       },
       {
+        // No link: ZwiftPower shows profiles only to signed-in users.
+        text: '2026 — Zwift cycling races, category C: five top-10 finishes, with 4th place twice as the best result',
+      },
+      {
         text: '2024 – 2025 — Ironman 70.3 finisher: Riviera Nayarit (2024) and Monterrey (2025)',
         href: IRONMAN,
       },
@@ -362,6 +366,10 @@ export const CV: Record<Lang, CV> = {
       {
         text: '2026 — Foundations of Data Structures and Algorithms, University of Colorado Boulder (especialización de 5 cursos)',
         href: CU_BOULDER_DSA,
+      },
+      {
+        // Sin enlace: ZwiftPower solo muestra perfiles con sesión iniciada.
+        text: '2026 — Carreras de ciclismo en Zwift, categoría C: cinco top 10, con un 4.º lugar como mejor resultado (dos veces)',
       },
       {
         text: '2024 – 2025 — Finisher de Ironman 70.3: Riviera Nayarit (2024) y Monterrey (2025)',

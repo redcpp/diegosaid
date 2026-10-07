@@ -38,7 +38,9 @@ const mono = readFileSync(join(fontDir, 'IBMPlexMono-Regular.ttf'));
 const SERIF = 'Source Serif 4';
 const MONO = 'IBM Plex Mono';
 const SITE = 'diegosaid.com';
-const AUTHOR = 'Diego Said Anaya Mancilla';
+/** The brand. The full name is for the CV card, where it is the subject. */
+const AUTHOR = 'Diego Said';
+const FULL_NAME = 'Diego Said Anaya Mancilla';
 
 interface Card {
   title: string;
@@ -55,15 +57,28 @@ interface Card {
 }
 
 const HOME_CARD: Record<Lang, Pick<Card, 'kicker' | 'subtitle'>> = {
-  en: {
-    kicker: 'Software Engineer',
-    subtitle:
-      'Production backend and full-stack systems. Portfolio, publications, and technical writing.',
-  },
   es: {
-    kicker: 'Ingeniero de software',
+    kicker: 'Ingeniero de software y empresario',
     subtitle:
-      'Sistemas backend y full-stack en producción. Portafolio, publicaciones y escritos técnicos.',
+      'Escribo sobre lo que aprendo construyendo sistemas, dirigiendo empresas y entrenando para competir.',
+  },
+  en: {
+    kicker: 'Software engineer and business owner',
+    subtitle:
+      'I write about what I learn building systems, running companies, and training to race.',
+  },
+};
+
+const CV_CARD: Record<Lang, Pick<Card, 'kicker' | 'subtitle'>> = {
+  es: {
+    kicker: 'CV',
+    subtitle:
+      'Oracle Cloud, contratista para equipos de Estados Unidos, DeFi en Algorand, genómica clínica y mis propias empresas.',
+  },
+  en: {
+    kicker: 'CV',
+    subtitle:
+      'Oracle Cloud, contracting for US teams, DeFi on Algorand, clinical genomics, and my own companies.',
   },
 };
 
@@ -73,6 +88,10 @@ async function cardsFor(lang: Lang): Promise<Array<{ route: string; card: Card }
     {
       route: ogRoute('index', lang),
       card: { ...HOME_CARD[lang], title: AUTHOR },
+    },
+    {
+      route: ogRoute('cv', lang),
+      card: { ...CV_CARD[lang], title: FULL_NAME, byline: AUTHOR },
     },
     {
       route: ogRoute('blog', lang),

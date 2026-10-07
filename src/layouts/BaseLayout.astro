@@ -1,7 +1,15 @@
 ---
 import Navbar from '@/components/Navbar.astro';
 import Footer from '@/components/Footer.astro';
-import { LANGS, OG_LOCALE, UI, localizePath, otherLang, type Lang } from '@/i18n';
+import { DEFAULT_LANG, LANGS, OG_LOCALE, UI, localizePath, otherLang, type Lang } from '@/i18n';
+// Self-hosted: the woff2 files ship from this domain with the rest of the build,
+// so there is no third-party request before the first paint and no font
+// stylesheet to wait on. Each file declares a unicode-range, so a page only
+// downloads the subsets its text uses.
+import '@fontsource-variable/source-serif-4/opsz.css';
+import '@fontsource-variable/source-serif-4/opsz-italic.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/500.css';
 import '@/styles/global.css';
 
 interface Props {
@@ -10,8 +18,12 @@ interface Props {
   /** Absolute path to the generated OG image for this route. */
   ogImage?: string;
   ogType?: 'website' | 'article';
-  /** Emit the schema.org Person block (home page only). */
-  personSchema?: boolean;
+  /** schema.org blocks for this page, emitted as JSON-LD. */
+  jsonLd?: Record<string, unknown>[];
+  /** For ogType 'article': the facts Open Graph carries about a post. */
+  article?: { published: Date; tags: string[] };
+  /** Path of this page's plain Markdown version, when it has one. */
+  markdown?: string;
   /** Language of the page, chrome included. */
   lang?: Lang;
   /**
@@ -31,8 +43,10 @@ const {
   description,
   ogImage = '/og/index.png',
   ogType = 'website',
-  personSchema = false,
-  lang = 'en',
+  jsonLd = [],
+  article,
+  markdown,
+  lang = DEFAULT_LANG,
   alternates = {},
   fallback = {},
 } = Astro.props;
@@ -46,20 +60,15 @@ const hreflangs = LANGS.filter((code) => alternates[code]).map((code) => ({
   code,
   href: new URL(alternates[code]!, Astro.site).href,
 }));
-const xDefault = alternates.en ? new URL(alternates.en, Astro.site).href : undefined;
+// Spanish is the site's own language, so a reader in any third language lands there.
+const xDefaultPath = alternates[DEFAULT_LANG];
+const xDefault = xDefaultPath ? new URL(xDefaultPath, Astro.site).href : undefined;
 
 // Keep the trailing slash: Cloudflare Pages 308-redirects /blog/adr47 to
 // /blog/adr47/, and the sitemap emits the slashed form. Stripping it here would
 // point the canonical at a URL that redirects to the canonical.
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImageUrl = new URL(ogImage, Astro.site).href;
-
-// The previous markup deferred the webfont with media="print"
-// onload="this.media='all'", but _headers sets script-src without
-// 'unsafe-inline', so the CSP blocked the inline handler and the swap never
-// fired. Loaded directly instead; preconnect plus display=swap keeps it cheap.
-const fontHref =
-  'https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap';
 ---
 
 <html lang={lang}>
@@ -92,6 +101,8 @@ const fontHref =
       )
     }
 
+    {markdown && <link rel="alternate" type="text/markdown" href={markdown} />}
+
     {/* Open Graph */}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -100,11 +111,24 @@ const fontHref =
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:site_name" content="Diego Said" />
     <meta property="og:locale" content={ogLocale} />
     {
       alternates[otherLang(lang)] && (
         <meta property="og:locale:alternate" content={OG_LOCALE[otherLang(lang)]} />
+      )
+    }
+
+    {
+      article && (
+        <>
+          <meta property="article:published_time" content={article.published.toISOString()} />
+          <meta property="article:author" content={new URL(localizePath('/', lang), Astro.site).href} />
+          {article.tags.map((tag) => (
+            <meta property="article:tag" content={tag} />
+          ))}
+        </>
       )
     }
 
@@ -114,61 +138,10 @@ const fontHref =
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
 
-    {/* Fonts: see the note in the frontmatter above. */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href={fontHref} />
-
     {
-      personSchema && (
-        <script
-          is:inline
-          type="application/ld+json"
-          set:html={JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Person',
-            name: 'Diego Said Anaya Mancilla',
-            alternateName: 'Diego Said',
-            jobTitle: 'Software Engineer Technical Lead',
-            url: 'https://diegosaid.com',
-            sameAs: [
-              'https://github.com/redcpp',
-              'https://www.linkedin.com/in/redcpp',
-              'https://pubmed.ncbi.nlm.nih.gov/?term=Anaya-Mancilla+DS',
-            ],
-            worksFor: {
-              '@type': 'Organization',
-              name: 'Century 21 CAM Grupo',
-              url: 'https://www.camgrupo.com',
-            },
-            alumniOf: [
-              {
-                '@type': 'EducationalOrganization',
-                name: 'University of Colorado Boulder',
-                url: 'https://www.colorado.edu',
-              },
-              {
-                '@type': 'EducationalOrganization',
-                name: 'Harvard Business School Online',
-                url: 'https://online.hbs.edu',
-              },
-              {
-                '@type': 'EducationalOrganization',
-                name: 'Universidad Autónoma de Querétaro',
-                url: 'https://www.uaq.mx',
-              },
-            ],
-            knowsAbout: [
-              'Software Engineering',
-              'REST API Design',
-              'Data Pipelines',
-              'Cloud Infrastructure',
-              'LLM Integration',
-              'DeFi Protocol Design',
-            ],
-          })}
-        />
-      )
+      jsonLd.map((block) => (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(block)} />
+      ))
     }
 
     {/* Plausible Analytics */}
@@ -181,7 +154,7 @@ const fontHref =
       <main class="flex-1 pt-14">
         <slot />
       </main>
-      <Footer />
+      <Footer lang={lang} />
     </div>
   </body>
 </html>

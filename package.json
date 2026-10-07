@@ -1,6 +1,6 @@
 {
   "name": "diegosaid",
-  "description": "Diego Said — personal portfolio (Astro, statically rendered, deployed on Cloudflare Pages).",
+  "description": "Diego Said — essays and CV, Spanish first (Astro, statically rendered, deployed on Cloudflare Pages).",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -22,6 +22,8 @@
     "@astrojs/mdx": "^7.0.8",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
+    "@fontsource-variable/source-serif-4": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
     "@resvg/resvg-js": "^2.6.2",
     "astro": "^7.2.9",
     "katex": "^0.17.0",

@@ -1,8 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { getPosts, isScheduled, localizePath, ogImagePath, postPath, UI, type Lang } from '@/i18n';
-import { monthYear, readTime } from '@/lib/format';
-import { tagClass } from '@/lib/tags';
+import { getPosts, localizePath, ogImagePath, UI, type Lang } from '@/i18n';
+import PostItem from '@/components/PostItem.astro';
 import Star from '@/components/Star.astro';
 
 interface Props {
@@ -34,18 +33,18 @@ const orders = [
   description={t.writingDescription}
   ogImage={ogImagePath('blog', lang)}
   lang={lang}
-  alternates={{ en: '/blog/', es: '/es/blog/' }}
+  alternates={{ es: '/blog/', en: '/en/blog/' }}
 >
-  <div class="max-w-[780px] mx-auto px-6 lg:px-8 py-16 lg:py-24">
+  <div class="max-w-[680px] mx-auto px-6 pt-12 pb-16 lg:pt-20">
     <h1 class="text-[28px] lg:text-[32px] font-bold tracking-tight">{t.writing}</h1>
     <p class="mt-3 text-[17px] text-muted leading-relaxed">
       {t.writingDescription}
     </p>
     <a
       href={localizePath('/rss.xml', lang)}
-      class="inline-block mt-4 font-mono text-[13px] text-muted hover:text-accent transition-colors"
+      class="inline-block mt-4 font-mono text-[14px] text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent"
     >
-      RSS
+      {t.rss}
     </a>
 
     <section class="mt-12 group/order" aria-labelledby="all-writing">
@@ -82,36 +81,7 @@ const orders = [
           <ol data-order={key} class={`mt-6 border-t border-rule divide-y divide-rule ${visibility}`}>
             {posts.map((post) => (
               <li>
-                <a href={postPath(post)} class="block py-8 group">
-                  <div class="flex items-baseline gap-3 text-[13px] font-mono text-muted">
-                    <span>{monthYear(post.data.date, lang)}</span>
-                    <span>·</span>
-                    <span>{readTime(post.data.readMinutes)}</span>
-                    {isScheduled(post) && (
-                      <>
-                        <span>·</span>
-                        <span class="text-note">{t.scheduled}</span>
-                      </>
-                    )}
-                  </div>
-                  <h3 class="text-[20px] font-bold mt-2 group-hover:text-accent transition-colors">
-                    {post.data.title}
-                    {post.data.featured && (
-                      <span class="ml-1 whitespace-nowrap" title={t.featured}>
-                        <Star />
-                        <span class="sr-only">({t.featured})</span>
-                      </span>
-                    )}
-                  </h3>
-                  <p class="text-[15px] text-muted mt-2 leading-relaxed">{post.data.excerpt}</p>
-                  <div class="flex flex-wrap gap-2 mt-3">
-                    {post.data.tags.map((tag, i) => (
-                      <span class={`text-[12px] font-mono border px-2 py-0.5 rounded ${tagClass(i)}`}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </a>
+                <PostItem post={post} lang={lang} />
               </li>
             ))}
           </ol>

@@ -1,13 +1,29 @@
 /**
- * The home page's content in both languages. The two halves have the same
+ * The CV page's content in both languages. The two halves have the same
  * shape and the same order, entry for entry, so an edit to one shows where the
  * other needs it. Organization names, publication titles and program names
  * stay as they are officially written.
  */
 
+// Type-only: the tests load this file under Node, which cannot resolve '@/'.
 import type { Lang } from '@/i18n';
 
+/** Ironman and Ironman 70.3 results, compiled by CoachCox from the official ones. */
+export const IRONMAN = 'https://www.coachcox.co.uk/imstats/athlete/1189560/';
+
+// Public verification pages: anyone can confirm these without asking Diego.
+const HBS_CORE = 'https://online.hbs.edu/verify-certificate?dvid=Z2EFLPBY';
+const CU_BOULDER_DSA = 'https://coursera.org/verify/specialization/ODT6LV4XF4A2';
+
 interface Entry {
+  years: string;
+  title: string;
+  org: string;
+  /** One result per line. Short enough to scan; the essays carry the detail. */
+  bullets: string[];
+}
+
+interface Degree {
   years: string;
   title: string;
   org: string;
@@ -17,14 +33,14 @@ interface Entry {
 interface Project {
   title: string;
   description: string;
-  image: string | null;
+  /** Intrinsic size, so the page reserves the space before the image loads. */
+  image: { src: string; width: number; height: number } | null;
   link: string;
 }
 
 interface CV {
-  meta: { description: string };
+  meta: { title: string; description: string };
   role: string;
-  location: string;
   headings: {
     about: string;
     experience: string;
@@ -33,18 +49,17 @@ interface CV {
     education: string;
     honors: string;
     skills: string;
-    contact: string;
   };
   about: string;
   experience: Entry[];
   projects: Project[];
   screenshotAlt: (title: string) => string;
   publications: { ref: string; citation: string; href: string }[];
-  education: Entry[];
-  honors: string[];
+  education: Degree[];
+  /** Newest first. `href` links the entry to where it can be verified. */
+  honors: { text: string; href?: string }[];
   skills: { title: string; items: string }[];
   spokenLanguages: string;
-  contactLabels: { email: string; phone: string };
 }
 
 // The reference marker is split out so it can set in mono and in the citation
@@ -80,58 +95,70 @@ const PUBLICATIONS = [
 export const CV: Record<Lang, CV> = {
   en: {
     meta: {
+      title: 'CV — Diego Said Anaya Mancilla',
       description:
-        'Software engineer building production backend and full-stack systems. Portfolio, publications, and technical writing.',
+        'CV of Diego Said Anaya Mancilla: software engineer and business owner. Experience, open source, publications, education and skills.',
     },
-    role: 'Software Engineer',
-    location: 'Vallarta, Mexico (UTC−6)',
+    role: 'Software engineer and business owner',
     headings: {
-      about: 'About',
+      about: 'Summary',
       experience: 'Experience',
-      openSource: 'Open Source',
+      openSource: 'Open source',
       publications: 'Publications',
       education: 'Education',
-      honors: 'Honors & Diplomas',
-      skills: 'Technical Competencies',
-      contact: 'Contact',
+      honors: 'Honors, certifications & sport',
+      skills: 'Technical competencies',
     },
     about:
-      'Software engineer with 5+ years building production backend and full-stack systems as a remote contractor and in-house engineer: REST APIs, data pipelines, cloud deployments, and web applications in Python, TypeScript/JavaScript, and SQL. Comfortable taking over an existing codebase, shipping end-to-end, and working async with US/European teams. Currently completing an M.S. in Computer Science at CU Boulder.',
+      'Software engineer with 5+ years building production systems: at Oracle Cloud, as a remote contractor for US teams, and now for my own companies. Python, TypeScript and SQL; REST APIs, data pipelines, cloud infrastructure and LLM integration. Completing an M.S. in Computer Science at CU Boulder. I take on projects as an independent contractor.',
     experience: [
       {
         years: '2024 – present',
-        title: 'Software Engineer Technical Lead',
+        title: 'Owner and technology lead',
         org: 'Century 21 CAM Grupo',
-        description:
-          'Lead operations and commercial strategy for C21 CAM Grupo in Riviera Nayarit. Built an automated contract-generation service for regulated (NOM-247) real estate documents using document templating and MCP servers over the Claude API, cutting drafting time from days to under 1 hour. Designed and shipped a market-intelligence dashboard over MLS transaction data (Python, pandas, PostgreSQL): automated cleaning pipelines, anomaly detection, and absorption metrics by micro-market and price segment. Deployed and operate a private on-premise LLM inference stack (Apple Silicon, MLX, Tailscale) so confidential client data never leaves the firm’s network. Build and maintain four production marketing sites on Astro + Cloudflare (camgrupo.com and one per development), plus DNS, email infrastructure, and Airtable-based operations tracking.',
+        bullets: [
+          'Built a contract-generation service for regulated (NOM-247) real estate documents with document templating and MCP servers over the Claude API; drafting went from days to under an hour.',
+          'Designed a market-intelligence dashboard over MLS transaction data (Python, pandas, PostgreSQL): cleaning pipelines, anomaly detection, and absorption by micro-market and price segment.',
+          'Run a private on-premise LLM inference stack (Apple Silicon, MLX, Tailscale) so confidential client data never leaves the firm’s network.',
+          'Build and maintain four production sites on Astro and Cloudflare, plus DNS, email and Airtable-based operations tracking.',
+        ],
       },
       {
         years: '2021 – 2023',
-        title: 'Full Stack Developer (Contractor)',
+        title: 'Full stack developer (contractor)',
         org: 'Augusto Digital',
-        description:
-          'Decentracare — took over the MVP of a healthcare staffing platform (clinicians and outpatient providers) and owned its evolution for two years across a React frontend, Python/Flask REST backend, PostgreSQL, and AWS (EC2, S3, RDS); network grew to 350+ clinicians. ADHD Online — implemented and maintained the core assessment flow and patient dashboard in Vue.js; fixed long-standing production bugs. Worked fully async with a US-based team: scoped tickets, shipped weekly, and owned deploys and production support.',
+        bullets: [
+          'Decentracare: took over the MVP of a healthcare staffing platform and owned it for two years (React, Python/Flask, PostgreSQL, AWS); the network grew to 350+ clinicians.',
+          'ADHD Online: built and maintained the core assessment flow and patient dashboard in Vue.js, and fixed long-standing production bugs.',
+          'Worked fully async with a US team: scoped tickets, shipped weekly, owned deploys and production support.',
+        ],
       },
       {
         years: '2021 – 2022',
-        title: 'Core Developer',
+        title: 'Core developer',
         org: 'xBacked DAO',
-        description:
-          'Built the web app and wallet connection for xUSD, a collateralized stablecoin on Algorand. Published crypto tutorials and two open-source samples featured on the Algorand Developer Portal (IPFS file sharing, real-time block visualizer). Co-authored the protocol’s Litepaper v2.0 and design documents ADR-46 and ADR-47 on leverage limits and collateral safety; ADR-47 prevented a launch that would have diluted collateral.',
+        bullets: [
+          'Built the web app and wallet connection for xUSD, a collateralized stablecoin on Algorand.',
+          'Co-authored the Litepaper v2.0 and the design documents ADR-46 and ADR-47; ADR-47 stopped a launch that would have diluted the collateral.',
+          'Published crypto tutorials and two open-source samples featured on the Algorand Developer Portal.',
+        ],
       },
       {
         years: '2019 – 2021',
-        title: 'Software Developer II',
+        title: 'Software developer II',
         org: 'Oracle — Big Data Service (OCI)',
-        description:
-          'Built OCI image pipelines to migrate on-premise Big Data applications to the cloud using Python REST services, Docker, TeamCity CI/CD, and Artifactory. Global on-call rotation for Severity-1 incidents; root-cause analysis on enterprise production outages.',
+        bullets: [
+          'Built OCI image pipelines to migrate on-premise Big Data applications to the cloud (Python REST services, Docker, TeamCity, Artifactory).',
+          'Global on-call rotation for Severity-1 incidents; root-cause analysis on enterprise production outages.',
+        ],
       },
       {
         years: '2018',
-        title: 'Software Engineer Intern',
+        title: 'Software engineer intern',
         org: 'LIIGH — Cancer Genomics Lab',
-        description:
-          'Designed and built VCF/Plotein (Vue.js, Node.js), a web application for clinical interpretation of genomic variants from exome sequencing; co-author on the resulting Bioinformatics (Oxford Academic, 2019) paper with UNAM and Cambridge.',
+        bullets: [
+          'Designed and built VCF/Plotein (Vue.js, Node.js) for the clinical interpretation of genomic variants from exome sequencing; co-author of the resulting Bioinformatics paper (2019) with UNAM and Cambridge.',
+        ],
       },
     ],
     projects: [
@@ -139,21 +166,21 @@ export const CV: Record<Lang, CV> = {
         title: 'VCF/Plotein',
         description:
           'Clinical genomics web app for visualizing and prioritizing exome VCF variants on protein structures. Published in Bioinformatics (Oxford Academic, 2019). Co-authored with researchers from UNAM and Cambridge.',
-        image: '/img/vcfplotein.webp',
+        image: { src: '/img/vcfplotein.webp', width: 3000, height: 2200 },
         link: 'https://github.com/redcpp/vcfplotein',
       },
       {
         title: 'Nepohualtzintzin',
         description:
           'Interactive web recreation of the Nepohualtzintzin, the pre-Hispanic Mesoamerican base-20 abacus. Vue 2 + Vuex with animated bead toggles.',
-        image: '/img/nepohualtzintzin.webp',
+        image: { src: '/img/nepohualtzintzin.webp', width: 1440, height: 900 },
         link: 'https://github.com/redcpp/nepohualtzintzin',
       },
       {
         title: 'Algorand Vue RT',
         description:
           'Real-time generative visualization of the Algorand TestNet — every confirmed block rendered as a colored square on a p5.js canvas. Vue 2 + algosdk.',
-        image: '/img/algorand-vue-rt.webp',
+        image: { src: '/img/algorand-vue-rt.webp', width: 2880, height: 1800 },
         link: 'https://github.com/redcpp/algorand-vue-rt',
       },
       {
@@ -181,9 +208,25 @@ export const CV: Record<Lang, CV> = {
       },
     ],
     honors: [
-      '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers, Financial Accounting',
-      '2018 — ACM-ICPC Regional Finalist, Mexico & Central America',
-      '2017 — ACM-ICPC Honorable Mention, Mexico & Central America',
+      {
+        text: '2026 — Foundations of Data Structures and Algorithms, University of Colorado Boulder (specialization, 5 courses)',
+        href: CU_BOULDER_DSA,
+      },
+      {
+        // No link: ZwiftPower shows profiles only to signed-in users.
+        text: '2026 — Zwift cycling races, category C: five top-10 finishes, with 4th place twice as the best result',
+      },
+      {
+        text: '2024 – 2025 — Ironman 70.3 finisher: Riviera Nayarit (2024) and Monterrey (2025)',
+        href: IRONMAN,
+      },
+      { text: '2025 — Member of AMPI México, the Mexican Association of Real Estate Professionals' },
+      {
+        text: '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers, Financial Accounting',
+        href: HBS_CORE,
+      },
+      { text: '2018 — ACM-ICPC Regional Finalist, Mexico & Central America' },
+      { text: '2017 — ACM-ICPC Honorable Mention, Mexico & Central America' },
     ],
     skills: [
       { title: 'Languages', items: 'Python, TypeScript / JavaScript, SQL, C++' },
@@ -203,63 +246,74 @@ export const CV: Record<Lang, CV> = {
       },
     ],
     spokenLanguages: 'Languages: Spanish (native), English (fluent), Italian.',
-    contactLabels: { email: 'Email', phone: 'Phone' },
   },
 
   es: {
     meta: {
+      title: 'CV — Diego Said Anaya Mancilla',
       description:
-        'Ingeniero de software que construye sistemas backend y full-stack en producción. Portafolio, publicaciones y escritos técnicos.',
+        'CV de Diego Said Anaya Mancilla: ingeniero de software y empresario. Experiencia, código abierto, publicaciones, formación y competencias.',
     },
-    role: 'Ingeniero de software',
-    location: 'Vallarta, México (UTC−6)',
+    role: 'Ingeniero de software y empresario',
     headings: {
-      about: 'Acerca de',
+      about: 'Resumen',
       experience: 'Experiencia',
       openSource: 'Código abierto',
       publications: 'Publicaciones',
       education: 'Formación',
-      honors: 'Distinciones y diplomas',
+      honors: 'Distinciones, certificaciones y deporte',
       skills: 'Competencias técnicas',
-      contact: 'Contacto',
     },
     about:
-      'Ingeniero de software con más de 5 años construyendo sistemas backend y full-stack en producción, como contratista remoto y como ingeniero de planta: APIs REST, pipelines de datos, despliegues en la nube y aplicaciones web en Python, TypeScript/JavaScript y SQL. Me siento cómodo tomando una base de código existente, entregando de principio a fin y trabajando de forma asíncrona con equipos de Estados Unidos y Europa. Actualmente curso la maestría en Ciencias de la Computación en CU Boulder.',
+      'Ingeniero de software con más de 5 años construyendo sistemas en producción: en Oracle Cloud, como contratista remoto para equipos de Estados Unidos y ahora para mis propias empresas. Python, TypeScript y SQL; APIs REST, pipelines de datos, infraestructura en la nube e integración de LLM. Curso la maestría en Ciencias de la Computación en CU Boulder. Acepto proyectos como contratista independiente.',
     experience: [
       {
         years: '2024 – actualidad',
-        title: 'Líder técnico de ingeniería de software',
+        title: 'Dueño y líder de tecnología',
         org: 'Century 21 CAM Grupo',
-        description:
-          'Dirijo las operaciones y la estrategia comercial de C21 CAM Grupo en Riviera Nayarit. Construí un servicio que genera automáticamente contratos inmobiliarios regulados (NOM-247) con plantillas de documentos y servidores MCP sobre la API de Claude, y que redujo el tiempo de redacción de días a menos de una hora. Diseñé y puse en producción un tablero de inteligencia de mercado sobre datos de transacciones de la MLS (Python, pandas, PostgreSQL): pipelines de limpieza automatizados, detección de anomalías y métricas de absorción por micromercado y segmento de precio. Desplegué y opero un stack privado de inferencia de LLM on-premise (Apple Silicon, MLX, Tailscale) para que los datos confidenciales de los clientes nunca salgan de la red de la empresa. Construyo y mantengo cuatro sitios de marketing en producción con Astro y Cloudflare (camgrupo.com y uno por desarrollo), además del DNS, la infraestructura de correo y el seguimiento de operaciones en Airtable.',
+        bullets: [
+          'Construí un servicio que genera contratos inmobiliarios regulados (NOM-247) con plantillas de documentos y servidores MCP sobre la API de Claude; la redacción pasó de días a menos de una hora.',
+          'Diseñé un tablero de inteligencia de mercado sobre transacciones de la MLS (Python, pandas, PostgreSQL): pipelines de limpieza, detección de anomalías y absorción por micromercado y segmento de precio.',
+          'Opero un stack privado de inferencia de LLM on-premise (Apple Silicon, MLX, Tailscale) para que los datos confidenciales de los clientes nunca salgan de la red de la empresa.',
+          'Construyo y mantengo cuatro sitios en producción con Astro y Cloudflare, además del DNS, el correo y el seguimiento de operaciones en Airtable.',
+        ],
       },
       {
         years: '2021 – 2023',
         title: 'Desarrollador full stack (contratista)',
         org: 'Augusto Digital',
-        description:
-          'Decentracare: tomé el MVP de una plataforma de contratación de personal de salud (clínicos y proveedores ambulatorios) y fui responsable de su evolución durante dos años, con un frontend en React, un backend REST en Python/Flask, PostgreSQL y AWS (EC2, S3, RDS); la red creció a más de 350 clínicos. ADHD Online: implementé y mantuve el flujo principal de evaluación y el panel del paciente en Vue.js, y corregí errores de producción que llevaban tiempo abiertos. Trabajé de forma totalmente asíncrona con un equipo en Estados Unidos: definía el alcance de los tickets, entregaba cada semana y me encargaba de los despliegues y del soporte en producción.',
+        bullets: [
+          'Decentracare: tomé el MVP de una plataforma de contratación de personal de salud y fui responsable de ella durante dos años (React, Python/Flask, PostgreSQL, AWS); la red creció a más de 350 clínicos.',
+          'ADHD Online: construí y mantuve el flujo principal de evaluación y el panel del paciente en Vue.js, y corregí errores de producción que llevaban tiempo abiertos.',
+          'Trabajé de forma totalmente asíncrona con un equipo en Estados Unidos: definía el alcance de los tickets, entregaba cada semana y me encargaba de los despliegues y del soporte en producción.',
+        ],
       },
       {
         years: '2021 – 2022',
         title: 'Desarrollador core',
         org: 'xBacked DAO',
-        description:
-          'Construí la aplicación web y la conexión de wallets de xUSD, una stablecoin colateralizada en Algorand. Publiqué tutoriales de cripto y dos ejemplos de código abierto destacados en el Algorand Developer Portal (intercambio de archivos con IPFS y un visualizador de bloques en tiempo real). Coautor del Litepaper v2.0 del protocolo y de los documentos de diseño ADR-46 y ADR-47 sobre límites de apalancamiento y seguridad del colateral; ADR-47 evitó un lanzamiento que habría diluido el colateral.',
+        bullets: [
+          'Construí la aplicación web y la conexión de wallets de xUSD, una stablecoin colateralizada en Algorand.',
+          'Coautor del Litepaper v2.0 y de los documentos de diseño ADR-46 y ADR-47; el ADR-47 detuvo un lanzamiento que habría diluido el colateral.',
+          'Publiqué tutoriales de cripto y dos ejemplos de código abierto destacados en el Algorand Developer Portal.',
+        ],
       },
       {
         years: '2019 – 2021',
         title: 'Desarrollador de software II',
         org: 'Oracle — Big Data Service (OCI)',
-        description:
-          'Construí pipelines de imágenes de OCI para migrar a la nube aplicaciones de Big Data on-premise, con servicios REST en Python, Docker, CI/CD en TeamCity y Artifactory. Guardias en la rotación global para incidentes de severidad 1; análisis de causa raíz de caídas en producción de clientes empresariales.',
+        bullets: [
+          'Construí pipelines de imágenes de OCI para migrar a la nube aplicaciones de Big Data on-premise (servicios REST en Python, Docker, TeamCity, Artifactory).',
+          'Guardias en la rotación global para incidentes de severidad 1; análisis de causa raíz de caídas en producción de clientes empresariales.',
+        ],
       },
       {
         years: '2018',
         title: 'Practicante de ingeniería de software',
         org: 'LIIGH — Laboratorio de Genómica del Cáncer',
-        description:
-          'Diseñé y construí VCF/Plotein (Vue.js, Node.js), una aplicación web para la interpretación clínica de variantes genómicas obtenidas por secuenciación de exoma; coautor del artículo resultante en Bioinformatics (Oxford Academic, 2019), junto con la UNAM y Cambridge.',
+        bullets: [
+          'Diseñé y construí VCF/Plotein (Vue.js, Node.js) para la interpretación clínica de variantes genómicas de secuenciación de exoma; coautor del artículo resultante en Bioinformatics (2019), con la UNAM y Cambridge.',
+        ],
       },
     ],
     projects: [
@@ -267,21 +321,21 @@ export const CV: Record<Lang, CV> = {
         title: 'VCF/Plotein',
         description:
           'Aplicación web de genómica clínica para visualizar y priorizar variantes de archivos VCF de exoma sobre estructuras de proteínas. Publicada en Bioinformatics (Oxford Academic, 2019), en coautoría con investigadores de la UNAM y Cambridge.',
-        image: '/img/vcfplotein.webp',
+        image: { src: '/img/vcfplotein.webp', width: 3000, height: 2200 },
         link: 'https://github.com/redcpp/vcfplotein',
       },
       {
         title: 'Nepohualtzintzin',
         description:
           'Recreación web interactiva del Nepohualtzintzin, el ábaco mesoamericano prehispánico de base 20. Vue 2 + Vuex, con cuentas que se activan con animación.',
-        image: '/img/nepohualtzintzin.webp',
+        image: { src: '/img/nepohualtzintzin.webp', width: 1440, height: 900 },
         link: 'https://github.com/redcpp/nepohualtzintzin',
       },
       {
         title: 'Algorand Vue RT',
         description:
           'Visualización generativa en tiempo real de la TestNet de Algorand: cada bloque confirmado se dibuja como un cuadro de color en un canvas de p5.js. Vue 2 + algosdk.',
-        image: '/img/algorand-vue-rt.webp',
+        image: { src: '/img/algorand-vue-rt.webp', width: 2880, height: 1800 },
         link: 'https://github.com/redcpp/algorand-vue-rt',
       },
       {
@@ -309,9 +363,25 @@ export const CV: Record<Lang, CV> = {
       },
     ],
     honors: [
-      '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers y Financial Accounting',
-      '2018 — Finalista regional del ACM-ICPC, México y Centroamérica',
-      '2017 — Mención honorífica en el ACM-ICPC, México y Centroamérica',
+      {
+        text: '2026 — Foundations of Data Structures and Algorithms, University of Colorado Boulder (especialización de 5 cursos)',
+        href: CU_BOULDER_DSA,
+      },
+      {
+        // Sin enlace: ZwiftPower solo muestra perfiles con sesión iniciada.
+        text: '2026 — Carreras de ciclismo en Zwift, categoría C: cinco top 10, con un 4.º lugar como mejor resultado (dos veces)',
+      },
+      {
+        text: '2024 – 2025 — Finisher de Ironman 70.3: Riviera Nayarit (2024) y Monterrey (2025)',
+        href: IRONMAN,
+      },
+      { text: '2025 — Asociado de AMPI México, la Asociación Mexicana de Profesionales Inmobiliarios' },
+      {
+        text: '2022 — Credential of Readiness (CORe), Harvard Business School Online: Business Analytics, Economics for Managers y Financial Accounting',
+        href: HBS_CORE,
+      },
+      { text: '2018 — Finalista regional del ACM-ICPC, México y Centroamérica' },
+      { text: '2017 — Mención honorífica en el ACM-ICPC, México y Centroamérica' },
     ],
     skills: [
       { title: 'Lenguajes', items: 'Python, TypeScript / JavaScript, SQL, C++' },
@@ -333,6 +403,5 @@ export const CV: Record<Lang, CV> = {
       },
     ],
     spokenLanguages: 'Idiomas: español (nativo), inglés (fluido), italiano.',
-    contactLabels: { email: 'Correo', phone: 'Teléfono' },
   },
 };

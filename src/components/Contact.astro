@@ -1,0 +1,51 @@
+---
+// The contact block, on the home page and at the foot of the CV: the ways to
+// reach Diego on the left, Toptal's badge on the right, and one line beneath
+// both inviting contract work.
+import { EMAIL, PHONE, PROFILES, UI, type Lang } from '@/i18n';
+import { HOME } from '@/i18n/home';
+import ToptalBadge from '@/components/ToptalBadge.astro';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = UI[lang];
+const { contactLabels, contractor } = HOME[lang];
+const link = 'text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent';
+---
+
+<section id={t.contactId} class="scroll-mt-20" aria-labelledby={`${t.contactId}-heading`}>
+  <h2 id={`${t.contactId}-heading`} class="text-[22px] font-bold">{t.contact}</h2>
+  <div class="mt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8">
+    <dl class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 font-mono text-[15px] content-start">
+      <dt class="text-muted">{contactLabels.email}</dt>
+      {/* Cloudflare's Email Address Obfuscation rewrites mailto: links into a
+          __cf_email__ span that needs JavaScript to decode, so the address would
+          be absent from the HTML a scraper or an assistant reads. These markers
+          opt the region out; they must stay HTML comments, because Cloudflare
+          reads them from the response body. */}
+      <dd><!--email_off--><a href={`mailto:${EMAIL}`} class={link}>{EMAIL}</a><!--email_on--></dd>
+      <dt class="text-muted">{contactLabels.phone}</dt>
+      <dd><a href={`tel:${PHONE.replace(/\s/g, '')}`} class="text-ink hover:text-accent transition-colors">{PHONE}</a></dd>
+      {
+        PROFILES.map(({ name, url }) => (
+          <>
+            <dt class="text-muted">{name}</dt>
+            <dd>
+              <a href={url} target="_blank" rel="noopener noreferrer me" class={link}>
+                {url.replace(/^https:\/\/(www\.)?/, '')}
+              </a>
+            </dd>
+          </>
+        ))
+      }
+    </dl>
+    {/* zoom keeps the embed's own proportions while shrinking it to sit beside the list. */}
+    <div class="shrink-0 self-center sm:self-auto [zoom:0.66]">
+      <ToptalBadge />
+    </div>
+  </div>
+  <p class="mt-6 text-[16px] leading-[1.7] text-ink/85">{contractor}</p>
+</section>

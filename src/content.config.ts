@@ -29,6 +29,12 @@ const blog = defineCollection({
     /** Marked with a small star on the /blog/ index. */
     featured: z.boolean().default(false),
     /**
+     * Where the post comes from, when it is older than its date: the ADRs and
+     * the litepaper were written in 2022 and annotated here years later. Shown
+     * under the post header, in the post's language.
+     */
+    origin: z.string().optional(),
+    /**
      * Pairs a post with its translation. Defaults to the file name, so two
      * posts with the same slug in en/ and es/ are each other's translation;
      * set it only when a translation carries a slug of its own.

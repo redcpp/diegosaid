@@ -1,0 +1,181 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Contact from '@/components/Contact.astro';
+import { localizePath, ogImagePath, type Lang } from '@/i18n';
+import { CV } from '@/i18n/cv';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const cv = CV[lang];
+
+// Four groups instead of eight equal sections: a rule and a wide gap only
+// where the subject changes, tighter spacing inside a group.
+const group = 'border-t border-rule pt-10 mt-10';
+const heading = 'text-[22px] font-bold';
+const subheading = 'text-[18px] font-bold';
+---
+
+<BaseLayout
+  title={cv.meta.title}
+  description={cv.meta.description}
+  ogImage={ogImagePath('cv', lang)}
+  lang={lang}
+  alternates={{ es: '/cv/', en: '/en/cv/' }}
+>
+  <div class="max-w-[680px] mx-auto px-6 pt-12 pb-16 lg:pt-16">
+    <header>
+      <h1 class="text-[28px] lg:text-[32px] font-bold tracking-tight">Diego Said Anaya Mancilla</h1>
+      <p class="text-[17px] text-muted mt-2">{cv.role}</p>
+      <p class="mt-6 text-[17px] leading-[1.75]">{cv.about}</p>
+    </header>
+
+    <section class={group}>
+      <h2 class={heading}>{cv.headings.experience}</h2>
+      <ol class="mt-2">
+        {
+          cv.experience.map((entry) => (
+            <li class="flex flex-col sm:flex-row sm:gap-6 py-5">
+              <div class="sm:w-[136px] shrink-0 whitespace-nowrap font-mono text-[13px] text-muted pt-0.5">
+                {entry.years}
+              </div>
+              <div class="mt-1 sm:mt-0">
+                <h3 class="font-semibold text-[17px]">{entry.title}</h3>
+                <p class="italic text-muted text-[15px] mt-0.5">{entry.org}</p>
+                <ul class="mt-2 space-y-1.5 list-disc pl-5 marker:text-rule">
+                  {entry.bullets.map((bullet) => (
+                    <li class="text-[15px] leading-[1.65] text-ink/85">{bullet}</li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class={group}>
+      <h2 class={heading}>{cv.headings.openSource}</h2>
+      {
+        cv.projects.map((project) => (
+          <div class="mt-8">
+            <h3 class="font-semibold text-[17px]">{project.title}</h3>
+            <p class="text-[15px] leading-[1.7] mt-1.5 text-ink/85">{project.description}</p>
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-mono text-[14px] text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent mt-2 inline-block"
+            >
+              {project.link.replace('https://', '')}
+            </a>
+            {project.image && (
+              <img
+                src={project.image.src}
+                alt={cv.screenshotAlt(project.title)}
+                width={project.image.width}
+                height={project.image.height}
+                loading="lazy"
+                decoding="async"
+                class="rounded-lg border border-rule w-full h-auto mt-4"
+              />
+            )}
+          </div>
+        ))
+      }
+
+      <h2 class={`${subheading} mt-12`}>{cv.headings.publications}</h2>
+      <div class="mt-4">
+        {
+          cv.publications.map((entry) => (
+            <p class="text-[15px] leading-[1.7] mb-3 flex gap-2">
+              {entry.href.startsWith('/') ? (
+                <a
+                  href={localizePath(entry.href, lang)}
+                  class="font-mono text-[13px] text-cite hover:underline shrink-0 pt-0.5"
+                >
+                  {entry.ref}
+                </a>
+              ) : (
+                <a
+                  href={entry.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="font-mono text-[13px] text-cite hover:underline shrink-0 pt-0.5"
+                >
+                  {entry.ref}
+                </a>
+              )}
+              <span set:html={entry.citation} />
+            </p>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class={group}>
+      <h2 class={heading}>{cv.headings.education}</h2>
+      <div class="mt-2">
+        {
+          cv.education.map((entry) => (
+            <div class="flex flex-col sm:flex-row sm:gap-6 py-4">
+              <div class="sm:w-[136px] shrink-0 whitespace-nowrap font-mono text-[13px] text-muted pt-0.5">
+                {entry.years}
+              </div>
+              <div class="mt-1 sm:mt-0">
+                <h3 class="font-semibold text-[17px]">{entry.title}</h3>
+                <p class="italic text-muted text-[15px] mt-0.5">{entry.org}</p>
+                {entry.description && (
+                  <p class="text-[15px] leading-[1.7] text-ink/85 mt-1">{entry.description}</p>
+                )}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <h2 class={`${subheading} mt-8`}>{cv.headings.honors}</h2>
+      <ul class="mt-3 space-y-1.5">
+        {
+          cv.honors.map(({ text, href }) => (
+            <li class="text-[15px] leading-[1.7]">
+              {href ? (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="underline underline-offset-4 decoration-rule hover:text-accent hover:decoration-accent transition-colors"
+                >
+                  {text}
+                </a>
+              ) : (
+                text
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class={group}>
+      <h2 class={heading}>{cv.headings.skills}</h2>
+      <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-5">
+        {
+          cv.skills.map((cat) => (
+            <div>
+              <h3 class="text-[15px] font-semibold mb-1">{cat.title}</h3>
+              <p class="text-[15px] text-muted leading-relaxed">{cat.items}</p>
+            </div>
+          ))
+        }
+      </div>
+      <p class="mt-6 text-[15px] text-muted">{cv.spokenLanguages}</p>
+    </section>
+
+    <div class={group}>
+      <Contact lang={lang} />
+    </div>
+  </div>
+</BaseLayout>

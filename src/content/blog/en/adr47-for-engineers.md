@@ -12,7 +12,7 @@ tags:
   - Python
 ---
 
-In 2022 I was a core developer on xBacked, which issued xUSD, an over-collateralized stablecoin on Algorand. A partner, Pact, proposed a mechanism to seed a PACT/xUSD liquidity pool for its token launch. I co-authored the architecture decision record against it, ADR-47, and the launch did not happen in that form. The [formal version](/blog/adr47) has the proofs. This one has the code.
+In 2022 I was a core developer on xBacked, which issued xUSD, an over-collateralized stablecoin on Algorand. A partner, Pact, proposed a mechanism to seed a PACT/xUSD liquidity pool for its token launch. I co-authored the architecture decision record against it, ADR-47, and the launch did not happen in that form. The [formal version](/en/blog/adr47/) has the proofs. This one has the code.
 
 If you have reviewed a pull request that added a "temporary" bypass around a validation check, you already know the shape of the argument.
 

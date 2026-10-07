@@ -3,6 +3,7 @@ title: "ADR-46: el looping de vaults en forma cerrada"
 subtitle: Emitir de forma recursiva a través de un mercado de préstamos es una serie geométrica. La serie dice que la estrategia es un carry trade, no apalancamiento, y que su riesgo cae sobre alguien más.
 excerpt: ¿Hasta dónde puede llevar un usuario su apalancamiento emitiendo xUSD, prestándolo, pidiendo colateral prestado y volviendo a emitir? Una serie geométrica da el límite, muestra que la exposición neta nunca cambia y ubica el riesgo de liquidación en los usuarios sin apalancamiento.
 date: 2026-09-07
+origin: "Originalmente, un documento de decisión de arquitectura de xBacked DAO, 2022. Comentado en 2026."
 readMinutes: 13
 featured: true
 tags:

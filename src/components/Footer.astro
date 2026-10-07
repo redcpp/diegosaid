@@ -1,32 +1,30 @@
 ---
+import { PROFILES, UI, localizePath, type Lang } from '@/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
 const year = new Date().getFullYear();
+const link = 'text-[13px] font-mono text-muted hover:text-accent transition-colors';
 ---
 
 <footer class="bg-paper border-t border-rule">
   <div
-    class="max-w-[780px] mx-auto px-6 lg:px-8 py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+    class="max-w-[680px] mx-auto px-6 py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
   >
-    <span class="text-[13px] font-mono text-muted">
-      &copy; {year} Diego Said Anaya Mancilla
-    </span>
+    <span class="text-[13px] font-mono text-muted">&copy; {year} Diego Said</span>
 
-    <div class="flex items-center gap-4">
-      <a
-        href="https://github.com/redcpp"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-[13px] font-mono text-muted hover:text-accent transition-colors"
-      >
-        GitHub
-      </a>
-      <a
-        href="https://linkedin.com/in/redcpp"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-[13px] font-mono text-muted hover:text-accent transition-colors"
-      >
-        LinkedIn
-      </a>
+    <div class="flex flex-wrap items-center gap-4">
+      <a href={localizePath('/rss.xml', lang)} class={link}>{UI[lang].rss}</a>
+      {
+        PROFILES.map(({ name, url }) => (
+          <a href={url} target="_blank" rel="noopener noreferrer me" class={link}>
+            {name}
+          </a>
+        ))
+      }
     </div>
   </div>
 </footer>

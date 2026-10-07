@@ -1,0 +1,47 @@
+---
+/** One post in a list: the /blog/ index and the home page's latest writing. */
+import type { CollectionEntry } from 'astro:content';
+import { isScheduled, postPath, UI, type Lang } from '@/i18n';
+import { monthYear, readTime } from '@/lib/format';
+import Star from '@/components/Star.astro';
+import Tags from '@/components/Tags.astro';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  lang: Lang;
+  /** Heading level, so the item nests under whatever heading lists it. */
+  level?: 'h2' | 'h3';
+}
+
+const { post, lang, level: Heading = 'h3' } = Astro.props;
+const t = UI[lang];
+---
+
+<a href={postPath(post)} class="block py-8 group">
+  <div class="flex items-baseline gap-3 text-[13px] font-mono text-muted">
+    <span>{monthYear(post.data.date, lang)}</span>
+    <span>·</span>
+    <span>{readTime(post.data.readMinutes)}</span>
+    {
+      isScheduled(post) && (
+        <>
+          <span>·</span>
+          <span class="text-note">{t.scheduled}</span>
+        </>
+      )
+    }
+  </div>
+  <Heading class="text-[20px] font-bold mt-2 leading-snug group-hover:text-accent transition-colors">
+    {post.data.title}
+    {
+      post.data.featured && (
+        <span class="ml-1 whitespace-nowrap" title={t.featured}>
+          <Star />
+          <span class="sr-only">({t.featured})</span>
+        </span>
+      )
+    }
+  </Heading>
+  <p class="text-[16px] text-muted mt-2 leading-relaxed">{post.data.excerpt}</p>
+  <Tags tags={post.data.tags} class="mt-3" />
+</a>

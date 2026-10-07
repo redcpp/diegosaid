@@ -1,10 +1,14 @@
 ---
-// Toptal's "Top 3% Talent" badge, from their embed snippet. Two changes from
-// the original: the Typekit @import is dropped, because _headers only allows
-// Google Fonts (and Typekit's CSS pulls a tracking pixel from p.typekit.net),
-// so the text sets in the snippet's own Arial fallback; and the generic class
-// names are replaced, since Astro scopes this stylesheet to the component.
-const PROFILE = 'https://www.toptal.com/developers/resume/diego-said-anaya-mancilla#xnDmEW';
+// Toptal's "Top 3% Talent" badge, from their embed snippet. It keeps Toptal's
+// own colours on purpose: a seal reads as a seal because it is the issuer's,
+// not restyled into the site's. Two changes from the original: the Typekit
+// @import is dropped, because _headers only allows fonts from this domain (and
+// Typekit's CSS pulls a tracking pixel from p.typekit.net), so the text sets in
+// the snippet's own Arial fallback; and the generic class names are replaced,
+// since Astro scopes this stylesheet to the component.
+import { TOPTAL } from '@/i18n';
+
+const PROFILE = TOPTAL;
 ---
 
 <div class="frame">
@@ -68,6 +72,13 @@ const PROFILE = 'https://www.toptal.com/developers/resume/diego-said-anaya-manci
       radial-gradient(circle at 120% 80%, #00c3ff -80%, #fff 30%);
     background-blend-mode: multiply;
     box-shadow: 0 28px 50px rgba(6, 30, 96, 0.35);
+  }
+
+  /* On dark stock the white card would glare; take the edge off it. */
+  @media (prefers-color-scheme: dark) {
+    .frame {
+      filter: brightness(0.9);
+    }
   }
 
   .title {

@@ -20,7 +20,9 @@ module.exports = {
         note: 'rgb(var(--note) / <alpha-value>)',
       },
       fontFamily: {
-        serif: ['"Source Serif 4"', 'Georgia', '"Times New Roman"', 'serif'],
+        // Self-hosted through @fontsource (see BaseLayout); the variable build
+        // registers itself under this name.
+        serif: ['"Source Serif 4 Variable"', 'Georgia', '"Times New Roman"', 'serif'],
         mono: ['"IBM Plex Mono"', '"Courier New"', 'monospace'],
       },
     },

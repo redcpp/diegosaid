@@ -1,4 +1,12 @@
 /projects  /  301
-# Published in Spanish at the root before the site had a Spanish tree.
-/blog/por-que-escribo-en-espanol  /es/blog/por-que-escribo-en-espanol/  301
-/blog/por-que-escribo-en-espanol/  /es/blog/por-que-escribo-en-espanol/  301
+
+# Spanish moved from /es/ to the root in October 2026, and English moved from
+# the root to /en/. The old Spanish URLs all map one to one.
+/es  /  301
+/es/*  /:splat  301
+
+# English posts whose slug differs from the Spanish one moved under /en/. The
+# posts that share a slug (adr46, adr47, ...) now answer in Spanish at the old
+# URL, and their hreflang links lead to the English version.
+/blog/why-i-write-in-spanish  /en/blog/why-i-write-in-spanish/  301
+/blog/why-i-write-in-spanish/  /en/blog/why-i-write-in-spanish/  301

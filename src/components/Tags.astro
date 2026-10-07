@@ -1,0 +1,22 @@
+---
+/**
+ * A post's tags. They used to cycle through the four hyperref colours by
+ * position, which gave the same tag a different colour on every post: colour
+ * that meant nothing. They set in one neutral tone now; the OG cards keep the
+ * colours, where they are decoration rather than a signal.
+ */
+interface Props {
+  tags: string[];
+  class?: string;
+}
+
+const { tags, class: className = '' } = Astro.props;
+---
+
+<ul class={`flex flex-wrap gap-2 ${className}`}>
+  {
+    tags.map((tag) => (
+      <li class="text-[12px] font-mono text-muted border border-rule px-2 py-0.5 rounded">{tag}</li>
+    ))
+  }
+</ul>

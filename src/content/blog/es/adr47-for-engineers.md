@@ -12,7 +12,7 @@ tags:
   - Python
 ---
 
-En 2022 era desarrollador core en xBacked, que emitía xUSD, una stablecoin sobrecolateralizada en Algorand. Un socio, Pact, propuso un mecanismo para fondear un pool de liquidez PACT/xUSD para el lanzamiento de su token. Fui coautor del documento de decisión de arquitectura en contra, el ADR-47, y el lanzamiento no ocurrió de esa forma. La [versión formal](/es/blog/adr47/) tiene las demostraciones. Esta tiene el código.
+En 2022 era desarrollador core en xBacked, que emitía xUSD, una stablecoin sobrecolateralizada en Algorand. Un socio, Pact, propuso un mecanismo para fondear un pool de liquidez PACT/xUSD para el lanzamiento de su token. Fui coautor del documento de decisión de arquitectura en contra, el ADR-47, y el lanzamiento no ocurrió de esa forma. La [versión formal](/blog/adr47/) tiene las demostraciones. Esta tiene el código.
 
 Si alguna vez revisaste un pull request que agregaba un atajo "temporal" para saltarse una validación, ya conoces la forma del argumento.
 

@@ -3,6 +3,7 @@ title: "ADR-46: Vault Looping in Closed Form"
 subtitle: Recursive minting through a money market is a geometric series. The series says the strategy is a carry trade, not leverage, and that its risk lands on someone else.
 excerpt: How far can a user push leverage by minting xUSD, lending it, borrowing collateral, and minting again? A geometric series gives the cap, shows the net exposure never changes, and locates the liquidation risk on unlevered users.
 date: 2026-09-07
+origin: "Originally an architecture decision record for xBacked DAO, 2022. Annotated in 2026."
 readMinutes: 13
 featured: true
 tags:

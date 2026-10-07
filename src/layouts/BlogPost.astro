@@ -1,65 +1,91 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import type { CollectionEntry } from 'astro:content';
+import type { MarkdownHeading } from 'astro';
 import {
+  adjacentPosts,
+  EMAIL,
   localizePath,
   ogImagePath,
   otherLang,
   postLang,
+  postPath,
   postSlug,
   postTranslations,
   UI,
 } from '@/i18n';
 import { monthYearUpper, readTimeUpper } from '@/lib/format';
-import { tagClass } from '@/lib/tags';
+import { blogPosting } from '@/lib/schema';
+import { contents } from '@/lib/contents';
+import Tags from '@/components/Tags.astro';
 import 'katex/dist/katex.min.css';
 
 interface Props {
   post: CollectionEntry<'blog'>;
+  headings?: MarkdownHeading[];
 }
 
-const { post } = Astro.props;
-const { title, subtitle, excerpt, date, readMinutes, tags } = post.data;
+const { post, headings = [] } = Astro.props;
+const { title, subtitle, excerpt, date, readMinutes, tags, origin } = post.data;
 const lang = postLang(post);
+const t = UI[lang];
 const blog = localizePath('/blog/', lang);
-const allArticles = UI[lang].allArticles;
 const other = otherLang(lang);
+const ogImage = ogImagePath(`blog/${postSlug(post)}`, lang);
+const { previous, next } = await adjacentPosts(post);
+
+// A contents list earns its place once a post has enough sections to get lost
+// in; below three it is just a second copy of the headings.
+const sections = contents(post.body ?? '', headings);
+const showContents = sections.length >= 3;
+
+const muted = 'text-[14px] font-mono text-muted hover:text-accent transition-colors';
+const link = 'text-accent underline underline-offset-4 decoration-accent/40 hover:decoration-accent';
 ---
 
 <BaseLayout
   title={`${title} — Diego Said`}
   description={excerpt}
-  ogImage={ogImagePath(`blog/${postSlug(post)}`, lang)}
+  ogImage={ogImage}
   ogType="article"
+  article={{ published: date, tags }}
+  jsonLd={[blogPosting(post, ogImage)]}
+  markdown={postPath(post).replace(/\/$/, '.md')}
   lang={lang}
   alternates={await postTranslations(post)}
   fallback={{ [other]: localizePath('/blog/', other) }}
 >
-  <div class="max-w-[780px] mx-auto px-6 lg:px-8 py-16 lg:py-24">
-    <a href={blog} class="text-[14px] font-mono text-muted hover:text-accent transition-colors">
-      {allArticles}
-    </a>
+  <div class="max-w-[680px] mx-auto px-6 pt-12 pb-16 lg:pt-16">
+    <a href={blog} class={muted}>{t.allArticles}</a>
 
     <header class="mt-8">
       <div class="flex flex-wrap items-baseline gap-3 text-[13px] font-mono text-muted">
-        <span>{monthYearUpper(date, lang)}</span>
+        <time datetime={date.toISOString().slice(0, 10)}>{monthYearUpper(date, lang)}</time>
         <span>·</span>
         <span>{readTimeUpper(readMinutes, lang)}</span>
       </div>
-      <h1 class="text-[28px] lg:text-[32px] font-bold tracking-tight mt-3">{title}</h1>
-      <p class="text-[17px] text-muted mt-3 italic leading-relaxed">{subtitle}</p>
-      <div class="flex flex-wrap gap-2 mt-4">
-        {
-          tags.map((tag, i) => (
-            <span class={`text-[12px] font-mono border px-2 py-0.5 rounded ${tagClass(i)}`}>
-              {tag}
-            </span>
-          ))
-        }
-      </div>
+      <h1 class="text-[30px] lg:text-[36px] font-bold tracking-tight leading-tight mt-3">{title}</h1>
+      <p class="text-[19px] text-muted mt-4 italic leading-relaxed">{subtitle}</p>
+      {origin && <p class="mt-4 text-[14px] font-mono text-muted leading-relaxed">{origin}</p>}
+      <Tags tags={tags} class="mt-5" />
     </header>
 
-    <article class="blog-article mt-12 border-t border-rule pt-8">
+    {
+      showContents && (
+        <nav aria-labelledby="contents" class="toc mt-10 border-t border-rule pt-8">
+          <h2 id="contents" class="toc-title">{t.contents}</h2>
+          <ol>
+            {sections.map((heading) => (
+              <li>
+                <a href={`#${heading.slug}`} set:html={heading.html} />
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )
+    }
+
+    <article class="blog-article mt-10 border-t border-rule pt-8">
       <slot />
     </article>
 
@@ -68,10 +94,45 @@ const other = otherLang(lang);
       <span class="text-accent text-[13px]">∎</span>
     </div>
 
-    <div class="mt-8">
-      <a href={blog} class="text-[14px] font-mono text-muted hover:text-accent transition-colors">
-        {allArticles}
-      </a>
+    <aside class="mt-10 text-[16px] leading-[1.7]">
+      <p class="font-bold">Diego Said</p>
+      <p class="mt-1 text-ink/85">{t.bio}</p>
+      <p class="mt-3 text-ink/85">
+        {t.subscribeVia}{' '}
+        <a href={localizePath('/rss.xml', lang)} class={link}>RSS</a>{t.subscribeOr}{' '}
+        <!--email_off--><a href={`mailto:${EMAIL}`} class={link}>{EMAIL}</a><!--email_on-->.
+      </p>
+    </aside>
+
+    {
+      (previous || next) && (
+        <nav class="mt-12 border-t border-rule pt-8 grid gap-6 sm:grid-cols-2" aria-label={t.writing}>
+          <div>
+            {previous && (
+              <a href={postPath(previous)} class="group block">
+                <span class="font-mono text-[13px] text-muted">{t.previous}</span>
+                <span class="block mt-1 font-bold leading-snug group-hover:text-accent transition-colors">
+                  {previous.data.title}
+                </span>
+              </a>
+            )}
+          </div>
+          <div class="sm:text-right">
+            {next && (
+              <a href={postPath(next)} class="group block">
+                <span class="font-mono text-[13px] text-muted">{t.next}</span>
+                <span class="block mt-1 font-bold leading-snug group-hover:text-accent transition-colors">
+                  {next.data.title}
+                </span>
+              </a>
+            )}
+          </div>
+        </nav>
+      )
+    }
+
+    <div class="mt-10">
+      <a href={blog} class={muted}>{t.allArticles}</a>
     </div>
   </div>
 </BaseLayout>

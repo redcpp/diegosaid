@@ -1,4 +1,17 @@
+# Search engines, and assistants that fetch a page because someone asked
+# them to: welcome. /llms.txt has the site in brief for the latter.
 User-agent: *
 Allow: /
 
-Sitemap: https://diegosaid.com/sitemap.xml
+# Crawlers that collect training data. Cloudflare already answers these with
+# a 403 at the edge; this file says the same thing in the standard place.
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: CCBot
+User-agent: Bytespider
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: meta-externalagent
+Disallow: /
+
+Sitemap: https://diegosaid.com/sitemap-index.xml

@@ -11,7 +11,7 @@ tags:
   - Identity
 ---
 
-*This essay was written in Spanish. What follows is a translation; the [original](/es/blog/por-que-escribo-en-espanol/) is the one the argument is about.*
+*This essay was written in Spanish. What follows is a translation; the [original](/blog/por-que-escribo-en-espanol/) is the one the argument is about.*
 
 English has given me a lot, which is why this decision is not obvious. But this blog is going to be in Spanish. There is a little fatigue with English, yes. But it is more of a longing: the wish to enrich my soul with what I identify with.
 

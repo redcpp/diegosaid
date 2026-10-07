@@ -60,13 +60,13 @@ function published(lang) {
   return posts(lang).filter((post) => isPublished(new Date(post.data.date)));
 }
 
-/** dist/es/blog/adr47/index.html → /es/blog/adr47/ */
+/** dist/en/blog/adr47/index.html → /en/blog/adr47/ */
 function routeOf(file) {
   const path = '/' + relative(DIST, file).split(sep).join('/');
   return path.endsWith('index.html') ? path.slice(0, -'index.html'.length) : path;
 }
 
-/** /es/blog/adr47/ → dist/es/blog/adr47/index.html, or null if nothing is there. */
+/** /en/blog/adr47/ → dist/en/blog/adr47/index.html, or null if nothing is there. */
 function fileOf(route) {
   const path = decodeURI(route.split(/[?#]/)[0]);
   const candidates = path.endsWith('/')
@@ -91,8 +91,9 @@ function between(html, open, close) {
   return start === -1 || end === -1 ? '' : html.slice(start, end);
 }
 
+/** Spanish is the root tree; English lives under /en/. */
 function langOfRoute(route) {
-  return route === '/es/' || route.startsWith('/es/') ? 'es' : 'en';
+  return route.startsWith('/en/') ? 'en' : 'es';
 }
 
 function readPage(file) {
@@ -116,6 +117,8 @@ function readPage(file) {
     alternates,
     switches,
     main: between(html, '<main', '</main>'),
+    article: between(html, '<article', '</article>'),
+    head: between(html, '<head', '</head>'),
     ogImage: tags(html, 'meta').find((m) => m.property === 'og:image')?.content,
   };
 }
@@ -172,7 +175,7 @@ test('translation keys are unique within each language', () => {
   }
 });
 
-test('a post and its translation share a date, a tag count and a featured flag', () => {
+test('a post and its translation share a date, a tag count, a featured flag and an origin', () => {
   const es = new Map(posts('es').map((post) => [post.key, post]));
   for (const en of posts('en')) {
     const other = es.get(en.key);
@@ -181,6 +184,7 @@ test('a post and its translation share a date, a tag count and a featured flag',
     assert.equal(other.data.date, en.data.date, `${pair}: dates differ`);
     assert.equal(other.data.tags.length, en.data.tags.length, `${pair}: tag counts differ`);
     assert.equal(other.data.featured, en.data.featured, `${pair}: featured in one language only`);
+    assert.equal(Boolean(other.data.origin), Boolean(en.data.origin), `${pair}: origin in one language only`);
   }
 });
 
@@ -191,13 +195,13 @@ test('the CV has the same entries in both languages', () => {
   }
   en.projects.forEach((project, i) => {
     assert.equal(es.projects[i].link, project.link, `CV.projects[${i}]: links differ`);
-    assert.equal(es.projects[i].image, project.image, `CV.projects[${i}]: images differ`);
+    assert.deepEqual(es.projects[i].image, project.image, `CV.projects[${i}]: images differ`);
   });
   en.experience.forEach((entry, i) => {
     assert.equal(
-      Boolean(es.experience[i].description),
-      Boolean(entry.description),
-      `CV.experience[${i}]: description present in one language only`,
+      es.experience[i].bullets.length,
+      entry.bullets.length,
+      `CV.experience[${i}]: bullet counts differ`,
     );
   });
 });
@@ -271,12 +275,15 @@ buildTest('the navbar switch leads to the translation, not a fallback', () => {
 
 buildTest('each translation keeps the structure of the original', () => {
   for (const page of contentPages()) {
-    if (page.lang !== 'en') continue;
-    const translation = pages().find((other) => other.route === page.alternates.es);
+    if (page.lang !== 'es') continue;
+    const translation = pages().find((other) => other.route === page.alternates.en);
     if (!translation) continue; // reported above
+    // A post compares its article alone; the chrome around it (previous and
+    // next links) is the site's, not the translation's.
+    const body = (p) => p.article || p.main;
     assert.deepEqual(
-      skeleton(translation.main),
-      skeleton(page.main),
+      skeleton(body(translation)),
+      skeleton(body(page)),
       `${translation.route} does not match the structure of ${page.route}`,
     );
   }
@@ -306,12 +313,12 @@ buildTest('every page has its own Open Graph image', () => {
     assert.ok(page.ogImage, `${page.route}: no og:image`);
     const path = new URL(page.ogImage).pathname;
     assert.ok(fileOf(path), `${page.route}: og:image ${path} was not built`);
-    if (page.lang === 'es') assert.ok(path.startsWith('/og/es/'), `${page.route}: uses the English card`);
+    if (page.lang === 'en') assert.ok(path.startsWith('/og/en/'), `${page.route}: uses the Spanish card`);
   }
 });
 
 buildTest('each language has a 404 page in its own language', () => {
-  for (const [file, lang] of [['404.html', 'en'], ['es/404.html', 'es']]) {
+  for (const [file, lang] of [['404.html', 'es'], ['en/404.html', 'en']]) {
     const path = join(DIST, file);
     assert.ok(existsSync(path), `dist/${file} is missing; Cloudflare Pages would fall back to SPA mode`);
     assert.equal(readPage(path).lang, lang, `dist/${file}: wrong <html lang>`);
@@ -320,10 +327,10 @@ buildTest('each language has a 404 page in its own language', () => {
 
 buildTest('both feeds carry every post', () => {
   const items = (file) => (readFileSync(join(DIST, file), 'utf8').match(/<item>/g) ?? []).length;
-  const en = items('rss.xml');
-  const es = items('es/rss.xml');
-  assert.equal(en, published('en').length, 'rss.xml is missing posts');
-  assert.equal(es, published('es').length, 'es/rss.xml is missing posts');
+  const es = items('rss.xml');
+  const en = items('en/rss.xml');
+  assert.equal(es, published('es').length, 'rss.xml is missing posts');
+  assert.equal(en, published('en').length, 'en/rss.xml is missing posts');
   assert.equal(en, es, 'the feeds carry different numbers of posts');
 });
 
@@ -331,12 +338,45 @@ buildTest('a scheduled post is not built before its date', () => {
   for (const lang of LANGS) {
     const live = new Set(published(lang).map((post) => post.slug));
     for (const post of posts(lang)) {
-      const route = `${lang === 'en' ? '' : `/${lang}`}/blog/${post.slug}/`;
+      const route = `${lang === 'es' ? '' : `/${lang}`}/blog/${post.slug}/`;
       if (live.has(post.slug)) {
         assert.ok(fileOf(route), `${route} is published but was not built`);
       } else {
         assert.equal(fileOf(route), null, `${route} is scheduled for ${post.data.date} but was built`);
       }
+    }
+  }
+});
+
+// ---------------------------------------------------------------- crawlers
+
+buildTest('robots.txt points at a sitemap that exists', () => {
+  const robots = readFileSync(join(DIST, 'robots.txt'), 'utf8');
+  const sitemaps = [...robots.matchAll(/^Sitemap:\s*(\S+)/gm)].map((m) => new URL(m[1]).pathname);
+  assert.ok(sitemaps.length, 'robots.txt names no sitemap');
+  for (const path of sitemaps) assert.ok(fileOf(path), `robots.txt names ${path}, which was not built`);
+});
+
+buildTest('every post has a Markdown version, and llms.txt lists it', () => {
+  const llms = readFileSync(join(DIST, 'llms.txt'), 'utf8');
+  for (const lang of LANGS) {
+    for (const post of published(lang)) {
+      const path = `${lang === 'es' ? '' : `/${lang}`}/blog/${post.slug}.md`;
+      assert.ok(fileOf(path), `${path} was not built`);
+      assert.ok(llms.includes(`https://diegosaid.com${path}`), `llms.txt does not list ${path}`);
+    }
+  }
+});
+
+buildTest('every post carries BlogPosting JSON-LD, and every block parses', () => {
+  for (const page of contentPages()) {
+    const blocks = [...page.head.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(
+      (m) => JSON.parse(m[1]),
+    );
+    if (/\/blog\/[^/]+\/$/.test(page.route)) {
+      const post = blocks.find((block) => block['@type'] === 'BlogPosting');
+      assert.ok(post, `${page.route}: no BlogPosting`);
+      assert.equal(post.inLanguage, page.lang, `${page.route}: BlogPosting in the wrong language`);
     }
   }
 });

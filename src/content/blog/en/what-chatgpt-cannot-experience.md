@@ -11,7 +11,7 @@ tags:
   - Humanity
 ---
 
-*This essay was written in Spanish. What follows is a translation; the [original](/es/blog/lo-que-chatgpt-no-puede-experimentar/) is the one the argument is about.*
+*This essay was written in Spanish. What follows is a translation; the [original](/blog/lo-que-chatgpt-no-puede-experimentar/) is the one the argument is about.*
 
 ## The temptation of idle tokens
 

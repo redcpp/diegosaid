@@ -1,10 +1,9 @@
 ---
-// The Contact link used to be a React button wired through useLocation/useNavigate
-// so it could scroll on the home page and route-then-scroll from anywhere else.
-// A plain fragment link does both: same-page anchors scroll (html has
-// scroll-behavior: smooth), and off-page it navigates home and lands on #contact.
+// The Contact link is a plain fragment link: on the home page it scrolls (html
+// has scroll-behavior: smooth), and from anywhere else it navigates home and
+// lands on the contact block.
 //
-// The language switch is a link too: EN and ES always sit in that order, the
+// The language switch is a link too: ES and EN always sit in that order, the
 // current one in ink and the other one a link to this page in that language.
 import { LANGS, UI, localizePath, type Lang } from '@/i18n';
 
@@ -20,7 +19,7 @@ const home = localizePath('/', lang);
 ---
 
 <nav class="fixed top-0 inset-x-0 z-50 bg-paper/95 backdrop-blur-sm border-b border-rule">
-  <div class="max-w-[780px] mx-auto px-6 lg:px-8 h-14 flex items-center justify-between gap-4">
+  <div class="max-w-[680px] mx-auto px-6 h-14 flex items-center justify-between gap-4">
     <a
       href={home}
       class="text-[15px] font-bold font-serif text-ink hover:text-accent transition-colors"
@@ -28,7 +27,7 @@ const home = localizePath('/', lang);
       Diego Said
     </a>
 
-    <div class="flex items-center gap-4 sm:gap-6">
+    <div class="flex items-center gap-3 sm:gap-6">
       <a
         href={localizePath('/blog/', lang)}
         class="text-[14px] font-serif text-muted hover:text-ink transition-colors"
@@ -36,12 +35,18 @@ const home = localizePath('/', lang);
         {t.writing}
       </a>
       <a
-        href={`${home}#contact`}
+        href={localizePath('/cv/', lang)}
+        class="text-[14px] font-serif text-muted hover:text-ink transition-colors"
+      >
+        {t.cv}
+      </a>
+      <a
+        href={`${home}#${t.contactId}`}
         class="text-[14px] font-serif text-muted hover:text-ink transition-colors"
       >
         {t.contact}
       </a>
-      <div class="flex items-center gap-1.5 pl-4 sm:pl-6 border-l border-rule font-mono text-[13px]">
+      <div class="flex items-center gap-1.5 pl-3 sm:pl-6 border-l border-rule font-mono text-[13px]">
         {
           LANGS.map((code, i) => (
             <>

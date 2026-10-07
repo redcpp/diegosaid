@@ -3,6 +3,7 @@ title: "xUSD by Design: The xBacked Litepaper, Annotated"
 subtitle: How an over-collateralized stablecoin held its peg on Algorand. Vaults, partial liquidation, a redemption floor, and the keepers who ran it, with the reasoning the litepaper left implicit.
 excerpt: The xBacked Litepaper v2.0 described xUSD in examples. This is the same design explained mechanism by mechanism, including the liquidation formula derived from first principles and the arithmetic behind the peg band.
 date: 2026-09-07
+origin: "The xBacked Litepaper v2.0 was published in March 2022. Annotated in 2026."
 readMinutes: 10
 tags:
   - DeFi
@@ -104,4 +105,4 @@ The design principle, which the litepaper never states outright, is that a proto
 
 ## What I would write differently now
 
-The litepaper was a description, not an argument. It did not explain why the ratios were 110 and 120, or what the redemption mechanism does to vault owners' incentives, or what happens when users compose xUSD with a lending market. The two architecture decision records I co-authored, [ADR-46 on vault looping](/blog/adr46) and [ADR-47 on LP-backed issuance](/blog/adr47), were both attempts to supply the reasoning that the launch document skipped. A protocol's public document should carry its own proofs. This one relied on its readers to trust that the numbers had been thought about. They had been, but the document should have shown it.
+The litepaper was a description, not an argument. It did not explain why the ratios were 110 and 120, or what the redemption mechanism does to vault owners' incentives, or what happens when users compose xUSD with a lending market. The two architecture decision records I co-authored, [ADR-46 on vault looping](/en/blog/adr46/) and [ADR-47 on LP-backed issuance](/en/blog/adr47/), were both attempts to supply the reasoning that the launch document skipped. A protocol's public document should carry its own proofs. This one relied on its readers to trust that the numbers had been thought about. They had been, but the document should have shown it.

@@ -3,6 +3,7 @@ title: "xUSD por diseño: el litepaper de xBacked, comentado"
 subtitle: Cómo una stablecoin sobrecolateralizada sostuvo su paridad en Algorand. Vaults, liquidación parcial, un piso de redención y los keepers que la operaban, con el razonamiento que el litepaper dejó implícito.
 excerpt: El Litepaper v2.0 de xBacked describía xUSD con ejemplos. Este es el mismo diseño explicado mecanismo por mecanismo, incluida la fórmula de liquidación derivada desde first principles y la aritmética detrás de la banda de paridad.
 date: 2026-09-07
+origin: "El Litepaper v2.0 de xBacked se publicó en marzo de 2022. Comentado en 2026."
 readMinutes: 10
 tags:
   - DeFi
@@ -104,4 +105,4 @@ El principio de diseño, que el litepaper nunca dice de forma explícita, es que
 
 ## Lo que escribiría distinto hoy
 
-El litepaper era una descripción, no un argumento. No explicaba por qué las razones eran 110 y 120, ni qué le hace el mecanismo de redención a los incentivos de los dueños de vaults, ni qué pasa cuando los usuarios combinan xUSD con un mercado de préstamos. Los dos documentos de decisión de arquitectura de los que fui coautor, el [ADR-46 sobre el looping de vaults](/es/blog/adr46/) y el [ADR-47 sobre la emisión respaldada por LP](/es/blog/adr47/), fueron intentos de aportar el razonamiento que el documento de lanzamiento se saltó. El documento público de un protocolo debería traer sus propias demostraciones. Este confiaba en que sus lectores creyeran que alguien había pensado los números. Sí se habían pensado, pero el documento debió mostrarlo.
+El litepaper era una descripción, no un argumento. No explicaba por qué las razones eran 110 y 120, ni qué le hace el mecanismo de redención a los incentivos de los dueños de vaults, ni qué pasa cuando los usuarios combinan xUSD con un mercado de préstamos. Los dos documentos de decisión de arquitectura de los que fui coautor, el [ADR-46 sobre el looping de vaults](/blog/adr46/) y el [ADR-47 sobre la emisión respaldada por LP](/blog/adr47/), fueron intentos de aportar el razonamiento que el documento de lanzamiento se saltó. El documento público de un protocolo debería traer sus propias demostraciones. Este confiaba en que sus lectores creyeran que alguien había pensado los números. Sí se habían pensado, pero el documento debió mostrarlo.

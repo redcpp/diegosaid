@@ -11,7 +11,7 @@ tags:
   - Stoicism
 ---
 
-*This essay was written in Spanish. What follows is a translation; the [original](/es/blog/el-resultado-es-la-medicion/) is the one the argument is about.*
+*This essay was written in Spanish. What follows is a translation; the [original](/blog/el-resultado-es-la-medicion/) is the one the argument is about.*
 
 ## The next kilometer
 

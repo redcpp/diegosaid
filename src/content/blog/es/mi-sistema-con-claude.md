@@ -26,7 +26,7 @@ En 2023, un equipo encabezado por investigadores de Stanford midió algo parecid
 
 De ahí salió la primera capa. Claude permite guardar *skills*, que en español serían habilidades: instrucciones sobre un área que consulta cada vez que hace falta. Hice una para el deporte, otra para el trabajo y otra para los estudios de programación de la maestría. Después descubrí por mi cuenta que una habilidad puede llamar a otras, y armé una para mi plan semanal: le pido la semana y ella se pone de acuerdo con las demás. Le digo *proxy*, porque habla con las otras en mi nombre. La tercera capa fueron los proyectos, donde vive el trabajo largo con sus archivos y su historia. Con eso empecé a estudiar Claude más a fondo, a buscar las buenas prácticas y a sacarle provecho a las herramientas que tiene.
 
-A mi familia, que sí lee este blog, no le cuesta entenderlo. Habilidades, proyectos y documentos son palabras de todos los días, con las que también nos describimos como personas; ahora una herramienta las tiene a nuestra disposición.
+Habilidades, proyectos y documentos son palabras de todos los días, con las que también nos describimos como personas; ahora una herramienta las tiene a nuestra disposición.
 
 No sé si mis resultados son mejores que antes. Con pura disciplina ya me iba bien, y Claude es lo bastante inteligente para dar buenas respuestas sin que uno itere mucho. Lo que sí noté es que el resultado se parece más a lo que quiero: me explico y me organizo mejor, y puedo llevar varias cosas en paralelo.
 
@@ -48,7 +48,7 @@ Nunca delego los ejemplos ni la forma de pensar, y por eso creo que ninguna inte
 
 Si alguien me preguntara cómo copiar mi sistema, le diría que copie el metasistema, la manera de llegar a él. El mío está optimizado para mí después de meses de ajustes y no necesariamente es el mejor para nadie más. Lo que sí se puede copiar es el camino. Yo estudio cómo funciona la herramienta, intento cosas aunque fallen y pongo mucha atención a lo que pasa; a veces corro varias pruebas en paralelo para ver cuál sale mejor. Es el método científico de toda la vida: cambiar una variable, dejar las demás quietas y ver qué pasa.
 
-Con LinkedIn hice algo parecido. La manera en que se escribe ahí me da *cringe*; se siente artificial, sintética y a veces falsa. Yo no leo los posts largos, que rara vez tienen sustancia y cabrían en una imagen, así que decidí publicar justo eso: un carrusel con datos y un comentario breve. El que acompaña este texto junta cinco de sus estudios. Quería algo que se sintiera mío, y hasta ahora estoy a gusto con la decisión.
+Con LinkedIn hice algo parecido. La manera en que se escribe ahí me da *cringe*; se siente artificial, sintética y a veces falsa. Yo no leo los posts largos, que rara vez tienen sustancia y que en realidad cabrían en una imagen, así que decidí publicar justo eso: un carrusel con datos y un comentario breve, como el que acompaña este texto con cinco de sus estudios. Quería algo que se sintiera mío, y hasta ahora estoy contento con la decisión.
 
 No hay una forma correcta o incorrecta de usar estas herramientas, solo recomendaciones. La disciplina fue la base sobre la que armé todo esto, y el estudio me trae perspectivas y recursos que por mi cuenta no hubiera encontrado. Lo demás es intuición, gusto y el acomodo que cada quien le encuentra a sus herramientas, porque al final cada uno decide dónde está y a dónde quiere llegar.
 

@@ -29,7 +29,7 @@ In 2023, a team led by Stanford researchers measured something similar. They gav
 
 That gave me the first layer. Claude lets you save *skills*: instructions about an area that it consults whenever they're needed. I made one for sport, another for work and another for the programming coursework of my master's degree. Then I found out on my own that a skill can call other skills, and I built one for my weekly plan: I ask it for the week and it coordinates with the rest. I call it a *proxy*, because it talks to the others on my behalf. The third layer was projects, where long-running work lives with its files and its history. From there I started studying Claude in more depth, looking for good practices and getting more out of the tools it has.
 
-My family, who do read this blog, have no trouble understanding it. Skills, projects and documents are everyday words, and we use them to describe ourselves as people too; now a tool has them at our disposal.
+Skills, projects and documents are everyday words, and we use them to describe ourselves as people too; now a tool has them at our disposal.
 
 I don't know whether my results are better than before. With discipline alone I was already doing well, and Claude is smart enough to give good answers without much back and forth. What I did notice is that the output looks more like what I want: I explain myself and organize myself better, and I can carry several things in parallel.
 
@@ -51,7 +51,7 @@ I never delegate the examples or the way of thinking, and that's why I believe n
 
 If someone asked me how to copy my system, I'd tell them to copy the metasystem, the way of arriving at it. Mine is optimized for me after months of adjustments and isn't necessarily the best for anyone else. What can be copied is the path. I study how the tool works, try things even if they fail and pay close attention to what happens; sometimes I run several tests in parallel to see which one comes out better. It's the good old scientific method: change one variable, keep the rest still and see what happens.
 
-I did something similar with LinkedIn. The way people write there makes me cringe; it feels artificial, synthetic and sometimes fake. I don't read the long posts, which rarely have substance and would fit in an image, so I decided to publish exactly that: a carousel with data and a short comment. The one that goes with this essay gathers five of its studies. I wanted something that felt like mine, and so far I'm comfortable with the decision.
+I did something similar with LinkedIn. The way people write there makes me cringe; it feels artificial, synthetic and sometimes fake. I don't read the long posts, which rarely have substance and would actually fit in an image, so I decided to publish exactly that: a carousel with data and a short comment, like the one that goes with this essay and gathers five of its studies. I wanted something that felt like mine, and so far I'm happy with the decision.
 
 There's no right or wrong way to use these tools, only recommendations. Discipline was the base I built all this on, and study brings me perspectives and resources I wouldn't have found on my own. The rest is intuition, taste and the arrangement each of us finds with our tools, because in the end each of us decides where we are and where we want to go.
 
